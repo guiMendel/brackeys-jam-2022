@@ -40,7 +40,7 @@ public class NpcController : MonoBehaviour
     movementCoroutine = StartCoroutine(CountCycles());
 
     // Subscribe to area confinement
-    confine.OnLeaveConfinement.AddListener(ReturnToArea);
+    confine.OnOutsideConfinement.AddListener(ReturnToArea);
   }
 
   private void OnDisable()
@@ -50,10 +50,10 @@ public class NpcController : MonoBehaviour
       StopCoroutine(movementCoroutine);
       movementCoroutine = null;
     }
-    confine.OnLeaveConfinement.RemoveListener(ReturnToArea);
+    confine.OnOutsideConfinement.RemoveListener(ReturnToArea);
   }
 
-  private void ReturnToArea(Vector2 areaDirection)
+  private void ReturnToArea(Vector2 areaDistance)
   {
     if (movementCoroutine != null)
     {
@@ -62,7 +62,7 @@ public class NpcController : MonoBehaviour
     }
 
     // Set starting angle to the inverse of the collision angle
-    movementCoroutine = StartCoroutine(CountCycles(areaDirection, noInitialIdle: true));
+    movementCoroutine = StartCoroutine(CountCycles(areaDistance.normalized, noInitialIdle: true));
   }
 
   private void StartNewCycle(Vector2 direction, bool idle)
