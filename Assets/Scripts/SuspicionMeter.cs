@@ -138,10 +138,13 @@ public class SuspicionMeter : MonoBehaviour
   private void TurnIntoAlien(NpcController npc)
   {
     // Create alien where the npc is
-    Instantiate(alien, npc.transform.position, npc.transform.rotation, npc.transform.parent);
+    GameObject newAlien = Instantiate(alien, npc.transform.position, npc.transform.rotation, npc.transform.parent);
 
     // Remove the npc
     npc.gameObject.SetActive(false);
     Destroy(npc.gameObject);
+
+    // Give the alien a target
+    newAlien.GetComponent<AlienController>().Target = FindObjectOfType<PlayerController>().gameObject;
   }
 }

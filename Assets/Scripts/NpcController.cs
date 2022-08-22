@@ -31,7 +31,7 @@ public class NpcController : MonoBehaviour
     movement = GetComponent<Movement>();
     confine = GetComponent<AreaConfine>();
 
-    EnsureNotNull.Objects(movement, confine);
+    EnsureNotNull.Objects(movement);
   }
 
   private void OnEnable()
@@ -40,7 +40,7 @@ public class NpcController : MonoBehaviour
     movementCoroutine = StartCoroutine(CountCycles());
 
     // Subscribe to area confinement
-    confine.OnOutsideConfinement.AddListener(ReturnToArea);
+    confine?.OnOutsideConfinement.AddListener(ReturnToArea);
   }
 
   private void OnDisable()
@@ -50,7 +50,7 @@ public class NpcController : MonoBehaviour
       StopCoroutine(movementCoroutine);
       movementCoroutine = null;
     }
-    confine.OnOutsideConfinement.RemoveListener(ReturnToArea);
+    confine?.OnOutsideConfinement.RemoveListener(ReturnToArea);
   }
 
   private void ReturnToArea(Vector2 areaDistance)
