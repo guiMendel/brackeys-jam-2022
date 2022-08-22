@@ -14,6 +14,9 @@ public class NpcController : MonoBehaviour
   [Tooltip("The min and max duration of each movement cycle")]
   public Vector2 movementCycleDurationLimits = new Vector2(0.2f, 2f);
 
+  [Tooltip("Area to confine it's movement to")]
+  public BoxCollider2D movementArea;
+
 
   // === STATE
 
@@ -38,16 +41,30 @@ public class NpcController : MonoBehaviour
     movementCoroutine = StartCoroutine(CountCycles());
   }
 
-  private void OnTriggerExit2D(Collider2D other)
+  private void Update()
   {
-    if (movementCoroutine != null) StopCoroutine(movementCoroutine);
+    if (transform.position.x < movementArea.bounds.min.x) RestartCycleToAngle(0);
 
-    // Get angle to area center
-    float collisionAngle = Mathf.Atan2(other.bounds.center.y - transform.position.y, other.bounds.center.x - transform.position.x);
+    else if (transform.position.x > movementArea.bounds.max.x) RestartCycleToAngle(Mathf.PI);
 
-    // Set starting angle to move towards it
-    movementCoroutine = StartCoroutine(CountCycles(collisionAngle, noInitialIdle: true));
+    else if (transform.position.y > movementArea.bounds.max.y) RestartCycleToAngle(Mathf.PI * 1.5f);
+
+    else if (transform.position.y < movementArea.bounds.min.y) RestartCycleToAngle(Mathf.PI * 0.5f);
   }
+
+  // private void OnTriggerExit2D(Collider2D other)
+  // {
+  //   if (movementCoroutine != null) StopCoroutine(movementCoroutine);
+
+  //   // Get angle to area center
+  //   float centerAngle = Mathf.Atan2(other.bounds.center.y - transform.position.y, other.bounds.center.x - transform.position.x);
+
+  //   // Add some variation to it
+  //   centerAngle += Random.Range(-Mathf.PI / 4, Mathf.PI / 4);
+
+  //   // Set starting angle to move towards it
+  //   movementCoroutine = StartCoroutine(CountCycles(centerAngle, noInitialIdle: true));
+  // }
 
   private void RestartCycleToAngle(float angle)
   {

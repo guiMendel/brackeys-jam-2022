@@ -28,7 +28,9 @@ public class NpcManager : MonoBehaviour
         Random.Range(movementArea.bounds.min.y + 1, movementArea.bounds.max.y - 1)
       );
 
-      Instantiate(npc, position, Quaternion.identity, transform);
+      GameObject newNpc = Instantiate(npc, position, Quaternion.identity, transform);
+
+      newNpc.GetComponent<NpcController>().movementArea = movementArea;
     }
   }
 }

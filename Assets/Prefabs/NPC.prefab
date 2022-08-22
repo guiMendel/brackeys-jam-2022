@@ -161,6 +161,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c2bbf4da35bb5b4fbe18277930927f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleChance: 0.3
-  movementCycleDurationLimits: {x: 0.1, y: 1}
-  movementArea: {fileID: 0}
+  idleChance: 0.45
+  movementCycleDurationLimits: {x: 0.1, y: 0.6}
+  movementArea: {fileID: 8050839299892597862, guid: 09560a18bebf1e74aa3277faca5911b8, type: 3}
