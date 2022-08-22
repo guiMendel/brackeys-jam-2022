@@ -30,7 +30,7 @@ public class NpcManager : MonoBehaviour
 
       GameObject newNpc = Instantiate(npc, position, Quaternion.identity, transform);
 
-      newNpc.GetComponent<NpcController>().movementArea = movementArea;
+      newNpc.GetComponent<AreaConfine>().movementArea = movementArea;
     }
   }
 }
