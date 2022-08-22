@@ -1,6 +1,6 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -14,8 +14,17 @@ public class SuspicionMeter : MonoBehaviour
   [Tooltip("How much suspicion lowers each second")]
   public float suspicionDecay = 5f;
 
+  [Tooltip("How many aliens to spawn on aggro")]
+  public int alienCount = 6;
+
+  [Tooltip("Alien object to spawn")]
+  public GameObject alien;
+
 
   // === STATE
+
+  // Whether already triggered
+  public bool Triggered { get; private set; } = false;
 
 
   // === PROPERTIES
@@ -47,6 +56,9 @@ public class SuspicionMeter : MonoBehaviour
     if (SuspicionRaise != 0f)
     {
       SuspicionLevel += SuspicionRaise * Time.deltaTime;
+
+      // Check for aggro trigger
+      if (SuspicionLevel >= 100f) TriggerAggro();
     }
 
     // Slow suspicion decay
@@ -91,5 +103,45 @@ public class SuspicionMeter : MonoBehaviour
   private void RaiseSuspicion(Vector2 areaDistance)
   {
     SuspicionRaise = areaDistance.magnitude * confinementBreakSuspicion;
+  }
+
+  private void TriggerAggro()
+  {
+    if (Triggered) return;
+
+    Triggered = true;
+
+    // No more decay
+    suspicionDecay = 0f;
+
+    // Select some regular looking dudes to convert to aliens
+    NpcController[] npcs = FindObjectsOfType<NpcController>();
+
+    // Make sure no more aliens than npcs
+    if (alienCount > npcs.Length) alienCount = npcs.Length;
+
+    // Sample some aliens
+    List<int> alienIndices = new List<int>();
+
+    while (alienIndices.Count < alienCount)
+    {
+      int alienIndex = Random.Range(0, alienCount);
+
+      if (alienIndices.Contains(alienIndex) == false)
+      {
+        alienIndices.Add(alienIndex);
+        TurnIntoAlien(npcs[alienIndex]);
+      }
+    }
+  }
+
+  private void TurnIntoAlien(NpcController npc)
+  {
+    // Create alien where the npc is
+    Instantiate(alien, npc.transform.position, npc.transform.rotation, npc.transform.parent);
+
+    // Remove the npc
+    npc.gameObject.SetActive(false);
+    Destroy(npc.gameObject);
   }
 }

@@ -713,6 +713,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   confinementBreakSuspicion: 45
   suspicionDecay: 25
+  alienCount: 4
+  alien: {fileID: 8464543620918312373, guid: defd1a018d9a4514b8f8797432b5d87a, type: 3}
 --- !u!114 &892734849
 MonoBehaviour:
   m_ObjectHideFlags: 0
