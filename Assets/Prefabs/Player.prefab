@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5179717209115902474}
   - component: {fileID: -1092515670685932520}
   - component: {fileID: -380891646891640602}
+  - component: {fileID: 7834860989639632544}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -175,6 +176,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementArea: {fileID: 0}
+  OnOutsideConfinement:
+    m_PersistentCalls:
+      m_Calls: []
   OnLeaveConfinement:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnterConfinement:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &7834860989639632544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5179717209115902477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b46e40e99486fce45a1a64ae7220831d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnDeath:
     m_PersistentCalls:
       m_Calls: []

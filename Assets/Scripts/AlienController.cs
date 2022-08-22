@@ -16,6 +16,9 @@ public class AlienController : MonoBehaviour
   [Tooltip("Max movement offset, in degrees")]
   public float maxOffset = 15f;
 
+  [Tooltip("Laser to shoot")]
+  public GameObject laser;
+
   [Tooltip("Min and max reload time, in seconds")]
   public Vector2 reloadTime = new Vector2(1.5f, 2.5f);
 
@@ -62,7 +65,11 @@ public class AlienController : MonoBehaviour
   {
     ChangeOffset();
 
-    if (Target == null) return;
+    if (Target == null)
+    {
+      npcController.enabled = true;
+      return;
+    }
 
     if (InRange) Shoot();
     else Chase();
@@ -104,7 +111,12 @@ public class AlienController : MonoBehaviour
     movement.SetTargetMovement(Vector2.zero);
 
     // Shoot
-    print("BLAM");
+    LaserController newLaser = Instantiate(
+      laser, transform.position, Quaternion.identity, GameObject.Find("Projectiles")?.transform
+    ).GetComponent<LaserController>();
+
+    newLaser.SetTarget(Target);
+    newLaser.Owner = gameObject;
 
     // Reload
     StartCoroutine(Reload());

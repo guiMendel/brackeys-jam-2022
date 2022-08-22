@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8464543620918312370}
   - component: {fileID: 8464543620918312371}
   - component: {fileID: 2590389505014224690}
+  - component: {fileID: 3053856151776920332}
   m_Layer: 6
   m_Name: NPC
   m_TagString: Untagged
@@ -164,7 +165,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   idleChance: 0.45
   movementCycleDurationLimits: {x: 0.1, y: 0.6}
-  movementArea: {fileID: 8050839299892597862, guid: 09560a18bebf1e74aa3277faca5911b8, type: 3}
 --- !u!114 &2590389505014224690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,6 +178,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementArea: {fileID: 8050839299892597862, guid: 09560a18bebf1e74aa3277faca5911b8, type: 3}
+  OnOutsideConfinement:
+    m_PersistentCalls:
+      m_Calls: []
   OnLeaveConfinement:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnterConfinement:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &3053856151776920332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8464543620918312373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b46e40e99486fce45a1a64ae7220831d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnDeath:
     m_PersistentCalls:
       m_Calls: []

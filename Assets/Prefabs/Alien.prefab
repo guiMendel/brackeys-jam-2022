@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8464543620918312370}
   - component: {fileID: 59774426087496625}
   - component: {fileID: -7878017163447939867}
+  - component: {fileID: 6907501634106941321}
   m_Layer: 6
   m_Name: Alien
   m_TagString: Untagged
@@ -165,6 +166,7 @@ MonoBehaviour:
   shootRange: 4
   offsetVariation: 10
   maxOffset: 50
+  laser: {fileID: 2131953222989692154, guid: 9d3b6a32c460a8541b47e0f45cfb2b5e, type: 3}
   reloadTime: {x: 1.5, y: 2.5}
 --- !u!114 &-7878017163447939867
 MonoBehaviour:
@@ -180,3 +182,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   idleChance: 0
   movementCycleDurationLimits: {x: 0.05, y: 0.5}
+--- !u!114 &6907501634106941321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8464543620918312373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b46e40e99486fce45a1a64ae7220831d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
