@@ -15,7 +15,7 @@ public class Movement : MonoBehaviour
 
   // === STATE
 
-  Vector2 movementDirection;
+  public Vector2 MovementDirection { get; private set; }
   SpriteRenderer spriteRenderer;
 
 
@@ -28,7 +28,7 @@ public class Movement : MonoBehaviour
 
   public void SetTargetMovement(Vector2 movementDirection)
   {
-    this.movementDirection = movementDirection;
+    MovementDirection = movementDirection;
   }
 
 
@@ -62,7 +62,7 @@ public class Movement : MonoBehaviour
     float scaledAcceleration = acceleration * Time.deltaTime;
 
     // Number to approximate the speed to
-    Vector2 movementTarget = movementDirection * maxSpeed;
+    Vector2 movementTarget = MovementDirection * maxSpeed;
 
     // If already there, do nothing
     if (movementTarget == body.velocity) return;

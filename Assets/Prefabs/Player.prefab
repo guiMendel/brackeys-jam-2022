@@ -179,6 +179,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialArea: {fileID: 0}
   deathRestartDelay: 3
+  OnSpawnPlayer:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPlayerInput:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!50 &5179717209115902472
 Rigidbody2D:
   serializedVersion: 4
@@ -212,8 +218,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a044d9e9b7097c94c85d5f3a2e45cc2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceleration: 13
-  maxSpeed: 4.5
+  acceleration: 11
+  maxSpeed: 2.5
 --- !u!61 &-1092515670685932520
 BoxCollider2D:
   m_ObjectHideFlags: 0

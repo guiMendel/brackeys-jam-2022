@@ -22,6 +22,9 @@ public class SuspicionMeter : MonoBehaviour
   [Tooltip("How much suspicion raise speed is accrued for each second of being idle")]
   public float idleSuspicion = 2f;
 
+  [Tooltip("How much suspicion is raised each second the player is sprinting")]
+  public float sprintSuspicion = 10f;
+
   public UnityEvent OnAggro;
 
 
@@ -48,20 +51,24 @@ public class SuspicionMeter : MonoBehaviour
   // Speed at which the suspicion is raising this frame
   public float SuspicionRaise { get; private set; } = 0f;
 
+  bool PlayerSprinting => playerController != null &&
+    playerController.IsSprinting && playerController.GetComponent<Movement>().MovementDirection != Vector2.zero;
+
 
   // === REFS
 
   AreaConfine playerConfine;
+  PlayerController playerController;
 
 
   private void Awake()
   {
     OnAggro ??= new UnityEvent();
 
-    playerConfine = FindObjectOfType<PlayerController>()
-      .GetComponent<AreaConfine>();
+    playerController = FindObjectOfType<PlayerController>();
+    playerConfine = playerController.GetComponent<AreaConfine>();
 
-    EnsureNotNull.Objects(playerConfine);
+    EnsureNotNull.Objects(playerConfine, playerController);
   }
 
   private void Update()
@@ -72,6 +79,9 @@ public class SuspicionMeter : MonoBehaviour
       : idleSuspicion * (timeSinceLastInput - idleSlackTime);
 
     SuspicionRaise = confineSuspicionRaise + idleSuspicionRaise;
+
+    // Detect sprint
+    if (PlayerSprinting) SuspicionRaise += sprintSuspicion;
 
     // Raise suspicion
     if (SuspicionRaise != 0f)
@@ -96,15 +106,15 @@ public class SuspicionMeter : MonoBehaviour
   {
     playerConfine.OnOutsideConfinement.AddListener(RaiseConfineSuspicion);
     playerConfine.OnEnterConfinement.AddListener(StopConfineRaising);
-    FindObjectOfType<PlayerController>().OnPlayerInput.AddListener(TrackInput);
+    playerController.OnPlayerInput.AddListener(TrackInput);
 
   }
 
   private void OnDisable()
   {
-    playerConfine.OnOutsideConfinement.RemoveListener(RaiseConfineSuspicion);
-    playerConfine.OnEnterConfinement.RemoveListener(StopConfineRaising);
-    FindObjectOfType<PlayerController>()?.OnPlayerInput.RemoveListener(TrackInput);
+    playerConfine?.OnOutsideConfinement.RemoveListener(RaiseConfineSuspicion);
+    playerConfine?.OnEnterConfinement.RemoveListener(StopConfineRaising);
+    playerController?.OnPlayerInput.RemoveListener(TrackInput);
   }
 
   private void TrackInput(Vector2 direction)
@@ -135,6 +145,6 @@ public class SuspicionMeter : MonoBehaviour
     suspicionDecay = 0f;
 
     // Add player as target
-    FindObjectOfType<AlienTargetManager>().AddTarget(FindObjectOfType<PlayerController>().gameObject);
+    FindObjectOfType<AlienTargetManager>().AddTarget(playerController.gameObject);
   }
 }
