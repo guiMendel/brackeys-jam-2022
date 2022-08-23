@@ -7,6 +7,8 @@ public class LaserVulnerable : MonoBehaviour
 {
   // === PARAMS
 
+  public GameObject destroyTarget;
+
   public UnityEvent OnDeath;
 
 
@@ -14,7 +16,7 @@ public class LaserVulnerable : MonoBehaviour
   {
     OnDeath ??= new UnityEvent();
 
-    EnsureNotNull.Objects(OnDeath);
+    EnsureNotNull.Objects(OnDeath, destroyTarget);
   }
 
 
@@ -22,6 +24,6 @@ public class LaserVulnerable : MonoBehaviour
   {
     OnDeath.Invoke();
 
-    Destroy(gameObject);
+    Destroy(destroyTarget);
   }
 }

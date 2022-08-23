@@ -74,11 +74,13 @@ public class LaserController : MonoBehaviour
       return;
     }
 
+    LaserVulnerable hitVulnerable = other.GetComponent<LaserVulnerable>();
+
     // Ignore if owner
-    if (GameObject.ReferenceEquals(Owner, other.gameObject)) return;
+    if (hitVulnerable == null || GameObject.ReferenceEquals(Owner, hitVulnerable.destroyTarget)) return;
 
     // Try to kill it
-    other.GetComponent<LaserVulnerable>()?.Die();
+    hitVulnerable.Die();
   }
 
   private void Stop()

@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
   private void Awake()
   {
     movement = GetComponent<Movement>();
-    laserVulnerable = GetComponent<LaserVulnerable>();
+    laserVulnerable = GetComponentInChildren<LaserVulnerable>();
 
     EnsureNotNull.Objects(movement, laserVulnerable);
   }

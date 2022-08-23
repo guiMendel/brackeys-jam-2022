@@ -19,6 +19,9 @@ public class AlienController : MonoBehaviour
   [Tooltip("Laser to shoot")]
   public GameObject laser;
 
+  [Tooltip("Min and max time alien waits before it starts shooting")]
+  public Vector2 warmupTime = new Vector2(0.4f, 0.8f);
+
   [Tooltip("Min and max reload time, in seconds")]
   public Vector2 reloadTime = new Vector2(1.5f, 2.5f);
 
@@ -61,7 +64,7 @@ public class AlienController : MonoBehaviour
     npcController.enabled = false;
 
     // Warm up time
-    StartCoroutine(Reload());
+    StartCoroutine(Reload(Random.Range(warmupTime.x, warmupTime.y)));
   }
 
   private void Update()
@@ -122,14 +125,14 @@ public class AlienController : MonoBehaviour
     newLaser.Owner = gameObject;
 
     // Reload
-    StartCoroutine(Reload());
+    StartCoroutine(Reload(Random.Range(reloadTime.x, reloadTime.y)));
   }
 
-  private IEnumerator Reload()
+  private IEnumerator Reload(float time)
   {
     Reloading = true;
 
-    yield return new WaitForSeconds(Random.Range(reloadTime.x, reloadTime.y));
+    yield return new WaitForSeconds(time);
 
     Reloading = false;
   }

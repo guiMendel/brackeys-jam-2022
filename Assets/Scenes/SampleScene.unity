@@ -628,6 +628,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac17dd5d74cc9b6468fb3ffc2bb7789d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  preRestartCurtainCloseTime: 1
 --- !u!4 &725940039
 Transform:
   m_ObjectHideFlags: 0
@@ -940,6 +941,7 @@ GameObject:
   - component: {fileID: 1539990495}
   - component: {fileID: 1539990494}
   - component: {fileID: 1539990496}
+  - component: {fileID: 1539990497}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -992,6 +994,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   yellowWarningThreshold: 30
   redWarningThreshold: 70
+--- !u!114 &1539990497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1539990493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1381e41be9738f14a81a3ca6f9dc2c67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  accelerationDerivative: 2000
+  initialAcceleration: 0
 --- !u!114 &1577757295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1252,18 +1268,6 @@ PrefabInstance:
     - target: {fileID: 5179717209115902477, guid: 6a5271c1469b2d2448cc520c7ee5202a, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 5179717209115902478, guid: 6a5271c1469b2d2448cc520c7ee5202a, type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5179717209115902478, guid: 6a5271c1469b2d2448cc520c7ee5202a, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5179717209115902478, guid: 6a5271c1469b2d2448cc520c7ee5202a, type: 3}
-      propertyPath: m_Color.r
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5179717209115902479, guid: 6a5271c1469b2d2448cc520c7ee5202a, type: 3}
       propertyPath: m_RootOrder

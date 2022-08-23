@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class SceneHandler : MonoBehaviour
 {
+  // === PARAMS
+
+  public float preRestartCurtainCloseTime = 1f;
+
+
   // === REFS
 
   static SceneHandler instance;
@@ -37,8 +42,15 @@ public class SceneHandler : MonoBehaviour
 
   IEnumerator RestartSceneIn(float seconds)
   {
-    yield return new WaitForSeconds(seconds);
+    yield return new WaitForSeconds(seconds - preRestartCurtainCloseTime);
+
+    FindObjectOfType<UICurtain>().Close();
+
+    print("closing");
+
+    yield return new WaitForSeconds(preRestartCurtainCloseTime);
 
     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    print("restarting");
   }
 }
