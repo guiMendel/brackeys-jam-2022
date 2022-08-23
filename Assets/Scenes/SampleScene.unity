@@ -798,7 +798,7 @@ MonoBehaviour:
   suspicionDecay: 25
   confinementBreakSuspicion: 45
   idleSlackTime: 3
-  idleSuspicion: 0.005
+  idleSuspicion: 0.05
   sprintSuspicion: 30
   OnAggro:
     m_PersistentCalls:
