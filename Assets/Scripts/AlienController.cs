@@ -59,6 +59,9 @@ public class AlienController : MonoBehaviour
   {
     // Disable wandering
     npcController.enabled = false;
+
+    // Warm up time
+    StartCoroutine(Reload());
   }
 
   private void Update()

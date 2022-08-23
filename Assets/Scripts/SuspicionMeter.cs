@@ -38,7 +38,6 @@ public class SuspicionMeter : MonoBehaviour
 
   // === REFS
 
-  static SuspicionMeter instance;
   AreaConfine playerConfine;
 
 
@@ -68,23 +67,8 @@ public class SuspicionMeter : MonoBehaviour
     SuspicionLevel = Mathf.Clamp(SuspicionLevel, 0f, 100f);
   }
 
-  private void SingletonCheck()
-  {
-    if (instance != null && instance != this)
-    {
-      // If there's already an instance, stop
-      gameObject.SetActive(false);
-      Destroy(gameObject);
-
-      return;
-    }
-
-    instance = this;
-  }
-
   private void OnEnable()
   {
-    SingletonCheck();
     playerConfine.OnOutsideConfinement.AddListener(RaiseSuspicion);
     playerConfine.OnEnterConfinement.AddListener(StopRaising);
   }
