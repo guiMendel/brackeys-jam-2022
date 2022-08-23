@@ -44,6 +44,8 @@ public class AreaConfine : MonoBehaviour
 
   private void Update()
   {
+    if (movementArea == null) return;
+
     // The direction of the area
     Vector2 areaDirection = Vector2.zero;
 

@@ -52,6 +52,13 @@ public class PlayerController : MonoBehaviour
 
   private void Start()
   {
+    if (initialArea != null) PickSpawnPosition();
+
+    OnSpawnPlayer.Invoke(transform.position);
+  }
+
+  private void PickSpawnPosition()
+  {
     BoxCollider2D ownCollider = GetComponent<BoxCollider2D>();
 
     // Place player inside initial area randomly
@@ -63,10 +70,7 @@ public class PlayerController : MonoBehaviour
         initialArea.bounds.min.y + ownCollider.bounds.extents.y, initialArea.bounds.max.y - ownCollider.bounds.extents.y
       ) + transform.position.y - ownCollider.bounds.center.y
     );
-
-    OnSpawnPlayer.Invoke(transform.position);
   }
-
 
   public void Move(InputAction.CallbackContext callbackContext)
   {

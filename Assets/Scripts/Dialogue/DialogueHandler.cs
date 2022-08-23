@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class DialogueHandler : MonoBehaviour
 {
@@ -23,6 +24,21 @@ public class DialogueHandler : MonoBehaviour
   Coroutine writeCoroutine;
 
 
+  // === REFS
+
+  Label dialogue;
+
+
+  private void Awake()
+  {
+    dialogue = FindObjectOfType<UIDocument>().rootVisualElement.Q<Label>("dialogue");
+
+    // Empty it
+    dialogue.text = "";
+
+    EnsureNotNull.Objects(dialogue);
+  }
+
   public void SetDialogue(Dialogue dialogue)
   {
     activeDialogue = dialogue;
@@ -36,7 +52,7 @@ public class DialogueHandler : MonoBehaviour
   {
     while (displayedCharacters++ < activeDialogue.text.Length)
     {
-      print(activeDialogue.text.Substring(0, displayedCharacters));
+      dialogue.text = activeDialogue.text.Substring(0, displayedCharacters);
 
       yield return new WaitForSeconds(writeSpeed);
     }
