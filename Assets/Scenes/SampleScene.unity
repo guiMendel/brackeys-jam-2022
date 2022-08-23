@@ -1124,7 +1124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1730eb691c60f5847acdafd41bf66cfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alienCount: 6
+  alienCount: 4
   alien: {fileID: 8464543620918312373, guid: defd1a018d9a4514b8f8797432b5d87a, type: 3}
 --- !u!4 &1777050354
 Transform:
@@ -1463,7 +1463,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8050839299892597863, guid: 09560a18bebf1e74aa3277faca5911b8, type: 3}
       propertyPath: npcCount
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8050839299892597863, guid: 09560a18bebf1e74aa3277faca5911b8, type: 3}
       propertyPath: trackedLifeNpcPrefab
