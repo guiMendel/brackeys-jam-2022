@@ -59,29 +59,49 @@ public class DialogueHandler : MonoBehaviour
 
   private IEnumerator DisplayDialogue()
   {
-    // Wait delay
-    if (activeDialogue.delay > 0f) yield return new WaitForSeconds(activeDialogue.delay);
+    float delayExecuted = 0f;
 
-    dialogue.text = "";
-
-    // For each word
-    foreach (string word in activeDialogue.text.Split(' '))
+    while (activeDialogue != null)
     {
-      // Detect pauses
-      if (Regex.IsMatch(word, @"^#\d(.\d+)?$"))
-      {
-        yield return new WaitForSeconds(float.Parse(word.Substring(1)));
+      // Get remaining delay
+      float delay = activeDialogue.delay - delayExecuted;
 
-        continue;
+      // Wait delay
+      if (delay > 0f) yield return new WaitForSeconds(activeDialogue.delay);
+
+      dialogue.text = "";
+
+      // For each word
+      foreach (string word in activeDialogue.text.Split(' '))
+      {
+        // Detect pauses
+        if (Regex.IsMatch(word, @"^#\d(.\d+)?$"))
+        {
+          yield return new WaitForSeconds(float.Parse(word.Substring(1)));
+
+          continue;
+        }
+
+        // Type it plus a space (if not the first word)
+        foreach (char c in $"{(dialogue.text.Length == 0 ? "" : " ")}{word}")
+        {
+          dialogue.text += c;
+
+          yield return new WaitForSeconds(writeSpeed);
+        }
       }
 
-      // Type it plus a space (if not the first word)
-      foreach (char c in $"{(dialogue.text.Length == 0 ? "" : " ")}{word}")
-      {
-        dialogue.text += c;
+      // Detect follow up
+      if (activeDialogue.followUp == null) break;
 
-        yield return new WaitForSeconds(writeSpeed);
-      }
+      // Wait follow up delay
+      if (activeDialogue.followUpDelay > 0f)
+        yield return new WaitForSeconds(activeDialogue.followUpDelay);
+
+      delayExecuted = activeDialogue.followUpDelay;
+
+      // Follow up
+      activeDialogue = activeDialogue.followUp;
     }
 
     displayCoroutine = null;
