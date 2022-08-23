@@ -795,8 +795,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dccfda37fc07a14187c597dd953d215, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  confinementBreakSuspicion: 45
   suspicionDecay: 25
+  confinementBreakSuspicion: 45
+  idleSlackTime: 3
+  idleSuspicion: 0.005
   OnAggro:
     m_PersistentCalls:
       m_Calls: []

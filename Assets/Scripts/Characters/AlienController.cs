@@ -115,7 +115,6 @@ public class AlienController : MonoBehaviour
     Vector2 targetDirection = (target.transform.position - transform.position).normalized;
 
     // Set movement towards target
-    print(movementOffset);
     movement.SetTargetMovement(targetDirection.Rotated(movementOffset));
   }
 

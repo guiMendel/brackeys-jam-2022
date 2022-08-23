@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,17 @@ public class SuspicionMeter : MonoBehaviour
 {
   // === INTERFACE
 
+  [Tooltip("How much suspicion lowers each second")]
+  public float suspicionDecay = 5f;
+
   [Tooltip("How much suspicion each unit of distance from confine are accrues per second")]
   public float confinementBreakSuspicion = 20f;
 
-  [Tooltip("How much suspicion lowers each second")]
-  public float suspicionDecay = 5f;
+  [Tooltip("How long player can be idle before raising suspicion")]
+  public float idleSlackTime = 4f;
+
+  [Tooltip("How much suspicion raise speed is accrued for each second of being idle")]
+  public float idleSuspicion = 2f;
 
   public UnityEvent OnAggro;
 
@@ -22,6 +29,15 @@ public class SuspicionMeter : MonoBehaviour
 
   // Whether already triggered
   public bool Triggered { get; private set; } = false;
+
+  // How much time has passed since player's las input
+  float timeSinceLastInput = 0f;
+
+  // Suspicion raise from area confinement
+  float confineSuspicionRaise = 0f;
+
+  // Suspicion raise from being idle
+  float idleSuspicionRaise = 0f;
 
 
   // === PROPERTIES
@@ -50,6 +66,13 @@ public class SuspicionMeter : MonoBehaviour
 
   private void Update()
   {
+    // Detect idle
+    idleSuspicionRaise += timeSinceLastInput <= idleSlackTime
+      ? 0f
+      : idleSuspicion * (timeSinceLastInput - idleSlackTime);
+
+    SuspicionRaise = confineSuspicionRaise + idleSuspicionRaise;
+
     // Raise suspicion
     if (SuspicionRaise != 0f)
     {
@@ -64,28 +87,40 @@ public class SuspicionMeter : MonoBehaviour
 
     // Clamp it
     SuspicionLevel = Mathf.Clamp(SuspicionLevel, 0f, 100f);
+
+    // Raise idle counter
+    timeSinceLastInput += Time.deltaTime;
   }
 
   private void OnEnable()
   {
-    playerConfine.OnOutsideConfinement.AddListener(RaiseSuspicion);
-    playerConfine.OnEnterConfinement.AddListener(StopRaising);
+    playerConfine.OnOutsideConfinement.AddListener(RaiseConfineSuspicion);
+    playerConfine.OnEnterConfinement.AddListener(StopConfineRaising);
+    FindObjectOfType<PlayerController>().OnPlayerInput.AddListener(TrackInput);
+
   }
 
   private void OnDisable()
   {
-    playerConfine.OnOutsideConfinement.RemoveListener(RaiseSuspicion);
-    playerConfine.OnEnterConfinement.RemoveListener(StopRaising);
+    playerConfine.OnOutsideConfinement.RemoveListener(RaiseConfineSuspicion);
+    playerConfine.OnEnterConfinement.RemoveListener(StopConfineRaising);
+    FindObjectOfType<PlayerController>()?.OnPlayerInput.RemoveListener(TrackInput);
   }
 
-  private void StopRaising()
+  private void TrackInput(Vector2 direction)
   {
-    SuspicionRaise = 0f;
+    timeSinceLastInput = 0f;
+    idleSuspicionRaise = 0f;
   }
 
-  private void RaiseSuspicion(Vector2 areaDistance)
+  private void StopConfineRaising()
   {
-    SuspicionRaise = areaDistance.magnitude * confinementBreakSuspicion;
+    confineSuspicionRaise = 0f;
+  }
+
+  private void RaiseConfineSuspicion(Vector2 areaDistance)
+  {
+    confineSuspicionRaise = areaDistance.magnitude * confinementBreakSuspicion;
   }
 
   private void TriggerAggro()
