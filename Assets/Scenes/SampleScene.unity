@@ -688,6 +688,51 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &771099347
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 771099349}
+  - component: {fileID: 771099348}
+  m_Layer: 0
+  m_Name: Dialogue Handler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &771099348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771099347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c54ec9723bb4f774fb9cdbbcc26e171e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  writeSpeed: 0.07
+--- !u!4 &771099349
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771099347}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.6086802, y: 0.18465103, z: 1.0381671}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &786326017
 GameObject:
   m_ObjectHideFlags: 0
@@ -1367,6 +1412,38 @@ PrefabInstance:
       propertyPath: initialArea
       value: 
       objectReference: {fileID: 843585266}
+    - target: {fileID: 5179717209115902473, guid: 6a5271c1469b2d2448cc520c7ee5202a, type: 3}
+      propertyPath: OnSpawnPlayer.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5179717209115902473, guid: 6a5271c1469b2d2448cc520c7ee5202a, type: 3}
+      propertyPath: OnSpawnPlayer.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5179717209115902473, guid: 6a5271c1469b2d2448cc520c7ee5202a, type: 3}
+      propertyPath: OnSpawnPlayer.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 771099348}
+    - target: {fileID: 5179717209115902473, guid: 6a5271c1469b2d2448cc520c7ee5202a, type: 3}
+      propertyPath: OnSpawnPlayer.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5179717209115902473, guid: 6a5271c1469b2d2448cc520c7ee5202a, type: 3}
+      propertyPath: OnSpawnPlayer.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetDialogue
+      objectReference: {fileID: 0}
+    - target: {fileID: 5179717209115902473, guid: 6a5271c1469b2d2448cc520c7ee5202a, type: 3}
+      propertyPath: OnSpawnPlayer.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: DialogueHandler, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5179717209115902473, guid: 6a5271c1469b2d2448cc520c7ee5202a, type: 3}
+      propertyPath: OnSpawnPlayer.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 11400000, guid: ba4d1db58ce4e724cbe5543eb5ccce43, type: 2}
+    - target: {fileID: 5179717209115902473, guid: 6a5271c1469b2d2448cc520c7ee5202a, type: 3}
+      propertyPath: OnSpawnPlayer.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: Dialogue, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 5179717209115902477, guid: 6a5271c1469b2d2448cc520c7ee5202a, type: 3}
       propertyPath: m_Name
       value: Player
