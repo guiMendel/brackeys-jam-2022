@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SuspicionMeter : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class SuspicionMeter : MonoBehaviour
 
   [Tooltip("Alien object to spawn")]
   public GameObject alien;
+
+  public UnityEvent OnAggro;
 
 
   // === STATE
@@ -43,6 +46,8 @@ public class SuspicionMeter : MonoBehaviour
 
   private void Awake()
   {
+    OnAggro ??= new UnityEvent();
+
     playerConfine = FindObjectOfType<PlayerController>()
       .GetComponent<AreaConfine>();
 
@@ -95,14 +100,19 @@ public class SuspicionMeter : MonoBehaviour
 
     Triggered = true;
 
+    OnAggro.Invoke();
+
     // No more decay
     suspicionDecay = 0f;
 
     // Select some regular looking dudes to convert to aliens
-    NpcController[] npcs = FindObjectsOfType<NpcController>();
+    List<NpcController> npcs = FindObjectsOfType<NpcController>().ToList();
 
-    // Make sure no more aliens than npcs
-    if (alienCount > npcs.Length) alienCount = npcs.Length;
+    // If need be, create some more npcs
+    while (alienCount > npcs.Count)
+    {
+      npcs.Add(FindObjectOfType<NpcManager>().CreateNpc().GetComponent<NpcController>());
+    }
 
     // Sample some aliens
     List<int> alienIndices = new List<int>();

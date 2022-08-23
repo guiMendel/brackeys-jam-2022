@@ -46,11 +46,8 @@ public class SceneHandler : MonoBehaviour
 
     FindObjectOfType<UICurtain>().Close();
 
-    print("closing");
-
     yield return new WaitForSeconds(preRestartCurtainCloseTime);
 
     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    print("restarting");
   }
 }

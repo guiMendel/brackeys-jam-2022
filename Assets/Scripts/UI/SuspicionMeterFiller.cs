@@ -35,8 +35,6 @@ public class SuspicionMeterFiller : MonoBehaviour
 
     meterBar.ClearClassList();
 
-    // print((suspicionMeter.SuspicionRaise, yellowWarningThreshold));
-
     // Raise speed visual queue
     if (suspicionMeter.SuspicionRaise >= redWarningThreshold || suspicionMeter.Triggered)
     {
