@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -10,6 +11,9 @@ public class DialogueHandler : MonoBehaviour
 
   [Tooltip("How many seconds to wait between each character display")]
   public float writeSpeed = 0.2f;
+
+  [Tooltip("The initial dialogue to be displayed")]
+  public Dialogue initialDialogue;
 
 
   // === STATE
@@ -21,7 +25,7 @@ public class DialogueHandler : MonoBehaviour
   int displayedCharacters = 0;
 
   // The coroutine currently writing on screen
-  Coroutine writeCoroutine;
+  Coroutine displayCoroutine;
 
 
   // === REFS
@@ -39,24 +43,47 @@ public class DialogueHandler : MonoBehaviour
     EnsureNotNull.Objects(dialogue);
   }
 
+  private void Start()
+  {
+    if (activeDialogue == null && initialDialogue != null) SetDialogue(initialDialogue);
+  }
+
   public void SetDialogue(Dialogue dialogue)
   {
     activeDialogue = dialogue;
 
-    if (writeCoroutine != null) StopCoroutine(writeCoroutine);
+    if (displayCoroutine != null) StopCoroutine(displayCoroutine);
 
-    writeCoroutine = StartCoroutine(DisplayDialogue());
+    displayCoroutine = StartCoroutine(DisplayDialogue());
   }
 
   private IEnumerator DisplayDialogue()
   {
-    while (displayedCharacters++ < activeDialogue.text.Length)
-    {
-      dialogue.text = activeDialogue.text.Substring(0, displayedCharacters);
+    // Wait delay
+    if (activeDialogue.delay > 0f) yield return new WaitForSeconds(activeDialogue.delay);
 
-      yield return new WaitForSeconds(writeSpeed);
+    dialogue.text = "";
+
+    // For each word
+    foreach (string word in activeDialogue.text.Split(' '))
+    {
+      // Detect pauses
+      if (Regex.IsMatch(word, @"^#\d(.\d+)?$"))
+      {
+        yield return new WaitForSeconds(float.Parse(word.Substring(1)));
+
+        continue;
+      }
+
+      // Type it plus a space (if not the first word)
+      foreach (char c in $"{(dialogue.text.Length == 0 ? "" : " ")}{word}")
+      {
+        dialogue.text += c;
+
+        yield return new WaitForSeconds(writeSpeed);
+      }
     }
 
-    writeCoroutine = null;
+    displayCoroutine = null;
   }
 }

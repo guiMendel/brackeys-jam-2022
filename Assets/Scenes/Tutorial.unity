@@ -400,6 +400,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3560303425478029912, guid: 2be372d939536b54688387e424141331, type: 3}
+      propertyPath: initialDialogue
+      value: 
+      objectReference: {fileID: 11400000, guid: 427e47c025eb1a64483e18062340324f, type: 2}
     - target: {fileID: 3560303425478029913, guid: 2be372d939536b54688387e424141331, type: 3}
       propertyPath: m_RootOrder
       value: 6
