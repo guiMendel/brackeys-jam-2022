@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -34,28 +35,24 @@ public class AlienController : MonoBehaviour
 
   // === PROPERTIES
 
-  public GameObject Target { get; set; }
-
   // Whether is reloading
   public bool Reloading { get; private set; }
-
-  // Whether is in range to shoot the target
-  public bool InRange =>
-    Target == null ? false : Vector2.Distance(transform.position, Target.transform.position) <= shootRange;
 
 
   // === REFS
 
   Movement movement;
   NpcController npcController;
+  AlienTargetManager alienTargetManager;
 
 
   private void Awake()
   {
     movement = GetComponent<Movement>();
     npcController = GetComponent<NpcController>();
+    alienTargetManager = FindObjectOfType<AlienTargetManager>();
 
-    EnsureNotNull.Objects(movement, npcController);
+    EnsureNotNull.Objects(movement, npcController, alienTargetManager);
   }
 
   private void Start()
@@ -69,16 +66,33 @@ public class AlienController : MonoBehaviour
 
   private void Update()
   {
-    ChangeOffset();
+    GameObject target = GetTarget();
 
-    if (Target == null)
+    if (target == null)
     {
       npcController.enabled = true;
       return;
     }
 
-    if (InRange) Shoot();
-    else Chase();
+    if (InRange(target)) Shoot(target);
+    else Chase(target);
+  }
+
+  private GameObject GetTarget()
+  {
+    if (alienTargetManager.ActiveTargets.Count == 0) return null;
+
+    // Get closest target
+    return alienTargetManager
+      .ActiveTargets
+      .OrderBy(target => Vector2.Distance(target.transform.position, transform.position))
+      .ElementAt(0);
+  }
+
+  // Whether is in range to shoot the target
+  public bool InRange(GameObject target)
+  {
+    return target == null ? false : Vector2.Distance(transform.position, target.transform.position) <= shootRange;
   }
 
   private void ChangeOffset()
@@ -90,18 +104,21 @@ public class AlienController : MonoBehaviour
     );
   }
 
-  private void Chase()
+  private void Chase(GameObject target)
   {
+    // Change it's movement offset
+    ChangeOffset();
+
     // Stop wandering
     npcController.enabled = false;
 
-    Vector2 targetDirection = (Target.transform.position - transform.position).normalized;
+    Vector2 targetDirection = (target.transform.position - transform.position).normalized;
 
     // Set movement towards target
     movement.SetTargetMovement(targetDirection.Rotated(movementOffset));
   }
 
-  private void Shoot()
+  private void Shoot(GameObject target)
   {
     // If reloading, move around
     if (Reloading)
@@ -121,7 +138,7 @@ public class AlienController : MonoBehaviour
       laser, transform.position, Quaternion.identity, GameObject.Find("Projectiles")?.transform
     ).GetComponent<LaserController>();
 
-    newLaser.SetTarget(Target);
+    newLaser.SetTarget(target);
     newLaser.Owner = gameObject;
 
     // Reload

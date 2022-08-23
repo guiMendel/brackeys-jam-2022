@@ -239,9 +239,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shootRange: 4
-  offsetVariation: 10
-  maxOffset: 50
+  offsetVariation: 300
+  maxOffset: 120
   laser: {fileID: 2131953222989692154, guid: 9d3b6a32c460a8541b47e0f45cfb2b5e, type: 3}
+  warmupTime: {x: 0.4, y: 0.8}
   reloadTime: {x: 1.5, y: 2.5}
 --- !u!114 &-7878017163447939867
 MonoBehaviour:

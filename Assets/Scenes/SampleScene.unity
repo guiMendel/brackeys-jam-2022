@@ -797,8 +797,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   confinementBreakSuspicion: 45
   suspicionDecay: 25
-  alienCount: 4
-  alien: {fileID: 8464543620918312373, guid: defd1a018d9a4514b8f8797432b5d87a, type: 3}
   OnAggro:
     m_PersistentCalls:
       m_Calls: []
@@ -1097,6 +1095,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Asset: {fileID: -944628639613478452, guid: a560fa74a3787ee4db844f06a5c84fcc, type: 3}
   m_ActionId: 7607c7b6-cd76-4816-beef-bd0341cfe950
+--- !u!1 &1777050352
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1777050354}
+  - component: {fileID: 1777050353}
+  m_Layer: 0
+  m_Name: Alien Target Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1777050353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1777050352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1730eb691c60f5847acdafd41bf66cfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alienCount: 6
+  alien: {fileID: 8464543620918312373, guid: defd1a018d9a4514b8f8797432b5d87a, type: 3}
+--- !u!4 &1777050354
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1777050352}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.6086802, y: 0.18465103, z: 1.0381671}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1952605734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1415,6 +1459,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8050839299892597861, guid: 09560a18bebf1e74aa3277faca5911b8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050839299892597863, guid: 09560a18bebf1e74aa3277faca5911b8, type: 3}
+      propertyPath: npcCount
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8050839299892597863, guid: 09560a18bebf1e74aa3277faca5911b8, type: 3}

@@ -23,6 +23,7 @@ public class TrackedLifeRepeater : MonoBehaviour
 
   Movement movement;
   NpcManager npcManager;
+  AlienTargetManager alienTargetManager;
 
   public void SetLifeEntry(PlayerLifeTracker.LifeEntry lifeEntry)
   {
@@ -34,8 +35,9 @@ public class TrackedLifeRepeater : MonoBehaviour
   {
     movement = GetComponent<Movement>();
     npcManager = FindObjectOfType<NpcManager>();
+    alienTargetManager = FindObjectOfType<AlienTargetManager>();
 
-    EnsureNotNull.Objects(movement, npcManager);
+    EnsureNotNull.Objects(movement, npcManager, alienTargetManager);
   }
 
   private void Start() { AdvanceInputQueue(); }
@@ -55,7 +57,7 @@ public class TrackedLifeRepeater : MonoBehaviour
 
 
     // Place a regular npc in place of this one
-    npcManager.CreateNpcAt(transform.position);
+    alienTargetManager.SwitchTarget(gameObject, npcManager.CreateNpcAt(transform.position));
 
     gameObject.SetActive(false);
     Destroy(gameObject);
@@ -66,6 +68,9 @@ public class TrackedLifeRepeater : MonoBehaviour
     if (Time.timeSinceLevelLoad < LifeEntry.aggroTime || aggroTriggered) return;
 
     aggroTriggered = true;
+
+    // Set aggro
+    alienTargetManager.AddTarget(gameObject);
   }
 
   private void ExecuteInputs()

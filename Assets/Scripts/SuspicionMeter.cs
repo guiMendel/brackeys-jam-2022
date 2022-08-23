@@ -15,12 +15,6 @@ public class SuspicionMeter : MonoBehaviour
   [Tooltip("How much suspicion lowers each second")]
   public float suspicionDecay = 5f;
 
-  [Tooltip("How many aliens to spawn on aggro")]
-  public int alienCount = 6;
-
-  [Tooltip("Alien object to spawn")]
-  public GameObject alien;
-
   public UnityEvent OnAggro;
 
 
@@ -105,40 +99,7 @@ public class SuspicionMeter : MonoBehaviour
     // No more decay
     suspicionDecay = 0f;
 
-    // Select some regular looking dudes to convert to aliens
-    List<NpcController> npcs = FindObjectsOfType<NpcController>().ToList();
-
-    // If need be, create some more npcs
-    while (alienCount > npcs.Count)
-    {
-      npcs.Add(FindObjectOfType<NpcManager>().CreateNpc().GetComponent<NpcController>());
-    }
-
-    // Sample some aliens
-    List<int> alienIndices = new List<int>();
-
-    while (alienIndices.Count < alienCount)
-    {
-      int alienIndex = Random.Range(0, alienCount);
-
-      if (alienIndices.Contains(alienIndex) == false)
-      {
-        alienIndices.Add(alienIndex);
-        TurnIntoAlien(npcs[alienIndex]);
-      }
-    }
-  }
-
-  private void TurnIntoAlien(NpcController npc)
-  {
-    // Create alien where the npc is
-    GameObject newAlien = Instantiate(alien, npc.transform.position, npc.transform.rotation, npc.transform.parent);
-
-    // Remove the npc
-    npc.gameObject.SetActive(false);
-    Destroy(npc.gameObject);
-
-    // Give the alien a target
-    newAlien.GetComponent<AlienController>().Target = FindObjectOfType<PlayerController>().gameObject;
+    // Add player as target
+    FindObjectOfType<AlienTargetManager>().AddTarget(FindObjectOfType<PlayerController>().gameObject);
   }
 }
