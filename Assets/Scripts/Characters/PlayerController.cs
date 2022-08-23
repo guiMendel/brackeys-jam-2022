@@ -13,47 +13,26 @@ public class PlayerController : MonoBehaviour
   [Tooltip("How many seconds to wait before reloading on death")]
   public float deathRestartDelay = 3f;
 
-  [Tooltip("Acceleration when sprinting")]
-  public float sprintAcceleration = 13f;
-
-  [Tooltip("Max speed when sprinting")]
-  public float sprintMaxSpeed = 4.5f;
-
-
   public Event.Vector2 OnSpawnPlayer;
-  public Event.Vector2 OnPlayerInput;
-
-
-  // === STATE
-
-  float walkAcceleration;
-  float walkMaxSpeed;
-
-
-  // === PROPERTIES
-
-  // Whether is sprinting
-  public bool IsSprinting { get; private set; } = false;
+  public Event.Vector2 OnPlayerMove;
+  public Event.Bool OnPlayerSprint;
 
 
   // === REFS
 
-  Movement movement;
   LaserVulnerable laserVulnerable;
+  PlayerCharacter playerCharacter;
 
   private void Awake()
   {
     OnSpawnPlayer ??= new Event.Vector2();
-    OnPlayerInput ??= new Event.Vector2();
+    OnPlayerMove ??= new Event.Vector2();
+    OnPlayerSprint ??= new Event.Bool();
 
-    movement = GetComponent<Movement>();
+    playerCharacter = GetComponent<PlayerCharacter>();
     laserVulnerable = GetComponentInChildren<LaserVulnerable>();
 
-    EnsureNotNull.Objects(movement, laserVulnerable);
-
-    // Register initial movement config
-    walkAcceleration = movement.acceleration;
-    walkMaxSpeed = movement.maxSpeed;
+    EnsureNotNull.Objects(laserVulnerable, playerCharacter);
   }
 
   private void OnEnable()
@@ -95,27 +74,17 @@ public class PlayerController : MonoBehaviour
 
     Vector2 movementVector = callbackContext.ReadValue<Vector2>();
 
-    movement.SetTargetMovement(movementVector);
+    playerCharacter.Move(movementVector);
 
-    OnPlayerInput.Invoke(movementVector);
+    OnPlayerMove.Invoke(movementVector);
   }
 
   public void Sprint(InputAction.CallbackContext callbackContext)
   {
     if (callbackContext.started) return;
 
-    IsSprinting = callbackContext.performed;
+    playerCharacter.Sprint(callbackContext.performed);
 
-    // Adjust movement config
-    if (IsSprinting)
-    {
-      movement.acceleration = sprintAcceleration;
-      movement.maxSpeed = sprintMaxSpeed;
-    }
-    else
-    {
-      movement.acceleration = walkAcceleration;
-      movement.maxSpeed = walkMaxSpeed;
-    }
+    OnPlayerSprint.Invoke(callbackContext.performed);
   }
 }

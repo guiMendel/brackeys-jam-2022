@@ -8,4 +8,5 @@ using UnityEngine.EventSystems;
 namespace Event
 {
   [Serializable] public class Vector2 : UnityEvent<UnityEngine.Vector2> { }
+  [Serializable] public class Bool : UnityEvent<bool> { }
 }

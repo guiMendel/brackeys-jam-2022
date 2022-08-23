@@ -13,7 +13,7 @@ public class TrackedLifeRepeater : MonoBehaviour
   // === STATE
 
   // Next input entry to execute
-  PlayerLifeTracker.InputEntry? nextInputEntry = null;
+  PlayerLifeTracker.InputEntry nextInputEntry = null;
 
   // Whether already triggered aggro
   bool aggroTriggered = false;
@@ -21,7 +21,7 @@ public class TrackedLifeRepeater : MonoBehaviour
 
   // === REFS
 
-  Movement movement;
+  PlayerCharacter playerCharacter;
   NpcManager npcManager;
   AlienTargetManager alienTargetManager;
 
@@ -33,11 +33,11 @@ public class TrackedLifeRepeater : MonoBehaviour
 
   private void Awake()
   {
-    movement = GetComponent<Movement>();
+    playerCharacter = GetComponent<PlayerCharacter>();
     npcManager = FindObjectOfType<NpcManager>();
     alienTargetManager = FindObjectOfType<AlienTargetManager>();
 
-    EnsureNotNull.Objects(movement, npcManager, alienTargetManager);
+    EnsureNotNull.Objects(playerCharacter, npcManager, alienTargetManager);
   }
 
   private void Start() { AdvanceInputQueue(); }
@@ -76,10 +76,18 @@ public class TrackedLifeRepeater : MonoBehaviour
   private void ExecuteInputs()
   {
     // Check if it's time to execute this entry
-    if (nextInputEntry != null && Time.timeSinceLevelLoad >= nextInputEntry.Value.timeStamp)
+    if (nextInputEntry != null && Time.timeSinceLevelLoad >= nextInputEntry.timeStamp)
     {
       // Execute the input entry
-      movement.SetTargetMovement(nextInputEntry.Value.movementDirection);
+      if (nextInputEntry is PlayerLifeTracker.MovementInput)
+      {
+        playerCharacter.Move((nextInputEntry as PlayerLifeTracker.MovementInput).direction);
+      }
+
+      else
+      {
+        playerCharacter.Sprint((nextInputEntry as PlayerLifeTracker.SprintInput).toggle);
+      }
 
       // Advance queue
       AdvanceInputQueue();

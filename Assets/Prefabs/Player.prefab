@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 5179717209115902474}
   - component: {fileID: -1092515670685932520}
   - component: {fileID: -380891646891640602}
+  - component: {fileID: -5563711406499440224}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -182,7 +183,10 @@ MonoBehaviour:
   OnSpawnPlayer:
     m_PersistentCalls:
       m_Calls: []
-  OnPlayerInput:
+  OnPlayerMove:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPlayerSprint:
     m_PersistentCalls:
       m_Calls: []
 --- !u!50 &5179717209115902472
@@ -268,3 +272,17 @@ MonoBehaviour:
   OnEnterConfinement:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &-5563711406499440224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5179717209115902477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2509d6ed53bd0af47968b4fafdbd503f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprintAcceleration: 13
+  sprintMaxSpeed: 4.5

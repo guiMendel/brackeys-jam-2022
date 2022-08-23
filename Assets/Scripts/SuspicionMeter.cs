@@ -51,8 +51,9 @@ public class SuspicionMeter : MonoBehaviour
   // Speed at which the suspicion is raising this frame
   public float SuspicionRaise { get; private set; } = 0f;
 
-  bool PlayerSprinting => playerController != null &&
-    playerController.IsSprinting && playerController.GetComponent<Movement>().MovementDirection != Vector2.zero;
+  bool PlayerSprinting => playerController != null
+    && playerController.GetComponent<PlayerCharacter>().IsSprinting
+    && playerController.GetComponent<Movement>().MovementDirection != Vector2.zero;
 
 
   // === REFS
@@ -106,7 +107,7 @@ public class SuspicionMeter : MonoBehaviour
   {
     playerConfine.OnOutsideConfinement.AddListener(RaiseConfineSuspicion);
     playerConfine.OnEnterConfinement.AddListener(StopConfineRaising);
-    playerController.OnPlayerInput.AddListener(TrackInput);
+    playerController.OnPlayerMove.AddListener(TrackInput);
 
   }
 
@@ -114,7 +115,7 @@ public class SuspicionMeter : MonoBehaviour
   {
     playerConfine?.OnOutsideConfinement.RemoveListener(RaiseConfineSuspicion);
     playerConfine?.OnEnterConfinement.RemoveListener(StopConfineRaising);
-    playerController?.OnPlayerInput.RemoveListener(TrackInput);
+    playerController?.OnPlayerMove.RemoveListener(TrackInput);
   }
 
   private void TrackInput(Vector2 direction)

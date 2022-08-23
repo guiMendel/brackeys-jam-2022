@@ -89,6 +89,7 @@ GameObject:
   - component: {fileID: 8464543620918312369}
   - component: {fileID: 8464543620918312370}
   - component: {fileID: 1440629787978504825}
+  - component: {fileID: 8014436061447483611}
   m_Layer: 6
   m_Name: Tracked Life NPC
   m_TagString: Untagged
@@ -237,3 +238,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7632f002b4f428844bbe98d70bcfa835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8014436061447483611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8464543620918312373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2509d6ed53bd0af47968b4fafdbd503f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprintAcceleration: 13
+  sprintMaxSpeed: 4.5

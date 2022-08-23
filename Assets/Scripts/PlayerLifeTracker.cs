@@ -8,18 +8,36 @@ using UnityEngine.SceneManagement;
 public class PlayerLifeTracker : MonoBehaviour
 {
   // Defines an input entry
-  public struct InputEntry
+  public class InputEntry
   {
     // When this input happened
     public float timeStamp;
 
-    // What the input was
-    public Vector2 movementDirection;
-
-    public InputEntry(float timeStamp, Vector2 movementDirection)
+    public InputEntry(float timeStamp)
     {
       this.timeStamp = timeStamp;
-      this.movementDirection = movementDirection;
+    }
+  }
+
+  public class MovementInput : InputEntry
+  {
+    // Direction
+    public Vector2 direction;
+
+    public MovementInput(float timeStamp, Vector2 direction) : base(timeStamp)
+    {
+      this.direction = direction;
+    }
+  }
+
+  public class SprintInput : InputEntry
+  {
+    // Whether to toggle it on or off
+    public bool toggle;
+
+    public SprintInput(float timeStamp, bool toggle) : base(timeStamp)
+    {
+      this.toggle = toggle;
     }
   }
 
@@ -47,9 +65,9 @@ public class PlayerLifeTracker : MonoBehaviour
       aggroTime = deathTime = 0f;
     }
 
-    public void RegisterInput(float timeStamp, Vector2 movementDirection)
+    public void RegisterInput(InputEntry entry)
     {
-      inputEntries.Enqueue(new InputEntry(timeStamp, movementDirection));
+      inputEntries.Enqueue(entry);
     }
 
     static public LifeEntry Copy(LifeEntry lifeEntry)
@@ -123,7 +141,8 @@ public class PlayerLifeTracker : MonoBehaviour
     player?.OnSpawnPlayer.RemoveListener(StartNewLifeEntry);
 
     // Listen to it's input
-    player?.OnPlayerInput.RemoveListener(RegisterInput);
+    player?.OnPlayerMove.RemoveListener(RegisterMove);
+    player?.OnPlayerSprint.RemoveListener(RegisterSprint);
 
     // Listen for aggro
     FindObjectOfType<SuspicionMeter>()?.OnAggro.RemoveListener(RegisterAggro);
@@ -148,7 +167,8 @@ public class PlayerLifeTracker : MonoBehaviour
     player.OnSpawnPlayer.AddListener(StartNewLifeEntry);
 
     // Listen to it's input
-    player.OnPlayerInput.AddListener(RegisterInput);
+    player.OnPlayerMove.AddListener(RegisterMove);
+    player.OnPlayerSprint.AddListener(RegisterSprint);
 
     // Listen for aggro
     FindObjectOfType<SuspicionMeter>().OnAggro.AddListener(RegisterAggro);
@@ -167,9 +187,14 @@ public class PlayerLifeTracker : MonoBehaviour
     currentLifeEntry = new LifeEntry(startingPosition);
   }
 
-  private void RegisterInput(Vector2 movementDirection)
+  private void RegisterMove(Vector2 movementDirection)
   {
-    currentLifeEntry.RegisterInput(Time.timeSinceLevelLoad, movementDirection);
+    currentLifeEntry.RegisterInput(new MovementInput(Time.timeSinceLevelLoad, movementDirection));
+  }
+
+  private void RegisterSprint(bool toggle)
+  {
+    currentLifeEntry.RegisterInput(new SprintInput(Time.timeSinceLevelLoad, toggle));
   }
 
   private void RegisterAggro()
