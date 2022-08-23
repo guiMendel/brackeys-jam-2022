@@ -1,19 +1,19 @@
 .red-warning {
-    border-left-color: rgba(231, 6, 0, 255);
-    border-right-color: rgba(231, 6, 0, 255);
-    border-top-color: rgba(231, 6, 0, 255);
-    border-bottom-color: rgba(231, 6, 0, 255);
+    border-left-color: rgb(231, 6, 0);
+    border-right-color: rgb(231, 6, 0);
+    border-top-color: rgb(231, 6, 0);
+    border-bottom-color: rgb(231, 6, 0);
 }
 
 .yellow-warning {
-    border-left-color: rgba(224, 167, 7, 255);
-    border-right-color: rgba(224, 167, 7, 255);
-    border-top-color: rgba(224, 167, 7, 255);
-    border-bottom-color: rgba(224, 167, 7, 255);
+    border-left-color: rgb(224, 167, 7);
+    border-right-color: rgb(224, 167, 7);
+    border-top-color: rgb(224, 167, 7);
+    border-bottom-color: rgb(224, 167, 7);
 }
 
 .yellow-warning #overlay {
-    background-color: rgba(224, 167, 7, 255);
+    background-color: rgb(224, 167, 7);
 }
 
 .overlay {
@@ -25,5 +25,5 @@
 }
 
 .red-warning #overlay {
-    background-color: rgba(231, 6, 0, 255);
+    background-color: rgb(231, 6, 0);
 }

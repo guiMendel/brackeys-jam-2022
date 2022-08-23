@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a6a01461a8db624aa899ac2a97fd5da, type: 3}
   m_Name: 2Movement
   m_EditorClassIdentifier: 
-  text: Try moving around with the WASD keys.
+  text: Try moving around with the WASD keys. #10 I'm waiting...
   delay: 0
   followUp: {fileID: 0}
   followUpDelay: 1

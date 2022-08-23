@@ -75,7 +75,7 @@ public class DialogueHandler : MonoBehaviour
       foreach (string word in activeDialogue.text.Split(' '))
       {
         // Detect pauses
-        if (Regex.IsMatch(word, @"^#\d(.\d+)?$"))
+        if (Regex.IsMatch(word, @"^#\d+(.\d+)?$"))
         {
           yield return new WaitForSeconds(float.Parse(word.Substring(1)));
 
