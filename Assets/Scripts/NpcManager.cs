@@ -33,8 +33,8 @@ public class NpcManager : MonoBehaviour
   // Start is called before the first frame update
   void Start()
   {
-    // Spawn regular npcs (discount the tracked life npcs)
-    for (int i = 0; i < npcCount - trackedLifeNpcs.Count; i++) CreateNpc();
+    // Spawn regular npcs
+    for (int i = 0; i < npcCount; i++) CreateNpc();
 
     // Spawn tracked life npcs
     foreach (var trackedNpc in trackedLifeNpcs)
