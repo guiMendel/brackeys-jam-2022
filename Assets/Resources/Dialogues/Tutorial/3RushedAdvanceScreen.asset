@@ -12,12 +12,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a6a01461a8db624aa899ac2a97fd5da, type: 3}
   m_Name: 3RushedAdvanceScreen
   m_EditorClassIdentifier: 
-  text: 'Oh, okay. I see you''re familiar with the <u>WASD</u> keys.
+  text: 'Oh, okay. I see you remember how to use the <u>WASD</u> keys.
 
-    In that
-    case, just proceed to the exit to the right.'
+    Now just
+    walk all the way to the right #0.2 and let''s go somewhere a little more interesting.'
   delay: 0.5
-  speedModifier: 1
   maxDuration: 0
+  speedModifier: 1
+  fontSizeModifier: 1
+  skippable: 0
   followUp: {fileID: 0}
   followUpDelay: 1
+  OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStop:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFinish:
+    m_PersistentCalls:
+      m_Calls: []
+  OnInterrupt:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFollowUp:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLeave:
+    m_PersistentCalls:
+      m_Calls: []

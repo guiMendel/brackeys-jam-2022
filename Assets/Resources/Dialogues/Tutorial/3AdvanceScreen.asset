@@ -12,10 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a6a01461a8db624aa899ac2a97fd5da, type: 3}
   m_Name: 3AdvanceScreen
   m_EditorClassIdentifier: 
-  text: That's it! #0.5 Now #0.1 walk all the way to the right #0.2 and let's get
-    out of here.
+  text: That's it! #0.5 Now #0.1 walk all the way to the right #0.2 and let's go
+    somewhere a little more interesting.
   delay: 0.5
-  speedModifier: 1
   maxDuration: 10
+  speedModifier: 1
+  fontSizeModifier: 1
+  skippable: 0
   followUp: {fileID: 0}
   followUpDelay: 1
+  OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStop:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFinish:
+    m_PersistentCalls:
+      m_Calls: []
+  OnInterrupt:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFollowUp:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLeave:
+    m_PersistentCalls:
+      m_Calls: []
