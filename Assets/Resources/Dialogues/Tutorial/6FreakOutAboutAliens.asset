@@ -10,19 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a6a01461a8db624aa899ac2a97fd5da, type: 3}
-  m_Name: 3RushedAdvanceScreen
+  m_Name: 6FreakOutAboutAliens
   m_EditorClassIdentifier: 
-  text: 'Oh, okay. I see we remember how to use the <u>WASD</u> keys.
-
-    Now just
-    walk all the way to the right #0.2 and let''s go somewhere a little more interesting.'
-  delay: 0.5
+  text: Oh s*** I totally forgot about that
+  delay: 0
   maxDuration: 0
-  speedModifier: 1
-  fontSizeModifier: 1
+  speedModifier: 2.5
+  fontSizeModifier: 0.8
   skippable: 0
-  followUp: {fileID: 0}
-  followUpDelay: 1
+  followUp: {fileID: 11400000, guid: d936b5d872d8c424d95ab41fcc3ead2a, type: 2}
+  followUpDelay: 0.5
   OnStart:
     m_PersistentCalls:
       m_Calls: []

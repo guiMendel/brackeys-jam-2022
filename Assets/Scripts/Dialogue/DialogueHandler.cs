@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class DialogueHandler : MonoBehaviour
@@ -40,9 +41,21 @@ public class DialogueHandler : MonoBehaviour
   // List of dialogues that were used
   List<Dialogue> usedDialogues;
 
+  string _displayedText;
 
 
   // === PROPERTIES
+
+  // Text that is currently show on screen
+  string DisplayedText
+  {
+    get { return _displayedText; }
+    set
+    {
+      _displayedText = value;
+      dialogue.text = value;
+    }
+  }
 
   // The currently displayed dialogue
   public Dialogue ActiveDialogue
@@ -54,13 +67,13 @@ public class DialogueHandler : MonoBehaviour
       _activeDialogue = value;
       if (value != null) usedDialogues.Add(_activeDialogue);
     }
-
   }
 
 
   // === REFS
 
   Label dialogue;
+  static DialogueHandler instance;
 
 
   // === INTERFACE
@@ -86,7 +99,7 @@ public class DialogueHandler : MonoBehaviour
       displayCoroutine = null;
     }
 
-    dialogue.text = "";
+    DisplayedText = "";
   }
 
   public void Skip(bool setInterrupted = true)
@@ -120,15 +133,39 @@ public class DialogueHandler : MonoBehaviour
 
   // === INTERNAL
 
+  private bool SingletonCheck()
+  {
+    if (instance != null && instance != this)
+    {
+      // If there's already an instance, stop
+      gameObject.SetActive(false);
+      Destroy(gameObject);
+
+      return false;
+    }
+
+    instance = this;
+    DontDestroyOnLoad(gameObject);
+
+    return true;
+  }
+
   private void Awake()
   {
+    if (SingletonCheck() == false) return;
+
     usedDialogues = new List<Dialogue>();
+    GetDialogueBox();
+  }
+
+  private void GetDialogueBox()
+  {
     dialogue = FindObjectOfType<UIDocument>().rootVisualElement.Q<Label>("dialogue");
 
-    // Empty it
-    dialogue.text = "";
-
     EnsureNotNull.Objects(dialogue);
+
+    // Empty it
+    DisplayedText = "";
   }
 
   private void Start()
@@ -136,9 +173,26 @@ public class DialogueHandler : MonoBehaviour
     if (ActiveDialogue == null && initialDialogue != null) SetDialogue(initialDialogue);
   }
 
+  private void OnEnable()
+  {
+    SceneManager.sceneLoaded += OnSceneLoaded;
+  }
+
   private void OnDisable()
   {
-    foreach (var dialogue in usedDialogues) dialogue.Reset();
+    if (usedDialogues != null) foreach (var dialogue in usedDialogues) dialogue.Reset();
+    SceneManager.sceneLoaded -= OnSceneLoaded;
+  }
+
+  private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+  {
+    // Get what was displayed
+    string screenText = DisplayedText;
+
+    GetDialogueBox();
+
+    // Put it back there
+    DisplayedText = screenText;
   }
 
   private IEnumerator DisplayDialogue()
@@ -152,7 +206,7 @@ public class DialogueHandler : MonoBehaviour
       if (ActiveDialogue.delay > 0f) yield return new WaitForSeconds(ActiveDialogue.delay);
 
       // Restart box
-      dialogue.text = "";
+      DisplayedText = "";
 
       // Apply style
       ApplyDialogueStyle();
@@ -198,11 +252,11 @@ public class DialogueHandler : MonoBehaviour
           if (c == '\n')
           {
             yield return new WaitForSeconds(newLineDelay);
-            dialogue.text = "";
+            DisplayedText = "";
             continue;
           }
 
-          dialogue.text += c;
+          DisplayedText += c;
 
           // Detect special characters
           if (c == '<') writingSpecialCharacters = true;
@@ -228,7 +282,7 @@ public class DialogueHandler : MonoBehaviour
       if (ActiveDialogue.maxDuration > 0f)
       {
         yield return new WaitForSeconds(ActiveDialogue.maxDuration);
-        dialogue.text = "";
+        DisplayedText = "";
         ActiveDialogue.RegisterLeave();
       }
 

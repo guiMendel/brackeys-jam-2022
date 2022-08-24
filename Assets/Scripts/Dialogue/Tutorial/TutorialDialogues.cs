@@ -28,6 +28,7 @@ public class TutorialDialogues : MonoBehaviour
   Dialogue newScreen;
   Dialogue rushedNewScreen;
   Dialogue pullLever;
+  Dialogue freakOut;
 
 
   protected void Awake()
@@ -44,11 +45,12 @@ public class TutorialDialogues : MonoBehaviour
     newScreen = handler.Load("Tutorial/4NewScreen");
     rushedNewScreen = handler.Load("Tutorial/4RushedNewScreen");
     pullLever = handler.Load("Tutorial/5PullLever");
+    freakOut = handler.Load("Tutorial/6FreakOutAboutAliens");
 
     EnsureNotNull.Objects(
       handler, playerController, advanceScreen, movement,
       rushedAdvanceScreen, intro, screen2Transition, newScreen, pullLever,
-      suspicionMeter, meterFiller
+      suspicionMeter, meterFiller, freakOut
     );
   }
 
@@ -66,6 +68,7 @@ public class TutorialDialogues : MonoBehaviour
     intro.OnLeave.AddListener(StartTutorial);
     screen2Transition.OnTransitionStart.AddListener(TransitionDialogue);
     pullLever.OnStart.AddListener(SetUpLeverBit);
+    suspicionMeter.OnAggro.AddListener(FreakOutDialogue);
   }
 
   private void OnDisable()
@@ -73,6 +76,14 @@ public class TutorialDialogues : MonoBehaviour
     intro.OnLeave.RemoveListener(StartTutorial);
     screen2Transition.OnTransitionStart.RemoveListener(TransitionDialogue);
     pullLever.OnStart.RemoveListener(SetUpLeverBit);
+    suspicionMeter.OnAggro.RemoveListener(FreakOutDialogue);
+  }
+
+  private void FreakOutDialogue()
+  {
+    handler.SetDialogue(freakOut);
+
+    suspicionMeter.OnAggro.RemoveListener(FreakOutDialogue);
   }
 
   private void SetUpLeverBit()

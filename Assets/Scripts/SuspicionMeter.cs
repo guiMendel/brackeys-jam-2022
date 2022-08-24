@@ -25,6 +25,7 @@ public class SuspicionMeter : MonoBehaviour
   [Tooltip("How much suspicion is raised each second the player is sprinting")]
   public float sprintSuspicion = 10f;
 
+  [Tooltip("Raised when the aliens aggro to the player character (not the player trackers)")]
   public UnityEvent OnAggro;
 
 

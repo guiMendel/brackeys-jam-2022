@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a6a01461a8db624aa899ac2a97fd5da, type: 3}
   m_Name: 4RushedNewScreen
   m_EditorClassIdentifier: 
-  text: 'Well someone''s in a hurry! Don''t have time for your good ol'' mind voice,
+  text: 'Well someone''s in a hurry! Don''t have time for your good ol'' inner self,
     do you?
 
     There, have some friends then. You are not alone anymore!
@@ -25,7 +25,7 @@ MonoBehaviour:
   speedModifier: 2
   fontSizeModifier: 1
   skippable: 1
-  followUp: {fileID: 11400000, guid: 9c601da0dd6e4cf4591c52448456d442, type: 2}
+  followUp: {fileID: 11400000, guid: fb596c1f7a59a89488baaf99d5af92fa, type: 2}
   followUpDelay: 2
   OnStart:
     m_PersistentCalls:
