@@ -10,9 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a6a01461a8db624aa899ac2a97fd5da, type: 3}
-  m_Name: 2Movement
+  m_Name: 3AdvanceScreen
   m_EditorClassIdentifier: 
-  text: Try moving around with the WASD keys. #10 I'm waiting...
-  delay: 0
+  text: That's it! #0.5 Now #0.1 walk all the way to the right #0.2 and let's get
+    out of here.
+  delay: 0.5
+  speedModifier: 1
+  maxDuration: 10
   followUp: {fileID: 0}
   followUpDelay: 1

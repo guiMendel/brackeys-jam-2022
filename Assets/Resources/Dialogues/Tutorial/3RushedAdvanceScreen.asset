@@ -10,9 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a6a01461a8db624aa899ac2a97fd5da, type: 3}
-  m_Name: 1Intro
+  m_Name: 3RushedAdvanceScreen
   m_EditorClassIdentifier: 
-  text: Hey, #0.2 you! #0.6 Are you lost? #0.6 What are you standing there for?
-  delay: 1
-  followUp: {fileID: 11400000, guid: a538c98c6e4123347a4a58bc5439c7bd, type: 2}
-  followUpDelay: 2
+  text: 'Oh, okay. I see you''re familiar with the <u>WASD</u> keys.
+
+    In that
+    case, just proceed to the exit to the right.'
+  delay: 0.5
+  speedModifier: 1
+  maxDuration: 0
+  followUp: {fileID: 0}
+  followUpDelay: 1

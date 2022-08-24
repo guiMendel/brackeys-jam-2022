@@ -8,6 +8,9 @@ public class UICurtain : MonoBehaviour
 {
   // === PARAMS
 
+  [Tooltip("Automatically open curtain on start")]
+  public bool openOnLoad = true;
+
   public float accelerationDerivative = 10f;
 
   public float initialAcceleration = 2f;
@@ -17,6 +20,15 @@ public class UICurtain : MonoBehaviour
 
   float speed = 0f;
   float acceleration = 0f;
+
+
+  // === PROPERTIES
+
+  float Position
+  {
+    get { return curtain.style.left.value.value; }
+    set { curtain.style.left = new Length(Mathf.Clamp(value, -100, 100), LengthUnit.Percent); }
+  }
 
 
   // === REFS
@@ -33,17 +45,16 @@ public class UICurtain : MonoBehaviour
   {
     if (speed == 0) return;
 
-    float newLeft = Mathf.Clamp(
-      curtain.style.left.value.value + speed * Time.deltaTime, -100, 100
-    );
-
-    curtain.style.left = new Length(newLeft, LengthUnit.Percent);
+    Position = Position + speed * Time.deltaTime;
   }
 
   private void Start()
   {
+    // Have it initially cover the screen
+    Position = 0f;
+
     // Remove curtain
-    Open();
+    if (openOnLoad) Open();
   }
 
   public void Close() { StartCoroutine(CloseCoroutine()); }
@@ -51,12 +62,12 @@ public class UICurtain : MonoBehaviour
 
   private IEnumerator OpenCoroutine()
   {
-    curtain.style.left = 0f;
+    Position = 0f;
 
     acceleration = initialAcceleration;
     speed = 0f;
 
-    while (curtain.style.left.value.value > -100)
+    while (Position > -100)
     {
       acceleration += accelerationDerivative * Time.deltaTime;
       speed -= acceleration * Time.deltaTime;
@@ -65,17 +76,17 @@ public class UICurtain : MonoBehaviour
     }
 
     speed = 0f;
-    curtain.style.left = new Length(-100, LengthUnit.Percent);
+    Position = -100f;
   }
 
   private IEnumerator CloseCoroutine()
   {
-    curtain.style.left = new Length(100, LengthUnit.Percent);
+    Position = 100f;
 
     acceleration = initialAcceleration;
     speed = 0f;
 
-    while (curtain.style.left.value.value > 0)
+    while (Position > 0)
     {
       acceleration += accelerationDerivative * Time.deltaTime;
       speed -= acceleration * Time.deltaTime;
@@ -84,7 +95,7 @@ public class UICurtain : MonoBehaviour
     }
 
     speed = 0f;
-    curtain.style.left = new Length(0f);
+    Position = 0f;
   }
 
 }

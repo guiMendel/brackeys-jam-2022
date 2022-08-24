@@ -13,6 +13,12 @@ public class PlayerController : MonoBehaviour
   [Tooltip("How many seconds to wait before reloading on death")]
   public float deathRestartDelay = 3f;
 
+  [Tooltip("Disables player movement")]
+  public bool disableMovement = false;
+
+  [Tooltip("Disables sprinting")]
+  public bool disableSprinting = false;
+
   public Event.Vector2 OnSpawnPlayer;
   public Event.Vector2 OnPlayerMove;
   public Event.Bool OnPlayerSprint;
@@ -74,7 +80,7 @@ public class PlayerController : MonoBehaviour
 
   public void Move(InputAction.CallbackContext callbackContext)
   {
-    if (callbackContext.started) return;
+    if (callbackContext.started || disableMovement) return;
 
     Vector2 movementVector = callbackContext.ReadValue<Vector2>();
 
@@ -85,7 +91,7 @@ public class PlayerController : MonoBehaviour
 
   public void Sprint(InputAction.CallbackContext callbackContext)
   {
-    if (callbackContext.started) return;
+    if (callbackContext.started || disableSprinting) return;
 
     playerCharacter.Sprint(callbackContext.performed);
 
