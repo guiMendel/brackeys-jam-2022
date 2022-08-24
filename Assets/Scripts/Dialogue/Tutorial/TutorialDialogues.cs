@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TutorialDialogues : MonoBehaviour
 {
@@ -69,6 +70,7 @@ public class TutorialDialogues : MonoBehaviour
     screen2Transition.OnTransitionStart.AddListener(TransitionDialogue);
     pullLever.OnStart.AddListener(SetUpLeverBit);
     suspicionMeter.OnAggro.AddListener(FreakOutDialogue);
+    SceneManager.sceneLoaded += OnSceneLoaded;
   }
 
   private void OnDisable()
@@ -77,6 +79,13 @@ public class TutorialDialogues : MonoBehaviour
     screen2Transition.OnTransitionStart.RemoveListener(TransitionDialogue);
     pullLever.OnStart.RemoveListener(SetUpLeverBit);
     suspicionMeter.OnAggro.RemoveListener(FreakOutDialogue);
+    SceneManager.sceneLoaded -= OnSceneLoaded;
+  }
+
+  private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+  {
+    // After first screen, open curtains on scene load
+    FindObjectOfType<UICurtain>().openOnLoad = true;
   }
 
   private void FreakOutDialogue()

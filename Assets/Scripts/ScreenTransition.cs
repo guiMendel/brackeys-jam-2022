@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class ScreenTransition : MonoBehaviour
 {
@@ -17,6 +18,12 @@ public class ScreenTransition : MonoBehaviour
 
   [Tooltip("Snap distance")]
   public float snapDistance = 0.05f;
+
+  [Tooltip("Whether to set the destinations as the new spawn points")]
+  public bool persistAsSpawnPoints;
+
+  [Tooltip("Whether to erase tracked player lives on transition")]
+  public bool eraseTrackedLives;
 
   public UnityEvent OnTransitionStart;
   public UnityEvent OnTransitionEnd;
@@ -77,7 +84,20 @@ public class ScreenTransition : MonoBehaviour
 
     OnTransitionEnd.Invoke();
 
+    if (persistAsSpawnPoints) PersistSpawnPoints(characterDestination.position, cameraDestination.position);
+    if (eraseTrackedLives) EraseTrackedLives();
+
     transitionCoroutine = null;
+  }
+
+  private void EraseTrackedLives()
+  {
+    FindObjectOfType<PlayerLifeTracker>().EraseEntries();
+  }
+
+  private void PersistSpawnPoints(Vector3 player, Vector3 camera)
+  {
+    FindObjectOfType<SceneHandler>().SetSpawnPoints(player, camera);
   }
 
   private bool CheckDistance(Movement movable, Vector2 destination)

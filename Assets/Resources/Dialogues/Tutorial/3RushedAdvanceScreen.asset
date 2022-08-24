@@ -14,11 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: 'Oh, okay. I see we remember how to use the <u>WASD</u> keys.
 
-    Now just
-    walk all the way to the right #0.2 and let''s go somewhere a little more interesting.'
+    By the
+    way, have I introduced myself? Hi, I''m you! And we are currently inside our
+    minds, trying to wake up from our crisis.
+
+    Now just walk all the way to the
+    right #0.2 and let''s go somewhere a little more interesting.'
   delay: 0.5
   maxDuration: 0
-  speedModifier: 1
+  speedModifier: 1.2
   fontSizeModifier: 1
   skippable: 0
   followUp: {fileID: 0}

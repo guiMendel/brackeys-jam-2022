@@ -16,7 +16,7 @@ MonoBehaviour:
   delay: 0
   maxDuration: 0
   speedModifier: 2.5
-  fontSizeModifier: 0.8
+  fontSizeModifier: 0.6
   skippable: 0
   followUp: {fileID: 11400000, guid: d936b5d872d8c424d95ab41fcc3ead2a, type: 2}
   followUpDelay: 0.5

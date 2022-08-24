@@ -32,6 +32,30 @@ public class PlayerController : MonoBehaviour
   LaserVulnerable laserVulnerable;
   PlayerCharacter playerCharacter;
 
+
+  // === INTERFACE
+
+  public void Move(InputAction.CallbackContext callbackContext)
+  {
+    if (callbackContext.started || disableInput || disableMovement) return;
+
+    Vector2 movementVector = callbackContext.ReadValue<Vector2>();
+
+    playerCharacter.Move(movementVector);
+
+    OnPlayerMove.Invoke(movementVector);
+  }
+
+  public void Sprint(InputAction.CallbackContext callbackContext)
+  {
+    if (callbackContext.started || disableInput || disableSprinting) return;
+
+    playerCharacter.Sprint(callbackContext.performed);
+
+    OnPlayerSprint.Invoke(callbackContext.performed);
+  }
+
+
   private void Awake()
   {
     OnSpawnPlayer ??= new Event.Vector2();
@@ -79,25 +103,5 @@ public class PlayerController : MonoBehaviour
         initialArea.bounds.min.y + ownCollider.bounds.extents.y, initialArea.bounds.max.y - ownCollider.bounds.extents.y
       ) + transform.position.y - ownCollider.bounds.center.y
     );
-  }
-
-  public void Move(InputAction.CallbackContext callbackContext)
-  {
-    if (callbackContext.started || disableInput || disableMovement) return;
-
-    Vector2 movementVector = callbackContext.ReadValue<Vector2>();
-
-    playerCharacter.Move(movementVector);
-
-    OnPlayerMove.Invoke(movementVector);
-  }
-
-  public void Sprint(InputAction.CallbackContext callbackContext)
-  {
-    if (callbackContext.started || disableInput || disableSprinting) return;
-
-    playerCharacter.Sprint(callbackContext.performed);
-
-    OnPlayerSprint.Invoke(callbackContext.performed);
   }
 }

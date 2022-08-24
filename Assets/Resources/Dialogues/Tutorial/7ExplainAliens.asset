@@ -15,21 +15,18 @@ MonoBehaviour:
   text: 'Uhhh #0.7 it''s okay I swear, lemme explain. #0.3 <u>Don''t</u> freak out.
 
     So,
-    there''s these aliens. We don''t know why, but they really want to kill us.
+    there''s these aliens. We don''t know why, but they really #0.5 <u>really</u>
+    want to kill us.
 
-    By
-    the way, have I introduced myself? Hi, I''m you! And we are currently inside
-    our minds, trying to wake up from our crisis.
+    They are <u>infiltrated</u> among us regular humans, and
+    reveal themselves when they recognize us. So <u>try not to get spotted</u>.
 
-    Okay so back to the aliens.
-    They are <u>infiltrated</u> among us regular humans, and reveal themselves when
-    they recognize us. So <u>try not to get spotted</u>.
+    In
+    this simulation, they''ll start suspecting you once you cross the red lines.
 
-    In this simulation,
-    they''ll start suspecting you once you cross the red lines.
-
-    Here, remember
-    we have this device that shows us <u>how close they are to spotting us</u>.'
+    Here,
+    remember we have this device that shows us <u>how close they are to spotting
+    us</u>.'
   delay: 0
   maxDuration: 0
   speedModifier: 1.3

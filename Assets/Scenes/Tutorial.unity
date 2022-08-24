@@ -364,6 +364,8 @@ MonoBehaviour:
   characterDestination: {fileID: 737928179}
   cameraDestination: {fileID: 1609954794}
   snapDistance: 0.05
+  persistAsSpawnPoints: 1
+  eraseTrackedLives: 1
   OnTransitionStart:
     m_PersistentCalls:
       m_Calls: []

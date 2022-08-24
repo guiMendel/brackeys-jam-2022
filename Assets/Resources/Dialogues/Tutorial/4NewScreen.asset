@@ -24,7 +24,7 @@ MonoBehaviour:
   speedModifier: 1
   fontSizeModifier: 1
   skippable: 1
-  followUp: {fileID: 11400000, guid: 9c601da0dd6e4cf4591c52448456d442, type: 2}
+  followUp: {fileID: 11400000, guid: fb596c1f7a59a89488baaf99d5af92fa, type: 2}
   followUpDelay: 2
   OnStart:
     m_PersistentCalls:

@@ -92,10 +92,21 @@ public class PlayerLifeTracker : MonoBehaviour
   // Life entry being currently recorded
   LifeEntry currentLifeEntry;
 
+  bool disregardCurrentLife = false;
+
 
   // === REFS
 
   static PlayerLifeTracker instance;
+
+
+  // === INTERFACE
+
+  public void EraseEntries()
+  {
+    lifeEntries.Clear();
+    disregardCurrentLife = true;
+  }
 
 
   private void SingletonCheck()
@@ -184,28 +195,41 @@ public class PlayerLifeTracker : MonoBehaviour
 
   private void StartNewLifeEntry(Vector2 startingPosition)
   {
+    if (disregardCurrentLife) return;
+
     currentLifeEntry = new LifeEntry(startingPosition);
   }
 
   private void RegisterMove(Vector2 movementDirection)
   {
+    if (disregardCurrentLife) return;
+
     currentLifeEntry.RegisterInput(new MovementInput(Time.timeSinceLevelLoad, movementDirection));
   }
 
   private void RegisterSprint(bool toggle)
   {
+    if (disregardCurrentLife) return;
+
     currentLifeEntry.RegisterInput(new SprintInput(Time.timeSinceLevelLoad, toggle));
   }
 
   private void RegisterAggro()
   {
+    if (disregardCurrentLife) return;
+
     currentLifeEntry.aggroTime = Time.timeSinceLevelLoad;
   }
 
   private void FinishLifeEntry()
   {
-    currentLifeEntry.deathTime = Time.timeSinceLevelLoad;
+    if (disregardCurrentLife == false)
+    {
+      currentLifeEntry.deathTime = Time.timeSinceLevelLoad;
 
-    lifeEntries.Add(currentLifeEntry);
+      lifeEntries.Add(currentLifeEntry);
+    }
+
+    disregardCurrentLife = false;
   }
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a6a01461a8db624aa899ac2a97fd5da, type: 3}
   m_Name: 2Movement
   m_EditorClassIdentifier: 
-  text: Try moving around with the <u>WASD</u> keys. #F #10 We don't have all day
+  text: Try moving around with the #F <u>WASD</u> keys. #10 We don't have all day
     long, buddy...
   delay: 0.5
   maxDuration: 0

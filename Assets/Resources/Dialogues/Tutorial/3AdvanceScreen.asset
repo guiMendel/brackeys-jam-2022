@@ -12,8 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a6a01461a8db624aa899ac2a97fd5da, type: 3}
   m_Name: 3AdvanceScreen
   m_EditorClassIdentifier: 
-  text: That's it! #0.5 Now #0.1 walk all the way to the right #0.2 and let's go
-    somewhere a little more interesting.
+  text: 'That''s it!
+
+    By the way, have I introduced myself? Hi, I''m you! And
+    we are currently inside our minds, trying to wake up from our crisis.
+
+    Now
+    #0.1 walk all the way to the right #0.2 and let''s go somewhere a little more
+    interesting.'
   delay: 0.5
   maxDuration: 10
   speedModifier: 1
