@@ -19,6 +19,9 @@ public class PlayerController : MonoBehaviour
   [Tooltip("Disables sprinting")]
   public bool disableSprinting = false;
 
+  [Tooltip("Disables all input")]
+  public bool disableInput = false;
+
   public Event.Vector2 OnSpawnPlayer;
   public Event.Vector2 OnPlayerMove;
   public Event.Bool OnPlayerSprint;
@@ -80,7 +83,7 @@ public class PlayerController : MonoBehaviour
 
   public void Move(InputAction.CallbackContext callbackContext)
   {
-    if (callbackContext.started || disableMovement) return;
+    if (callbackContext.started || disableInput || disableMovement) return;
 
     Vector2 movementVector = callbackContext.ReadValue<Vector2>();
 
@@ -91,7 +94,7 @@ public class PlayerController : MonoBehaviour
 
   public void Sprint(InputAction.CallbackContext callbackContext)
   {
-    if (callbackContext.started || disableSprinting) return;
+    if (callbackContext.started || disableInput || disableSprinting) return;
 
     playerCharacter.Sprint(callbackContext.performed);
 

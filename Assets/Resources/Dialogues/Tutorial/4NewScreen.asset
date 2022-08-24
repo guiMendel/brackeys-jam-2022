@@ -10,17 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a6a01461a8db624aa899ac2a97fd5da, type: 3}
-  m_Name: 1Intro
+  m_Name: 4NewScreen
   m_EditorClassIdentifier: 
-  text: "What are you doing?! We need to get out of here! #0.5 \nHello? Are you there?\nYou're
-    having one of your <u>identity crises</u> again, aren't you?\nAlright, let's
-    see if I still remember how to do this. Picture with me..."
-  delay: 1
+  text: 'Alright, so remember when I said something about an #0.2 <u>identity crisis?</u>
+
+    Here''s
+    some friends. You are not alone anymore!
+
+    But  always remember this: you
+    have to know <u>who you are</u>.'
+  delay: 0
   maxDuration: 0
   speedModifier: 1
   fontSizeModifier: 1
   skippable: 1
-  followUp: {fileID: 11400000, guid: a538c98c6e4123347a4a58bc5439c7bd, type: 2}
+  followUp: {fileID: 11400000, guid: 9c601da0dd6e4cf4591c52448456d442, type: 2}
   followUpDelay: 2
   OnStart:
     m_PersistentCalls:

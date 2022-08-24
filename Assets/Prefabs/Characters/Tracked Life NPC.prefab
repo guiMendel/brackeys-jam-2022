@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9056673993413085279}
   - component: {fileID: 7736334984538892992}
   - component: {fileID: 1537776764259209612}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Hurtbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 8464543620918312370}
   - component: {fileID: 1440629787978504825}
   - component: {fileID: 8014436061447483611}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Tracked Life NPC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -200,6 +200,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   acceleration: 11
   maxSpeed: 2.5
+  useRigidbody2D: 1
+  adjustSpriteRenderingOrder: 1
 --- !u!61 &8464543620918312370
 BoxCollider2D:
   m_ObjectHideFlags: 0

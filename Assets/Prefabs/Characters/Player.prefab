@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 114866021}
   - component: {fileID: 114866022}
   - component: {fileID: 114866023}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Hurtbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: -1092515670685932520}
   - component: {fileID: -380891646891640602}
   - component: {fileID: -5563711406499440224}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -180,6 +180,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialArea: {fileID: 0}
   deathRestartDelay: 3
+  disableMovement: 0
+  disableSprinting: 0
+  disableInput: 0
   OnSpawnPlayer:
     m_PersistentCalls:
       m_Calls: []
@@ -208,7 +211,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &5179717209115902474
 MonoBehaviour:
@@ -224,6 +227,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   acceleration: 11
   maxSpeed: 2.5
+  useRigidbody2D: 1
+  adjustSpriteRenderingOrder: 1
 --- !u!61 &-1092515670685932520
 BoxCollider2D:
   m_ObjectHideFlags: 0

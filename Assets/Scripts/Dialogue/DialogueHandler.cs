@@ -158,7 +158,10 @@ public class DialogueHandler : MonoBehaviour
       ApplyDialogueStyle();
 
       // Get dialogue write speed
-      float dialogueWriteSpeed = writeDelay * ActiveDialogue.speedModifier;
+      float dialogueWriteSpeed = writeDelay / ActiveDialogue.speedModifier;
+      float commaDelay = commaTime / ActiveDialogue.speedModifier;
+      float periodDelay = periodTime / ActiveDialogue.speedModifier;
+      float newLineDelay = newLineTime / ActiveDialogue.speedModifier;
 
       // For each word
       var words = ActiveDialogue
@@ -191,11 +194,10 @@ public class DialogueHandler : MonoBehaviour
         // Type it plus a space (if not the first word)
         foreach (char c in $"{(wordIndex == 0 ? "" : " ")}{word}")
         {
-
           // Detect new lines
           if (c == '\n')
           {
-            yield return new WaitForSeconds(newLineTime);
+            yield return new WaitForSeconds(newLineDelay);
             dialogue.text = "";
             continue;
           }
@@ -206,7 +208,7 @@ public class DialogueHandler : MonoBehaviour
           if (c == '<') writingSpecialCharacters = true;
 
           // Don't wait it writing special characters
-          if (writingSpecialCharacters == false) yield return new WaitForSeconds(writeDelay);
+          if (writingSpecialCharacters == false) yield return new WaitForSeconds(dialogueWriteSpeed);
 
           else if (c == '>') writingSpecialCharacters = false;
         }
@@ -214,8 +216,8 @@ public class DialogueHandler : MonoBehaviour
         // Detect paused characters (if  not last word)
         if (wordIndex < words.Length - 1)
         {
-          if (word[word.Length - 1] == ',') yield return new WaitForSeconds(commaTime);
-          else if (".?!".Contains(word[word.Length - 1])) yield return new WaitForSeconds(periodTime);
+          if (word[word.Length - 1] == ',') yield return new WaitForSeconds(commaDelay);
+          else if (".?!".Contains(word[word.Length - 1])) yield return new WaitForSeconds(periodDelay);
         }
       }
 

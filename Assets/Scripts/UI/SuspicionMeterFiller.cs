@@ -14,10 +14,13 @@ public class SuspicionMeterFiller : MonoBehaviour
   [Tooltip("Raise speed to activate red warning, in %")]
   public float redWarningThreshold = 40f;
 
+  [Tooltip("Whether to hide meter")]
+  public bool hideMeter = false;
+
 
   // === STATE
 
-  bool suspicionMeterWasEnabled = true;
+  bool meterIsDisplayed = true;
 
 
   // === REFS
@@ -37,12 +40,12 @@ public class SuspicionMeterFiller : MonoBehaviour
 
   private void Update()
   {
-    if (suspicionMeter.enabled == false)
+    if (suspicionMeter.enabled == false || hideMeter)
     {
-      if (suspicionMeterWasEnabled) HideMeter();
+      if (meterIsDisplayed) HideMeter();
       return;
     }
-    else if (suspicionMeterWasEnabled == false) ShowMeter();
+    else if (meterIsDisplayed == false) ShowMeter();
 
     meterOverlay.style.height = new Length(suspicionMeter.SuspicionLevel, LengthUnit.Percent);
 
@@ -62,13 +65,13 @@ public class SuspicionMeterFiller : MonoBehaviour
 
   private void ShowMeter()
   {
-    suspicionMeterWasEnabled = true;
+    meterIsDisplayed = true;
     meterBar.style.display = StyleKeyword.Initial;
   }
 
   private void HideMeter()
   {
-    suspicionMeterWasEnabled = false;
+    meterIsDisplayed = false;
     meterBar.style.display = StyleKeyword.None;
   }
 }

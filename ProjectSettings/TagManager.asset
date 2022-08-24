@@ -12,12 +12,12 @@ TagManager:
   - 
   - Water
   - UI
-  - Characters
+  - NPCs
   - Scenario
   - NPC Area
   - Projectiles
-  - 
-  - 
+  - Screen Transition
+  - Player Characters
   - 
   - 
   - 
@@ -44,6 +44,9 @@ TagManager:
     locked: 0
   - name: Floor
     uniqueID: 683359829
+    locked: 0
+  - name: Walls
+    uniqueID: 2091738793
     locked: 0
   - name: Characters
     uniqueID: 2408238931
