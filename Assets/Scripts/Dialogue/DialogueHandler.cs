@@ -125,11 +125,6 @@ public class DialogueHandler : MonoBehaviour
 
   public void SetDialogue(string path) { SetDialogue(Load(path)); }
 
-  public void InputSkip(InputAction.CallbackContext callbackContext)
-  {
-    if (callbackContext.performed) Skip();
-  }
-
 
   // === INTERNAL
 
@@ -218,9 +213,9 @@ public class DialogueHandler : MonoBehaviour
       float newLineDelay = newLineTime / ActiveDialogue.speedModifier;
 
       // For each word
-      var words = ActiveDialogue
-        .text
-        .Split(' ', StringSplitOptions.RemoveEmptyEntries);
+      var words = ActiveDialogue.text.Split(' ').Select(word => word.Trim(new char[] { ' ' }))
+        .Where(word => Regex.IsMatch(word, @"^[ ]*$") == false || word.Length == 1 && word[0] == '\n')
+        .ToArray();
 
       foreach (
         var (word, wordIndex) in words.Select((word, index) => (word, index))

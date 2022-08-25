@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dccfda37fc07a14187c597dd953d215, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  suspicionDecay: 25
+  suspicionDecay: 10
   confinementBreakSuspicion: 45
   idleSlackTime: 3
   idleSuspicion: 0.05

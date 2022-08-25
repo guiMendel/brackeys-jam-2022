@@ -10,15 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a6a01461a8db624aa899ac2a97fd5da, type: 3}
-  m_Name: 6FreakOutAboutAliens
+  m_Name: 8TryLeverAgain
   m_EditorClassIdentifier: 
-  text: 'Oh s*** I totally forgot about that
+  text: 'Alright, now you can try that lever again.
 
-    Uhhhh'
+    Be quick and try to get
+    it before they spot you. They''ll get you soon after, but this time we have a
+    <u>little surprise</u> for them.'
   delay: 0
   maxDuration: 0
-  speedModifier: 2.5
-  fontSizeModifier: 0.6
+  speedModifier: 1
+  fontSizeModifier: 1
   skippable: 0
   followUp: {fileID: 0}
   followUpDelay: 1

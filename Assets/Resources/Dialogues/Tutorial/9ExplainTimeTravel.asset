@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a6a01461a8db624aa899ac2a97fd5da, type: 3}
+  m_Name: 9ExplainTimeTravel
+  m_EditorClassIdentifier: 
+  text: "You'll notice this time around we have an extra friend in the safe zone.\r\nThat's
+    our <u>past self</u>. Bear with me.\r\nIf ever you want to skip what I have to
+    say, just hit the <u>Enter</u> key. #0.3 \r\nWe have a gadget that allows us
+    to <u>go back in time</u> at the moment we die. #0.3 Sortof.\r\nYou see, our
+    body can't travel in time. But our <u>mind</u> can. So what we atually do #0.4
+    is go back and <u>swap it with someone else's mind</u> in the past! #0.2 Hence
+    the identity crisis. #0.5 \r\nBut since our old body was also in that same past...
+    You'll notice it's still there, doing <u>exactly the same thing</u>, until it
+    eventually dies too."
+  delay: 3
+  maxDuration: 0
+  speedModifier: 1.5
+  fontSizeModifier: 1
+  skippable: 1
+  followUp: {fileID: 11400000, guid: 2aec8c4e39a3dc14f86f0db164a0233f, type: 2}
+  followUpDelay: 1
+  OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStop:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFinish:
+    m_PersistentCalls:
+      m_Calls: []
+  OnInterrupt:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFollowUp:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLeave:
+    m_PersistentCalls:
+      m_Calls: []

@@ -55,6 +55,11 @@ public class PlayerController : MonoBehaviour
     OnPlayerSprint.Invoke(callbackContext.performed);
   }
 
+  public void SkipDialogue(InputAction.CallbackContext callbackContext)
+  {
+    if (callbackContext.performed) FindObjectOfType<DialogueHandler>().Skip();
+  }
+
 
   private void Awake()
   {

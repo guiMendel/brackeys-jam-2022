@@ -68,7 +68,7 @@ public class LaserController : MonoBehaviour
 
   private void OnTriggerEnter2D(Collider2D other)
   {
-    if (other.gameObject.CompareTag("Bounds"))
+    if (other.gameObject.CompareTag("StopLaser"))
     {
       Stop();
       return;

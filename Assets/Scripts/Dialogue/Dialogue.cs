@@ -10,7 +10,7 @@ public class Dialogue : ScriptableObject
   [Header("Content")]
 
   [Tooltip("The dialogue text")]
-  [TextArea(5, 20)] public string text;
+  [TextArea(5, 5000)] public string text;
 
   [Tooltip("Delay to wait before displaying dialogue")]
   [Min(0f)] public float delay = 0f;
@@ -128,10 +128,6 @@ public class Dialogue : ScriptableObject
     unityEvent.Invoke();
     unityEvent.RemoveAllListeners();
   }
-
-  private void OnDisable() { Reset(); }
-
-  private void OnEnable() { Reset(); }
 
   public void Reset()
   {
