@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -11,7 +10,7 @@ public class ScreenTransition : MonoBehaviour
   // === PARAMS
 
   [Tooltip("Where the player will transition to")]
-  public Transform characterDestination;
+  public BoxCollider2D characterDestination;
 
   [Tooltip("Where the camera will transition to")]
   public Transform cameraDestination;
@@ -27,6 +26,11 @@ public class ScreenTransition : MonoBehaviour
 
   public UnityEvent OnTransitionStart;
   public UnityEvent OnTransitionEnd;
+
+
+  // === STATE
+
+  bool setSpawnPointsOnLoad = false;
 
 
   private void OnCollisionEnter2D(Collision2D other)
@@ -56,28 +60,31 @@ public class ScreenTransition : MonoBehaviour
     // Disable input
     if (playerController != null) playerController.disableInput = true;
 
+    // Get destination point
+    Vector2 destination = characterDestination.Accommodate(character.GetComponent<BoxCollider2D>());
+
     // Send him on his way
-    Move(character, characterDestination.position);
+    Move(character, destination);
     if (cameraArrived == false) Move(camera, cameraDestination.position);
 
     while (characterArrived == false || cameraArrived == false)
     {
-      if (characterArrived == false) characterArrived = CheckDistance(character, characterDestination.position);
+      if (characterArrived == false) characterArrived = CheckDistance(character, destination);
       if (cameraArrived == false) cameraArrived = CheckDistance(camera, cameraDestination.position);
 
       yield return new WaitForEndOfFrame();
     }
 
     // Reenable the character's collisions
-    characterBody.bodyType = RigidbodyType2D.Dynamic;
-    character.useRigidbody2D = true;
+    if (characterBody != null) characterBody.bodyType = RigidbodyType2D.Dynamic;
+    if (character != null) character.useRigidbody2D = true;
 
     // Reenable input
     if (playerController != null) playerController.disableInput = false;
 
     OnTransitionEnd.Invoke();
 
-    if (persistAsSpawnPoints) PersistSpawnPoints(characterDestination.position, cameraDestination.position);
+    if (persistAsSpawnPoints && playerController != null) PersistSpawnPoints();
     if (eraseTrackedLives) EraseTrackedLives();
   }
 
@@ -86,13 +93,32 @@ public class ScreenTransition : MonoBehaviour
     FindObjectOfType<PlayerLifeTracker>().EraseEntries();
   }
 
-  private void PersistSpawnPoints(Vector3 player, Vector3 camera)
+  private void PersistSpawnPoints()
   {
-    FindObjectOfType<SceneHandler>().SetSpawnPoints(player, camera);
+    setSpawnPointsOnLoad = true;
+
+    FindObjectOfType<SceneHandler>().SetSpawnPoints(characterDestination.bounds, cameraDestination.position);
+  }
+
+  private void OnEnable()
+  {
+    SceneManager.sceneLoaded += OnSceneLoaded;
+  }
+
+  private void OnDisable()
+  {
+    SceneManager.sceneLoaded -= OnSceneLoaded;
+  }
+
+  private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+  {
+    if (setSpawnPointsOnLoad) PersistSpawnPoints();
   }
 
   private bool CheckDistance(Movement movable, Vector2 destination)
   {
+    if (movable == null) return true;
+
     Move(movable, destination);
 
     float sqrDistance = (destination - (Vector2)movable.transform.position).sqrMagnitude;

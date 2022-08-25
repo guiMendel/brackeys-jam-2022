@@ -14,7 +14,7 @@ public class SceneHandler : MonoBehaviour
   // === STATE
 
   bool checkpointEnabled = false;
-  Vector2 checkpointSpawnPosition;
+  Bounds checkpointSpawnPosition;
   Vector2 checkpointSpawnPositionCamera;
 
 
@@ -25,11 +25,12 @@ public class SceneHandler : MonoBehaviour
 
   // === INTERFACE
 
-  public void SetSpawnPoints(Vector2 playerPoint, Vector2 cameraPoint)
+  public void SetSpawnPoints(Bounds playerPoint, Vector2 cameraPoint)
   {
     checkpointSpawnPosition = playerPoint;
     checkpointSpawnPositionCamera = cameraPoint;
     checkpointEnabled = true;
+    UseCheckpoint();
   }
 
   public void ReloadScene(float delay = 0f)
@@ -42,6 +43,9 @@ public class SceneHandler : MonoBehaviour
   {
     if (instance != null && instance != this)
     {
+      // Pass params ahead
+      instance.preRestartCurtainCloseTime = preRestartCurtainCloseTime;
+
       // If there's already an instance, stop
       gameObject.SetActive(false);
       Destroy(gameObject);
@@ -70,9 +74,15 @@ public class SceneHandler : MonoBehaviour
 
   private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
   {
+    UseCheckpoint();
+  }
+
+  private void UseCheckpoint()
+  {
     if (checkpointEnabled)
     {
-      FindObjectOfType<PlayerController>().transform.position = checkpointSpawnPosition;
+      print(("setting it up", checkpointSpawnPosition));
+      FindObjectOfType<PlayerController>().SpawnArea = checkpointSpawnPosition;
       Camera.main.transform.position = new Vector3(
         checkpointSpawnPositionCamera.x, checkpointSpawnPositionCamera.y, Camera.main.transform.position.z
       );

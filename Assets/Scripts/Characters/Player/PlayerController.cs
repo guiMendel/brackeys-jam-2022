@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -25,6 +26,23 @@ public class PlayerController : MonoBehaviour
   public Event.Vector2 OnSpawnPlayer;
   public Event.Vector2 OnPlayerMove;
   public Event.Bool OnPlayerSprint;
+
+
+  // === STATE
+
+  Bounds? _spawnArea = null;
+
+
+  // === PROPERTY
+
+  public Bounds? SpawnArea
+  {
+    get { return _spawnArea ?? (initialArea == null ? null : initialArea.bounds); }
+    set
+    {
+      _spawnArea = value;
+    }
+  }
 
 
   // === REFS
@@ -90,23 +108,28 @@ public class PlayerController : MonoBehaviour
 
   private void Start()
   {
-    if (initialArea != null) PickSpawnPosition();
+    print(SpawnArea);
+
+    PickSpawnPosition();
 
     OnSpawnPlayer.Invoke(transform.position);
   }
 
   private void PickSpawnPosition()
   {
+    if (SpawnArea == null) return;
+
     BoxCollider2D ownCollider = GetComponent<BoxCollider2D>();
 
     // Place player inside initial area randomly
-    transform.position = new Vector2(
-      Random.Range(
-        initialArea.bounds.min.x + ownCollider.bounds.extents.x, initialArea.bounds.max.x - ownCollider.bounds.extents.x
-      ),
-      Random.Range(
-        initialArea.bounds.min.y + ownCollider.bounds.extents.y, initialArea.bounds.max.y - ownCollider.bounds.extents.y
-      ) + transform.position.y - ownCollider.bounds.center.y
-    );
+    transform.position = SpawnArea.Value.Accommodate(ownCollider);
+    // transform.position = new Vector2(
+    //   Random.Range(
+    //     initialArea.bounds.min.x + ownCollider.bounds.extents.x, initialArea.bounds.max.x - ownCollider.bounds.extents.x
+    //   ),
+    //   Random.Range(
+    //     initialArea.bounds.min.y + ownCollider.bounds.extents.y, initialArea.bounds.max.y - ownCollider.bounds.extents.y
+    //   ) + transform.position.y - ownCollider.bounds.center.y
+    // );
   }
 }
