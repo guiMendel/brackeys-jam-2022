@@ -29,16 +29,9 @@ public class ScreenTransition : MonoBehaviour
   public UnityEvent OnTransitionEnd;
 
 
-  // === STATE
-
-  Coroutine transitionCoroutine;
-
-
   private void OnCollisionEnter2D(Collision2D other)
   {
-    if (transitionCoroutine != null) StopCoroutine(transitionCoroutine);
-
-    transitionCoroutine = StartCoroutine(Transition(other.gameObject.GetComponent<Movement>()));
+    StartCoroutine(Transition(other.gameObject.GetComponent<Movement>()));
   }
 
   private IEnumerator Transition(Movement character)
@@ -86,8 +79,6 @@ public class ScreenTransition : MonoBehaviour
 
     if (persistAsSpawnPoints) PersistSpawnPoints(characterDestination.position, cameraDestination.position);
     if (eraseTrackedLives) EraseTrackedLives();
-
-    transitionCoroutine = null;
   }
 
   private void EraseTrackedLives()

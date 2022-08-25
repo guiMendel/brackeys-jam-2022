@@ -73,7 +73,7 @@ public class DialogueHandler : MonoBehaviour
   // === REFS
 
   Label dialogue;
-  static DialogueHandler instance;
+  public static DialogueHandler Instance { get; private set; }
 
 
   // === INTERFACE
@@ -130,8 +130,11 @@ public class DialogueHandler : MonoBehaviour
 
   private bool SingletonCheck()
   {
-    if (instance != null && instance != this)
+    if (Instance != null && Instance != this)
     {
+      // Pass the params forward
+      SendMessage("PassParamsAhead");
+
       // If there's already an instance, stop
       gameObject.SetActive(false);
       Destroy(gameObject);
@@ -139,7 +142,7 @@ public class DialogueHandler : MonoBehaviour
       return false;
     }
 
-    instance = this;
+    Instance = this;
     DontDestroyOnLoad(gameObject);
 
     return true;

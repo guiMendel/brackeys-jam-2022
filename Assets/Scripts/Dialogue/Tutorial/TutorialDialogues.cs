@@ -9,7 +9,11 @@ public class TutorialDialogues : MonoBehaviour
 {
   // === PARAMS
 
+  [Tooltip("Transitioner to second screen")]
   public ScreenTransition screen2Transition;
+
+  [Tooltip("Area that triggers the sprint tutorial dialogue")]
+  public Trigger leaveDetector;
 
 
   // === REFS
@@ -35,6 +39,7 @@ public class TutorialDialogues : MonoBehaviour
   Dialogue tryLeverAgain;
   Dialogue explainTimeTravel;
   Dialogue solvePuzzle;
+  Dialogue explainSprint;
 
 
   protected void Awake()
@@ -51,10 +56,11 @@ public class TutorialDialogues : MonoBehaviour
     tryLeverAgain = handler.Load("Tutorial/8TryLeverAgain");
     explainTimeTravel = handler.Load("Tutorial/9ExplainTimeTravel");
     solvePuzzle = handler.Load("Tutorial/10SolvePuzzle");
+    explainSprint = handler.Load("Tutorial/11ExplainSprint");
 
     EnsureNotNull.Objects(
       advanceScreen, movement, rushedAdvanceScreen, intro, screen2Transition, newScreen, pullLever,
-      freakOut, tryLeverAgain, explainAliens, explainTimeTravel, solvePuzzle
+      freakOut, tryLeverAgain, explainAliens, explainTimeTravel, solvePuzzle, explainSprint
     );
   }
 
@@ -75,7 +81,7 @@ public class TutorialDialogues : MonoBehaviour
     suspicionMeter.OnAggro.AddListener(FreakOutDialogue);
     SceneManager.sceneLoaded += OnSceneLoaded;
     tryLeverAgain.OnStart.AddListener(EnableSuspicionMeter);
-    solvePuzzle.OnStop.AddListener(EnableSuspicionMeter);
+    solvePuzzle.OnStop.AddListener(EnableSuspicionMeterAndSprint);
   }
 
   private void OnDisable()
@@ -87,7 +93,16 @@ public class TutorialDialogues : MonoBehaviour
     SceneManager.sceneLoaded -= OnSceneLoaded;
     tryLeverAgain?.OnStart.RemoveListener(EnableSuspicionMeter);
     playerVulnerable?.OnDeath.RemoveListener(ExplainTimeTravel);
-    solvePuzzle?.OnStop.RemoveListener(EnableSuspicionMeter);
+    solvePuzzle?.OnStop.RemoveListener(EnableSuspicionMeterAndSprint);
+    leaveDetector?.OnTrigger?.RemoveListener(HandleSprintDialogue);
+  }
+
+  private void HandleSprintDialogue()
+  {
+    print("walked over it!");
+    if (solvePuzzle.Started == false || explainSprint.Started) return;
+    print("setting it");
+    playerVulnerable.OnDeath.AddListener(() => handler.SetDialogue(explainSprint));
   }
 
   private void ExplainTimeTravel()
@@ -98,14 +113,19 @@ public class TutorialDialogues : MonoBehaviour
     handler.SetDialogue(explainTimeTravel);
   }
 
-  private void EnableSuspicionMeter()
+  private void EnableSuspicionMeter() { EnableSuspicionMeter(false); }
+  private void EnableSuspicionMeterAndSprint() { EnableSuspicionMeter(true); }
+
+  private void EnableSuspicionMeter(bool enableSprint)
   {
     // Allow suspicion meter
     suspicionMeter.enabled = true;
     meterFiller.hideMeter = false;
 
     // Also give player movement agency
-    FindObjectOfType<PlayerController>().disableMovement = false;
+    playerController.disableMovement = false;
+
+    if (enableSprint) playerController.disableSprinting = false;
   }
 
   private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
@@ -119,9 +139,10 @@ public class TutorialDialogues : MonoBehaviour
     if (
       (tryLeverAgain.Started && explainTimeTravel.Started == false)
       || solvePuzzle.Stopped
-    ) EnableSuspicionMeter();
+    ) EnableSuspicionMeter(enableSprint: solvePuzzle.Stopped);
 
     playerVulnerable.OnDeath.AddListener(ExplainTimeTravel);
+    leaveDetector.OnTrigger.AddListener(HandleSprintDialogue);
   }
 
   private void FreakOutDialogue()
@@ -166,5 +187,12 @@ public class TutorialDialogues : MonoBehaviour
 
     suspicionMeter.enabled = false;
     meterFiller.hideMeter = true;
+  }
+
+  void PassParamsAhead()
+  {
+    TutorialDialogues instance = DialogueHandler.Instance.GetComponent<TutorialDialogues>();
+    instance.screen2Transition = screen2Transition;
+    instance.leaveDetector = leaveDetector;
   }
 }

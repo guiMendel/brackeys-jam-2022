@@ -19,12 +19,17 @@ public class Movement : MonoBehaviour
   [Tooltip("Whether to adjust sprite render order")]
   public bool adjustSpriteRenderingOrder = true;
 
+  [Tooltip("Snap distance")]
+  public float snapDistance = 0.05f;
+
 
   // === STATE
 
   public Vector2 MovementDirection { get; private set; }
 
   Vector2 _nonRigidbodySpeed = Vector2.zero;
+
+  Coroutine moveToCoroutine;
 
 
   // === PROPERTIES
@@ -48,9 +53,15 @@ public class Movement : MonoBehaviour
 
   // === INTERFACE
 
-  public void SetTargetMovement(Vector2 movementDirection)
+  public void SetTargetMovement(Vector2 movementDirection) { SetTargetMovement(movementDirection, true); }
+
+  public Coroutine MoveTo(Vector2 targetPosition)
   {
-    MovementDirection = movementDirection;
+    StopMoveTo();
+
+    moveToCoroutine = StartCoroutine(MoveToCoroutine(targetPosition));
+
+    return moveToCoroutine;
   }
 
   public void SnapTo(Vector2 position)
@@ -68,6 +79,40 @@ public class Movement : MonoBehaviour
 
     if (useRigidbody2D) EnsureNotNull.Objects(body);
     if (adjustSpriteRenderingOrder) EnsureNotNull.Objects(spriteRenderer);
+  }
+
+  private IEnumerator MoveToCoroutine(Vector2 targetPosition)
+  {
+    // Gets distance to target
+    Vector2 TargetDistance() { return (targetPosition - (Vector2)transform.position); }
+
+    while (TargetDistance().sqrMagnitude > snapDistance * snapDistance)
+    {
+      // Set speed
+      SetTargetMovement(TargetDistance().normalized, stopMoveTo: false);
+
+      yield return new WaitForEndOfFrame();
+    }
+
+    // Snap
+    SnapTo(targetPosition);
+
+    moveToCoroutine = null;
+  }
+
+  private void SetTargetMovement(Vector2 movementDirection, bool stopMoveTo)
+  {
+    MovementDirection = movementDirection;
+
+    if (stopMoveTo) StopMoveTo();
+  }
+
+  private void StopMoveTo()
+  {
+    if (moveToCoroutine == null) return;
+
+    StopCoroutine(moveToCoroutine);
+    moveToCoroutine = null;
   }
 
   private void Start()
