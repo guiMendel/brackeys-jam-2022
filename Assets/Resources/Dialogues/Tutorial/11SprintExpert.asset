@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a6a01461a8db624aa899ac2a97fd5da, type: 3}
-  m_Name: 11ExplainSprint
+  m_Name: 11SprintExpert
   m_EditorClassIdentifier: 
-  text: "Oh, yeah #0.3 I should also remind you to <u>sprint</u> holding the <u>shift</u>
-    key. Dance-walking like that won't get you very far I'm afraid.\r\nDo be careful
-    though, as <u>sprinting raises aliens' suspicion</u> very quickly! #3 \r\nCome
-    on, we're in <u>danger</u> in real life. I'm waiting for you!"
-  delay: 0.5
-  maxDuration: 8
+  text: "Oh wow look at you, already <u>sprinting</u> with the <u>shift</u> key and
+    all! You'll do just fine out there.\r\nJust don't forget that <u>sprinting will
+    raise their suspicion</u> very quickly! #0.4 \r\nCome on, let's get out of here
+    already. We're in <u>danger</u> in real life."
+  delay: 0.3
+  maxDuration: 4
   speedModifier: 1
   fontSizeModifier: 1
   skippable: 0

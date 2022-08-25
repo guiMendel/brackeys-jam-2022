@@ -40,6 +40,7 @@ public class TutorialDialogues : MonoBehaviour
   Dialogue explainTimeTravel;
   Dialogue solvePuzzle;
   Dialogue explainSprint;
+  Dialogue sprintExpert;
 
 
   protected void Awake()
@@ -57,10 +58,11 @@ public class TutorialDialogues : MonoBehaviour
     explainTimeTravel = handler.Load("Tutorial/9ExplainTimeTravel");
     solvePuzzle = handler.Load("Tutorial/10SolvePuzzle");
     explainSprint = handler.Load("Tutorial/11ExplainSprint");
+    sprintExpert = handler.Load("Tutorial/11SprintExpert");
 
     EnsureNotNull.Objects(
       advanceScreen, movement, rushedAdvanceScreen, intro, screen2Transition, newScreen, pullLever,
-      freakOut, tryLeverAgain, explainAliens, explainTimeTravel, solvePuzzle, explainSprint
+      freakOut, tryLeverAgain, explainAliens, explainTimeTravel, solvePuzzle, explainSprint, sprintExpert
     );
   }
 
@@ -95,11 +97,12 @@ public class TutorialDialogues : MonoBehaviour
     playerVulnerable?.OnDeath.RemoveListener(ExplainTimeTravel);
     solvePuzzle?.OnStop.RemoveListener(EnableSuspicionMeterAndSprint);
     leaveDetector?.OnTrigger?.RemoveListener(HandleSprintDialogue);
+    playerController?.OnPlayerSprint.RemoveListener(DetectSprintExpert);
   }
 
   private void HandleSprintDialogue()
   {
-    if (solvePuzzle.Started == false || explainSprint.Started) return;
+    if (solvePuzzle.Started == false || explainSprint.Started || sprintExpert.Started) return;
     playerVulnerable.OnDeath.AddListener(() => handler.SetDialogue(explainSprint));
   }
 
@@ -137,10 +140,22 @@ public class TutorialDialogues : MonoBehaviour
     if (
       (tryLeverAgain.Started && explainTimeTravel.Started == false)
       || solvePuzzle.Stopped
-    ) EnableSuspicionMeter(enableSprint: solvePuzzle.Stopped);
+    ) EnableSuspicionMeter(enableSprint: tryLeverAgain.Stopped);
 
     playerVulnerable.OnDeath.AddListener(ExplainTimeTravel);
     leaveDetector.OnTrigger.AddListener(HandleSprintDialogue);
+    playerController.OnPlayerSprint.AddListener(DetectSprintExpert);
+  }
+
+  private void DetectSprintExpert(bool arg0)
+  {
+    // Ignore if not moving or not at the right time
+    if (
+      playerController.GetComponent<Movement>().MovementDirection == Vector2.zero
+      || solvePuzzle.Stopped == false || sprintExpert.Started || explainSprint.Started
+    ) return;
+
+    handler.SetDialogue(sprintExpert);
   }
 
   private void FreakOutDialogue()
