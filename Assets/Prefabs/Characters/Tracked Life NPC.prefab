@@ -90,6 +90,8 @@ GameObject:
   - component: {fileID: 8464543620918312370}
   - component: {fileID: 1440629787978504825}
   - component: {fileID: 8014436061447483611}
+  - component: {fileID: 4763365271077450998}
+  - component: {fileID: 8718800462419330295}
   m_Layer: 11
   m_Name: Tracked Life NPC
   m_TagString: Untagged
@@ -154,7 +156,7 @@ SpriteRenderer:
   m_SortingLayerID: -1886728365
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 146ed8ef40bcaf04d813c313540d739e, type: 3}
+  m_Sprite: {fileID: -1317427136, guid: 38d0d540261343a4e8ab5b18abaff49e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -184,7 +186,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &8464543620918312369
 MonoBehaviour:
@@ -202,6 +204,7 @@ MonoBehaviour:
   maxSpeed: 2.5
   useRigidbody2D: 1
   adjustSpriteRenderingOrder: 1
+  adjustScaleDirection: 1
   snapDistance: 0.05
 --- !u!61 &8464543620918312370
 BoxCollider2D:
@@ -220,7 +223,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.96, y: 1.28}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 0.96, y: 1.28}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -255,3 +258,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprintAcceleration: 13
   sprintMaxSpeed: 4.5
+--- !u!95 &4763365271077450998
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8464543620918312373}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6646242a53e77d0428f7a7b09fe37cb1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8718800462419330295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8464543620918312373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9a2f9ba4516b16498afdca7139dacbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skins:
+  - {fileID: 9100000, guid: 8a222c7214203d040934dc4d50f32dcb, type: 2}
+  - {fileID: 9100000, guid: 6646242a53e77d0428f7a7b09fe37cb1, type: 2}
+  - {fileID: 9100000, guid: 809525c789a102049947b539002ba487, type: 2}

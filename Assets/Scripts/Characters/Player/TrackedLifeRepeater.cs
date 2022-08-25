@@ -28,6 +28,9 @@ public class TrackedLifeRepeater : MonoBehaviour
   public void SetLifeEntry(PlayerLifeTracker.LifeEntry lifeEntry)
   {
     LifeEntry = PlayerLifeTracker.LifeEntry.Copy(lifeEntry);
+    GetComponent<Skin>().ActiveSkin = lifeEntry.skin;
+
+    print(("loaded", lifeEntry.skin.name));
   }
 
 
@@ -57,7 +60,12 @@ public class TrackedLifeRepeater : MonoBehaviour
 
 
     // Place a regular npc in place of this one
-    alienTargetManager.SwitchTarget(gameObject, npcManager.CreateNpcAt(transform.position));
+    GameObject newNpc = npcManager.CreateNpcAt(transform.position);
+
+    // Give it the same skin
+    newNpc.GetComponent<Skin>().ActiveSkin = GetComponent<Skin>().ActiveSkin;
+
+    alienTargetManager.SwitchTarget(gameObject, newNpc);
 
     gameObject.SetActive(false);
     Destroy(gameObject);

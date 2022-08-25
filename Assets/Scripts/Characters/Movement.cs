@@ -19,6 +19,9 @@ public class Movement : MonoBehaviour
   [Tooltip("Whether to adjust sprite render order")]
   public bool adjustSpriteRenderingOrder = true;
 
+  [Tooltip("Whether to adjust local scale to match movement direction")]
+  public bool adjustScaleDirection = true;
+
   [Tooltip("Snap distance")]
   public float snapDistance = 0.05f;
 
@@ -156,5 +159,17 @@ public class Movement : MonoBehaviour
 
     // Update render order
     SetRenderOrder();
+
+    // Update scale direction
+    SetScaleDirection();
+  }
+
+  private void SetScaleDirection()
+  {
+    // Ignore if moving very little
+    if (adjustScaleDirection == false || Mathf.Abs(MovementDirection.x) < 0.2f) return;
+
+    if (MovementDirection.x < 0f) transform.localScale = new Vector3(-1f, 1f, 1f);
+    else transform.localScale = Vector3.one;
   }
 }

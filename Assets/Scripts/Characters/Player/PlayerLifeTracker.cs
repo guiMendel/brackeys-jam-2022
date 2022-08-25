@@ -44,6 +44,9 @@ public class PlayerLifeTracker : MonoBehaviour
   // Defines a life entry
   public struct LifeEntry
   {
+    // Player skin
+    public RuntimeAnimatorController skin;
+
     // Where it started
     public Vector2 startingPosition;
 
@@ -56,9 +59,10 @@ public class PlayerLifeTracker : MonoBehaviour
     // When it died
     public float deathTime;
 
-    public LifeEntry(Vector2 startingPosition)
+    public LifeEntry(Vector2 startingPosition, RuntimeAnimatorController skin)
     {
       this.startingPosition = startingPosition;
+      this.skin = skin;
 
       inputEntries = new Queue<InputEntry>();
 
@@ -73,7 +77,7 @@ public class PlayerLifeTracker : MonoBehaviour
 
     static public LifeEntry Copy(LifeEntry lifeEntry)
     {
-      var newEntry = new LifeEntry(lifeEntry.startingPosition);
+      var newEntry = new LifeEntry(lifeEntry.startingPosition, lifeEntry.skin);
 
       newEntry.inputEntries = new Queue<InputEntry>(lifeEntry.inputEntries);
 
@@ -195,11 +199,13 @@ public class PlayerLifeTracker : MonoBehaviour
 
   private void StartNewLifeEntry(Vector2 startingPosition)
   {
-    print("Starting");
-    print(disregardCurrentLife);
     if (disregardCurrentLife) return;
 
-    currentLifeEntry = new LifeEntry(startingPosition);
+    currentLifeEntry = new LifeEntry(
+      startingPosition, FindObjectOfType<PlayerController>().GetComponent<Skin>().ActiveSkin
+    );
+
+    print(currentLifeEntry.skin.name);
   }
 
   private void RegisterMove(Vector2 movementDirection)
@@ -225,10 +231,8 @@ public class PlayerLifeTracker : MonoBehaviour
 
   private void FinishLifeEntry()
   {
-    print(disregardCurrentLife);
     if (disregardCurrentLife == false)
     {
-      print("Finished");
       currentLifeEntry.deathTime = Time.timeSinceLevelLoad;
 
       lifeEntries.Add(currentLifeEntry);

@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 8464543620918312370}
   - component: {fileID: 59774426087496625}
   - component: {fileID: -7878017163447939867}
+  - component: {fileID: -5174717532415457451}
   m_Layer: 6
   m_Name: Alien
   m_TagString: Alien
@@ -154,7 +155,7 @@ SpriteRenderer:
   m_SortingLayerID: -1886728365
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 6a10c036bffa2bf4f9163fcbe4218893, type: 3}
+  m_Sprite: {fileID: -1222334458, guid: 8c2b951eae2adc74898efa84546a0326, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -184,7 +185,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &8464543620918312369
 MonoBehaviour:
@@ -202,6 +203,7 @@ MonoBehaviour:
   maxSpeed: 5.5
   useRigidbody2D: 1
   adjustSpriteRenderingOrder: 1
+  adjustScaleDirection: 1
   snapDistance: 0.05
 --- !u!61 &8464543620918312370
 BoxCollider2D:
@@ -220,7 +222,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.96, y: 1.28}
+    oldSize: {x: 1, y: 1.03125}
     newSize: {x: 0.96, y: 1.28}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -261,3 +263,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   idleChance: 0
   movementCycleDurationLimits: {x: 0.05, y: 0.5}
+--- !u!95 &-5174717532415457451
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8464543620918312373}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2f1e511e29833744298050471bfe60cb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

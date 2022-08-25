@@ -104,12 +104,15 @@ public class AlienTargetManager : MonoBehaviour
     // Create alien where the npc is
     GameObject newNpc = npcManager.CreateNpcAt(alien.transform.position);
 
+    TrackAlienDeath(newNpc);
+    newNpc.tag = "Alien";
+
+    // Give it's skin back
+    newNpc.GetComponent<Skin>().ActiveSkin = alien.GetComponent<AlienController>().NpcSkin;
+
     // Remove the alien
     alien.SetActive(false);
     Destroy(alien);
-
-    TrackAlienDeath(newNpc);
-    newNpc.tag = "Alien";
 
     return newNpc;
   }
@@ -142,6 +145,9 @@ public class AlienTargetManager : MonoBehaviour
     AlienController newAlien = Instantiate(
       alien, npc.transform.position, npc.transform.rotation, npc.transform.parent
     ).GetComponent<AlienController>();
+
+    // Store the npc skin
+    newAlien.NpcSkin = npc.GetComponent<Skin>().ActiveSkin;
 
     // Remove the npc
     npc.SetActive(false);

@@ -135,3 +135,5 @@ MonoBehaviour:
   maxSpeed: 10
   useRigidbody2D: 0
   adjustSpriteRenderingOrder: 0
+  adjustScaleDirection: 1
+  snapDistance: 0.05

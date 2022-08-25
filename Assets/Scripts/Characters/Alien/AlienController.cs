@@ -32,6 +32,9 @@ public class AlienController : MonoBehaviour
   // Movement direction offset
   float movementOffset;
 
+  // What was the npc skin before transforming into an alien
+  public RuntimeAnimatorController NpcSkin { get; set; }
+
 
   // === PROPERTIES
 
