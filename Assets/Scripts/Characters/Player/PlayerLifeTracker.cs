@@ -138,7 +138,6 @@ public class PlayerLifeTracker : MonoBehaviour
   private void OnEnable()
   {
     SceneManager.sceneLoaded += OnSceneLoad;
-    SetUpForScene();
   }
 
   private void OnDisable()

@@ -93,7 +93,7 @@ public class ScreenTransition : MonoBehaviour
     OnTransitionEnd.Invoke();
 
     if (persistAsSpawnPoints && playerController != null) PersistSpawnPoints();
-    if (eraseTrackedLives) EraseTrackedLives();
+    if (eraseTrackedLives && playerController != null) EraseTrackedLives();
 
     objectsInTransition.Remove(character.gameObject);
   }

@@ -131,6 +131,9 @@ public class TutorialDialogues : MonoBehaviour
 
   private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
   {
+    // Ignore if hasn't freaked out yet
+    if (freakOut.Started == false) return;
+
     // The first time, load this dialogue
     if (explainAliens.Started == false) handler.SetDialogue(explainAliens);
 

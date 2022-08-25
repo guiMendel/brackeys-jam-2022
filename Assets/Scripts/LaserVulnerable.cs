@@ -12,6 +12,11 @@ public class LaserVulnerable : MonoBehaviour
   public UnityEvent OnDeath;
 
 
+  // === STATE
+
+  public bool Dead { get; private set; } = false;
+
+
   private void Awake()
   {
     OnDeath ??= new UnityEvent();
@@ -22,8 +27,13 @@ public class LaserVulnerable : MonoBehaviour
 
   public void Die()
   {
+    if (Dead) return;
+
+    Dead = true;
+
     OnDeath.Invoke();
 
+    destroyTarget.SetActive(false);
     Destroy(destroyTarget);
   }
 }
