@@ -43,9 +43,6 @@ public class SceneHandler : MonoBehaviour
 
   public void LoadNextScene(string sceneName)
   {
-    print("loading scene...");
-    print(SceneManager.sceneCount);
-
     ResetStates();
 
     StartCoroutine(LoadSceneIn(sceneName, 1f));

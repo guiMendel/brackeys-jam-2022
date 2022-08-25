@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2105095343357511006}
   - component: {fileID: 4073628012232964981}
   - component: {fileID: 6166807514052362852}
-  m_Layer: 6
+  m_Layer: 14
   m_Name: Hurtbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -199,7 +199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   acceleration: 13
-  maxSpeed: 4.5
+  maxSpeed: 5.5
   useRigidbody2D: 1
   adjustSpriteRenderingOrder: 1
   snapDistance: 0.05

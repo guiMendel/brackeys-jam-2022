@@ -70,6 +70,7 @@ public class LaserController : MonoBehaviour
   {
     if (other.gameObject.CompareTag("StopLaser"))
     {
+      print(other.gameObject.tag);
       Stop();
       return;
     }

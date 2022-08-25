@@ -20,7 +20,7 @@ public class NpcManager : MonoBehaviour
   public BoxCollider2D movementArea;
 
   [Tooltip("Where NPCs spawn from at runtime")]
-  public Transform runtimeSpawnOrigin;
+  public List<Transform> runtimeSpawnOrigin;
 
   [Tooltip("Where NPCs spawned at runtime walk to")]
   public Transform runtimeSpawnDestination;
@@ -80,7 +80,7 @@ public class NpcManager : MonoBehaviour
         Random.Range(movementArea.bounds.min.y + 1, movementArea.bounds.max.y - 1)
       );
     }
-    else position = runtimeSpawnOrigin.position;
+    else position = runtimeSpawnOrigin[Random.Range(0, runtimeSpawnOrigin.Count)].position;
 
     // Create it 
     GameObject npc = CreateNpcAt(position);

@@ -195,6 +195,8 @@ public class PlayerLifeTracker : MonoBehaviour
 
   private void StartNewLifeEntry(Vector2 startingPosition)
   {
+    print("Starting");
+    print(disregardCurrentLife);
     if (disregardCurrentLife) return;
 
     currentLifeEntry = new LifeEntry(startingPosition);
@@ -223,8 +225,10 @@ public class PlayerLifeTracker : MonoBehaviour
 
   private void FinishLifeEntry()
   {
+    print(disregardCurrentLife);
     if (disregardCurrentLife == false)
     {
+      print("Finished");
       currentLifeEntry.deathTime = Time.timeSinceLevelLoad;
 
       lifeEntries.Add(currentLifeEntry);
