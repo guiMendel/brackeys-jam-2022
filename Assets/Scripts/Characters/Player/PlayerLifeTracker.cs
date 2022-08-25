@@ -51,7 +51,7 @@ public class PlayerLifeTracker : MonoBehaviour
     public Queue<InputEntry> inputEntries;
 
     // When it triggered the aggro
-    public float aggroTime;
+    public float? aggroTime;
 
     // When it died
     public float deathTime;
@@ -62,7 +62,8 @@ public class PlayerLifeTracker : MonoBehaviour
 
       inputEntries = new Queue<InputEntry>();
 
-      aggroTime = deathTime = 0f;
+      deathTime = 0f;
+      aggroTime = null;
     }
 
     public void RegisterInput(InputEntry entry)

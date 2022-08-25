@@ -14,6 +14,12 @@ public class AlienTargetManager : MonoBehaviour
   [Tooltip("Alien object to spawn")]
   public GameObject alien;
 
+  [Tooltip("Modifier to apply to movement angle offset on aliens spawned")]
+  public float angleOffsetModifier = 1f;
+
+  [Tooltip("How long aliens may take to respawn")]
+  public Vector2 respawnTime = new Vector2(0.5f, 2f);
+
 
   // === STATE
 
@@ -63,9 +69,10 @@ public class AlienTargetManager : MonoBehaviour
     if (ActiveTargets.Count == 0) HideAliens();
   }
 
-  internal void SwitchTarget(GameObject oldTarget, GameObject newTarget)
+  public void SwitchTarget(GameObject oldTarget, GameObject newTarget)
   {
-    ActiveTargets[ActiveTargets.IndexOf(oldTarget)] = newTarget;
+    ActiveTargets.Remove(oldTarget);
+    ActiveTargets.Add(newTarget);
 
     TrackDeath(newTarget);
   }
@@ -91,12 +98,18 @@ public class AlienTargetManager : MonoBehaviour
 
   private GameObject TurnIntoNpc(GameObject alien)
   {
+    // Stop if is in move animation
+    if (alien.GetComponent<SpawnAnimationScript>() != null) return alien;
+
     // Create alien where the npc is
     GameObject newNpc = npcManager.CreateNpcAt(alien.transform.position);
 
     // Remove the alien
     alien.SetActive(false);
     Destroy(alien);
+
+    TrackAlienDeath(newNpc);
+    newNpc.tag = "Alien";
 
     return newNpc;
   }
@@ -122,46 +135,64 @@ public class AlienTargetManager : MonoBehaviour
 
   private GameObject TurnIntoAlien(GameObject npc)
   {
+    // Stop if is in move animation
+    if (npc.GetComponent<SpawnAnimationScript>() != null) return npc;
+
     // Create alien where the npc is
-    GameObject newAlien = Instantiate(alien, npc.transform.position, npc.transform.rotation, npc.transform.parent);
+    AlienController newAlien = Instantiate(
+      alien, npc.transform.position, npc.transform.rotation, npc.transform.parent
+    ).GetComponent<AlienController>();
 
     // Remove the npc
     npc.SetActive(false);
     Destroy(npc);
 
-    return newAlien;
+    // Apply modifier
+    newAlien.maxOffset = newAlien.maxOffset * angleOffsetModifier;
+
+    TrackAlienDeath(newAlien.gameObject);
+    alien.tag = "Alien";
+
+    return newAlien.gameObject;
   }
 
   private void Start()
   {
     // Allocate aliens
-    AllocateAliens();
+    SpawnAliens();
   }
 
   // Ensures there are aliens ready for the hunt
-  private void AllocateAliens()
+  private void SpawnAliens()
   {
-    // Select some regular looking dudes to convert to aliens
-    List<NpcController> npcs = FindObjectsOfType<NpcController>().ToList();
+    while (alienCount > Aliens.Count) SpawnAlien(skipIntroAnimation: true);
+  }
 
-    // If need be, create some more npcs
-    while (alienCount > npcs.Count)
-    {
-      npcs.Add(FindObjectOfType<NpcManager>().CreateNpc().GetComponent<NpcController>());
-    }
+  private void SpawnAlien(bool skipIntroAnimation = false)
+  {
+    // Create it
+    GameObject newNpc = npcManager.CreateNpc(skipIntroAnimation);
 
-    // Sample some aliens
-    List<int> alienIndices = new List<int>();
+    // Add it to our list
+    Aliens.Add(newNpc);
 
-    while (alienIndices.Count < alienCount)
-    {
-      int alienIndex = Random.Range(0, alienCount);
+    newNpc.tag = "Alien";
 
-      if (alienIndices.Contains(alienIndex) == false)
-      {
-        alienIndices.Add(alienIndex);
-        Aliens.Add(npcs[alienIndex].gameObject);
-      }
-    }
+    // Listen to it's death
+    TrackAlienDeath(newNpc);
+  }
+
+  private void TrackAlienDeath(GameObject alien)
+  {
+    alien.GetComponentInChildren<LaserVulnerable>().OnDeath.AddListener(() => StartCoroutine(ReplenishAlien(alien)));
+  }
+
+  private IEnumerator ReplenishAlien(GameObject deadAlien)
+  {
+    Aliens.Remove(deadAlien);
+
+    yield return new WaitForSeconds(Random.Range(respawnTime.x, respawnTime.y));
+
+    SpawnAlien();
   }
 }

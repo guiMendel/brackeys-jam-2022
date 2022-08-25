@@ -65,7 +65,7 @@ public class TrackedLifeRepeater : MonoBehaviour
 
   private void DetectAggroStart()
   {
-    if (LifeEntry.aggroTime > 0f && (Time.timeSinceLevelLoad < LifeEntry.aggroTime || aggroTriggered)) return;
+    if (LifeEntry.aggroTime == null || Time.timeSinceLevelLoad < LifeEntry.aggroTime.Value || aggroTriggered) return;
 
     aggroTriggered = true;
 

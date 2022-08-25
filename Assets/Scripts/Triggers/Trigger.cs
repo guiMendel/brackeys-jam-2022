@@ -16,7 +16,6 @@ public class Trigger : MonoBehaviour
 
   private void OnTriggerEnter2D(Collider2D other)
   {
-    print("trigger thing detected");
     foreach (var target in targets) target.Trigger();
 
     OnTrigger.Invoke();

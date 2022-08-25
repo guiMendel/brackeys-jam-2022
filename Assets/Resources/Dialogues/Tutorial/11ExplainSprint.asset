@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a6a01461a8db624aa899ac2a97fd5da, type: 3}
   m_Name: 11ExplainSprint
   m_EditorClassIdentifier: 
-  text: 'Oh, yeah #0.3 I should also remind you to <u>sprint</u> holding the <u>shift</u>
-    key. Dance-walking like that won''t get you very far I''m afraid. #5
-
-    It''s
-    up to you now. Good luck!'
+  text: "Oh, yeah #0.3 I should also remind you to <u>sprint</u> holding the <u>shift</u>
+    key. Dance-walking like that won't get you very far I'm afraid.\r\nDo be careful
+    though, as <u>sprinting raises aliens' suspicion</u> very quickly! #5 \r\nIt's
+    up to you now. Good luck!"
   delay: 0.5
   maxDuration: 8
   speedModifier: 1

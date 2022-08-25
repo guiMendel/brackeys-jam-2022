@@ -15,25 +15,25 @@ MonoBehaviour:
   text: 'It''s #0.2 uhh #0.2 okay I swear, lemme explain. #0.3 <u>Don''t</u> freak
     out.
 
-    First things first, you''ll notice you don''t look quite the same as
-    before. Another merry consequence of your identity crisis.
+    First things first, you''ll notice you don''t look quite the same
+    as before. Another merry consequence of your identity crisis.
 
     So, there''s
     these aliens. We don''t know why, but they really #0.5 <u>really</u> want to
     kill us.
 
-    They are <u>infiltrated</u> among us regular humans, and reveal
-    themselves when they recognize us.
+    They are <u>infiltrated</u> among regular people, and reveal themselves
+    when they recognize you.
 
-    When they spot someone <u>acting out
-    of the ordinary</u>, they assume that''s us. So <u>try to blend in</u>.
+    When they spot someone <u>acting out of the ordinary</u>,
+    they assume that''s you. So <u>try to blend in</u>.
 
-    They''ll
-    usually start suspecting you once you move away from a group of people, or if
-    you <u>stand still</u> for too long.
+    They''ll usually start
+    suspecting you once you move away from a group of people, or if you <u>stand
+    still</u> for too long.
 
-    Ah yes, here, remember we have this
-    device that shows us <u>how much they suspect of us</u>.'
+    Ah yes, here, remember we have this device that
+    shows us <u>how much they suspect of us</u>.'
   delay: 0
   maxDuration: 0
   speedModifier: 1.5

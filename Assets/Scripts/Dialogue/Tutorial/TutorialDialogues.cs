@@ -99,9 +99,7 @@ public class TutorialDialogues : MonoBehaviour
 
   private void HandleSprintDialogue()
   {
-    print("walked over it!");
     if (solvePuzzle.Started == false || explainSprint.Started) return;
-    print("setting it");
     playerVulnerable.OnDeath.AddListener(() => handler.SetDialogue(explainSprint));
   }
 
