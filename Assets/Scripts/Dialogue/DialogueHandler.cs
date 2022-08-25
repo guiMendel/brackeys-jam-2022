@@ -52,6 +52,8 @@ public class DialogueHandler : MonoBehaviour
     get { return _displayedText; }
     set
     {
+      if (dialogue == null) GetDialogueBox();
+
       _displayedText = value;
       dialogue.text = value;
     }
@@ -125,6 +127,14 @@ public class DialogueHandler : MonoBehaviour
 
   public void SetDialogue(string path) { SetDialogue(Load(path)); }
 
+  public void ResetDialogues()
+  {
+    // Interrupt a previous one if necessary
+    Interrupt();
+
+    if (usedDialogues != null) foreach (var dialogue in usedDialogues) dialogue.Reset();
+  }
+
 
   // === INTERNAL
 
@@ -178,7 +188,7 @@ public class DialogueHandler : MonoBehaviour
 
   private void OnDisable()
   {
-    if (usedDialogues != null) foreach (var dialogue in usedDialogues) dialogue.Reset();
+    ResetDialogues();
     SceneManager.sceneLoaded -= OnSceneLoaded;
   }
 

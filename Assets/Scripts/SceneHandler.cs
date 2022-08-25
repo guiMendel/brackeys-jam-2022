@@ -16,6 +16,7 @@ public class SceneHandler : MonoBehaviour
   bool checkpointEnabled = false;
   Bounds checkpointSpawnPosition;
   Vector2 checkpointSpawnPositionCamera;
+  bool ignoreReload = false;
 
 
   // === REFS
@@ -35,9 +36,28 @@ public class SceneHandler : MonoBehaviour
 
   public void ReloadScene(float delay = 0f)
   {
-    StartCoroutine(RestartSceneIn(delay));
+    if (ignoreReload) return;
+
+    StartCoroutine(LoadSceneIn(SceneManager.GetActiveScene().name, delay));
   }
 
+  public void LoadNextScene(string sceneName)
+  {
+    print("loading scene...");
+    print(SceneManager.sceneCount);
+
+    ResetStates();
+
+    StartCoroutine(LoadSceneIn(sceneName, 1f));
+  }
+
+
+  private void ResetStates()
+  {
+    checkpointEnabled = false;
+    FindObjectOfType<DialogueHandler>().ResetDialogues();
+    FindObjectOfType<PlayerLifeTracker>().EraseEntries();
+  }
 
   private void SingletonCheck()
   {
@@ -88,14 +108,21 @@ public class SceneHandler : MonoBehaviour
     }
   }
 
-  IEnumerator RestartSceneIn(float seconds)
+  IEnumerator LoadSceneIn(string sceneName, float seconds)
   {
-    yield return new WaitForSeconds(seconds - preRestartCurtainCloseTime);
+    ignoreReload = true;
+
+    if (seconds > preRestartCurtainCloseTime)
+      yield return new WaitForSeconds(seconds - preRestartCurtainCloseTime);
 
     FindObjectOfType<UICurtain>().Close();
 
     yield return new WaitForSeconds(preRestartCurtainCloseTime);
 
-    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    SceneManager.LoadScene(sceneName);
+
+    yield return new WaitForEndOfFrame();
+
+    ignoreReload = false;
   }
 }
