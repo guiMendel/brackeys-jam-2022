@@ -81,7 +81,6 @@ public class SceneHandler : MonoBehaviour
   {
     if (checkpointEnabled)
     {
-      print(("setting it up", checkpointSpawnPosition));
       FindObjectOfType<PlayerController>().SpawnArea = checkpointSpawnPosition;
       Camera.main.transform.position = new Vector3(
         checkpointSpawnPositionCamera.x, checkpointSpawnPositionCamera.y, Camera.main.transform.position.z

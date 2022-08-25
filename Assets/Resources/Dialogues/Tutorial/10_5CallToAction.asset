@@ -10,14 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a6a01461a8db624aa899ac2a97fd5da, type: 3}
-  m_Name: 11ExplainSprint
+  m_Name: 10_5CallToAction
   m_EditorClassIdentifier: 
-  text: "Oh, yeah #0.3 I should also remind you to <u>sprint</u> holding the <u>shift</u>
-    key. Dance-walking like that won't get you very far I'm afraid.\r\nDo be careful
-    though, as <u>sprinting raises aliens' suspicion</u> very quickly! #3 \r\nIt's
-    up to you now. Good luck!"
-  delay: 0.5
-  maxDuration: 8
+  text: Go on, try to use that to <u>open the door</u> to your right with the lever
+    and then escape through it!
+  delay: 0
+  maxDuration: 5
   speedModifier: 1
   fontSizeModifier: 1
   skippable: 0

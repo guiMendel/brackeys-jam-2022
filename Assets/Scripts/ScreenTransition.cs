@@ -32,14 +32,22 @@ public class ScreenTransition : MonoBehaviour
 
   bool setSpawnPointsOnLoad = false;
 
+  // Objects being transitioned
+  List<GameObject> objectsInTransition = new List<GameObject>();
+
 
   private void OnCollisionEnter2D(Collision2D other)
   {
+    // If it's already in transition, ignore
+    if (objectsInTransition.Contains(other.gameObject)) return;
+
     StartCoroutine(Transition(other.gameObject.GetComponent<Movement>()));
   }
 
   private IEnumerator Transition(Movement character)
   {
+    objectsInTransition.Add(character.gameObject);
+
     OnTransitionStart.Invoke();
 
     Rigidbody2D characterBody = character.GetComponent<Rigidbody2D>();
@@ -86,6 +94,8 @@ public class ScreenTransition : MonoBehaviour
 
     if (persistAsSpawnPoints && playerController != null) PersistSpawnPoints();
     if (eraseTrackedLives) EraseTrackedLives();
+
+    objectsInTransition.Remove(character.gameObject);
   }
 
   private void EraseTrackedLives()

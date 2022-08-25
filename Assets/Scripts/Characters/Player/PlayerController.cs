@@ -108,8 +108,6 @@ public class PlayerController : MonoBehaviour
 
   private void Start()
   {
-    print(SpawnArea);
-
     PickSpawnPosition();
 
     OnSpawnPlayer.Invoke(transform.position);

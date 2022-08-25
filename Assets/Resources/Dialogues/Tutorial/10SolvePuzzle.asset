@@ -12,16 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a6a01461a8db624aa899ac2a97fd5da, type: 3}
   m_Name: 10SolvePuzzle
   m_EditorClassIdentifier: 
-  text: "Long story short, that means you can <u>record your moves</u>, and they
-    will get replayed everytime you die. #0.5 \r\nGo on, #F try to use that to <u>open
-    the door</u> to your right with the lever and then escape through it!"
+  text: Long story short, that means you can <u>record your moves</u>, and they will
+    get replayed everytime you die.
   delay: 0
   maxDuration: 0
   speedModifier: 1
   fontSizeModifier: 1
-  skippable: 0
-  followUp: {fileID: 0}
-  followUpDelay: 1
+  skippable: 1
+  followUp: {fileID: 11400000, guid: 99802f27e2f2c2a41a2d2323e8c9667a, type: 2}
+  followUpDelay: 2
   OnStart:
     m_PersistentCalls:
       m_Calls: []
