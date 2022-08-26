@@ -36,13 +36,13 @@ public class Movement : MonoBehaviour
 
   Vector2 _nonRigidbodySpeed = Vector2.zero;
 
-  Vector2? destination;
-
   // Whether control over the object's movement was conceded to the navMesh
   bool controlDisabled = false;
 
 
   // === PROPERTIES
+
+  public Vector2? Destination {get; private set;}
 
   public Vector2 Speed
   {
@@ -71,11 +71,18 @@ public class Movement : MonoBehaviour
 
   // === INTERFACE
 
-  public void SetTargetMovement(Vector2 movementDirection) { SetTargetMovement(movementDirection, true); }
+
+  public void SetTargetMovement(Vector2 movementDirection, bool stopMoveTo = true)
+  {
+    MovementDirection = movementDirection;
+
+    if (stopMoveTo) Destination = null;
+    controlDisabled = false;
+  }
 
   public void MoveTo(Vector2 targetPosition)
   {
-    destination = targetPosition;
+    Destination = targetPosition;
   }
 
   public void SnapTo(Vector2 position)
@@ -110,14 +117,6 @@ public class Movement : MonoBehaviour
     }
   }
 
-  private void SetTargetMovement(Vector2 movementDirection, bool stopMoveTo)
-  {
-    MovementDirection = movementDirection;
-
-    if (stopMoveTo) destination = null;
-    controlDisabled = false;
-  }
-
   private void Start()
   {
     // Init render order
@@ -144,10 +143,10 @@ public class Movement : MonoBehaviour
 
   private void FollowDestination()
   {
-    if (destination == null) return;
+    if (Destination == null) return;
 
     // Gets distance to target
-    Vector2 targetDistance = destination.Value - (Vector2)transform.position;
+    Vector2 targetDistance = Destination.Value - (Vector2)transform.position;
 
     // If no direct path AND can use navMesh, use it
     // if (useNavMesh)
@@ -157,7 +156,7 @@ public class Movement : MonoBehaviour
       controlDisabled = true;
 
       // Use navMesh
-      navMeshAgent.SetDestination(destination.Value);
+      navMeshAgent.SetDestination(Destination.Value);
 
       return;
     }
@@ -171,10 +170,10 @@ public class Movement : MonoBehaviour
     if (targetDistance.sqrMagnitude <= snapDistance * snapDistance)
     {
       // Snap
-      SnapTo(destination.Value);
+      SnapTo(Destination.Value);
 
       // Done
-      destination = null;
+      Destination = null;
 
       return;
     }

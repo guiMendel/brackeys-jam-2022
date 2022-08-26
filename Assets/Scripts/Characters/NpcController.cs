@@ -23,6 +23,8 @@ public class NpcController : MonoBehaviour
   // Coroutine to turn into alien
   Coroutine turnCoroutine;
 
+  public Vector2 initialPosition;
+
 
   // === REFS
 
@@ -61,6 +63,11 @@ public class NpcController : MonoBehaviour
     // Store the npc skin
     newAlien.NpcSkin = GetComponent<Skin>().ActiveSkin;
 
+    // Store it's confine area
+    newAlien.NpcConfine = confine.movementArea;
+    newAlien.NpcPosition = initialPosition;
+    newAlien.NpcIdleChance = idleChance;
+
     // Apply modifier
     newAlien.maxOffset = newAlien.maxOffset * alienTargetManager.angleOffsetModifier;
 
@@ -85,6 +92,8 @@ public class NpcController : MonoBehaviour
 
   private void OnEnable()
   {
+    initialPosition = transform.position;
+    
     // Start the movement cycles
     StartRandomWalk();
 
@@ -125,6 +134,8 @@ public class NpcController : MonoBehaviour
 
   private void StartNewCycle(Vector2 direction, bool idle)
   {
+    if (idle && movement.Destination != null) return;
+    
     movement.SetTargetMovement(idle ? Vector2.zero : direction);
   }
 

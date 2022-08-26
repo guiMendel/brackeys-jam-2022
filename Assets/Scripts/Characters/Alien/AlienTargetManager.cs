@@ -160,6 +160,11 @@ public class AlienTargetManager : MonoBehaviour
 
   private void Start()
   {
+    // Register any already present aliens
+    var aliens = FindObjectsOfType<NpcController>().Where(npc => npc.CompareTag("Alien"));
+
+    foreach (NpcController alien in aliens) RegisterAlien(alien.gameObject);
+
     // Allocate aliens
     SpawnAliens();
   }
@@ -185,11 +190,15 @@ public class AlienTargetManager : MonoBehaviour
   private void SpawnAlien(bool skipIntroAnimation = false)
   {
     // Create it
-    GameObject newNpc = npcManager.CreateNpc(skipIntroAnimation);
+    RegisterAlien(npcManager.CreateNpc(skipIntroAnimation));
+  }
 
+  private void RegisterAlien(GameObject newNpc)
+  {
     // Add it to our list
     Aliens.Add(newNpc);
 
+    // Set it's tag
     newNpc.tag = "Alien";
 
     // Listen to it's death

@@ -5205,7 +5205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b314bb082fa338a48aa75234f3c5775f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootRange: 6
+  shootRange: 4
   laserOrigin: {fileID: 8367217594639813686}
   shoulder: {fileID: 8647524651487381959}
   offsetVariation: 3000
@@ -5227,6 +5227,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   idleChance: 0
   movementCycleDurationLimits: {x: 0.05, y: 0.5}
+  initialPosition: {x: 0, y: 0}
 --- !u!95 &-5174717532415457451
 Animator:
   serializedVersion: 4

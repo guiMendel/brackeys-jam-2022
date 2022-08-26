@@ -41,6 +41,12 @@ public class AlienController : MonoBehaviour
   // What was the npc skin before transforming into an alien
   public RuntimeAnimatorController NpcSkin { get; set; }
 
+  // What was it's confine area
+  public BoxCollider2D NpcConfine { get; set; }
+
+  public float NpcIdleChance { get; set; }
+  public Vector2 NpcPosition { get; set; }
+
   // Coroutine to turn into npc
   Coroutine turnCoroutine;
 
@@ -125,8 +131,20 @@ public class AlienController : MonoBehaviour
     // Give it's skin back
     if (NpcSkin != null) newNpc.GetComponent<Skin>().ActiveSkin = NpcSkin;
 
+    // Give it's confine area
+    newNpc.GetComponent<AreaConfine>().movementArea = NpcConfine;
+
     // Play the npc's particles
     newNpc.GetComponent<ParticleSystem>().Play();
+
+    // Give it it's idle config back
+    var npcController = newNpc.GetComponent<NpcController>();
+    
+    npcController.idleChance = NpcIdleChance;
+    npcController.initialPosition = NpcPosition;
+
+    // Make it go back to it's initial position
+    newNpc.GetComponent<Movement>().MoveTo(NpcPosition);
 
     // Update alien target manager
     alienTargetManager.SwitchAlienObject(gameObject, newNpc);
