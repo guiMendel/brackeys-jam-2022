@@ -13,6 +13,8 @@ public class LaserVulnerable : MonoBehaviour
 
   public bool godMode = false;
 
+  public float destroyDelay = 0f;
+
 
   // === STATE
 
@@ -23,7 +25,7 @@ public class LaserVulnerable : MonoBehaviour
   {
     OnDeath ??= new UnityEvent();
 
-    EnsureNotNull.Objects(OnDeath, destroyTarget);
+    EnsureNotNull.Objects(OnDeath);
   }
 
 
@@ -35,7 +37,16 @@ public class LaserVulnerable : MonoBehaviour
 
     OnDeath.Invoke();
 
-    destroyTarget.SetActive(false);
-    Destroy(destroyTarget);
+    GameObject target = destroyTarget == null ? gameObject : destroyTarget;
+
+    StartCoroutine(DestroyDelayed(target));
+  }
+
+  private IEnumerator DestroyDelayed(GameObject target)
+  {
+    if (destroyDelay > 0f) yield return new WaitForSeconds(destroyDelay);
+
+    target.SetActive(false);
+    Destroy(target);
   }
 }
