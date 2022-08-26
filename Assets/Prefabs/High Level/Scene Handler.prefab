@@ -45,3 +45,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preRestartCurtainCloseTime: 1
+  RestartSceneAction:
+    m_Name: Restart Scene
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: cad2f22e-2205-417e-95f9-ce3b65c54ce9
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 66fa7c78-22af-4c6c-b84b-5d52fb2f1deb
+      m_Path: '*/{Cancel}'
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Restart Scene
+      m_Flags: 0
+    m_Flags: 0

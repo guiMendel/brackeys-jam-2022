@@ -199,7 +199,7 @@ public class PlayerLifeTracker : MonoBehaviour
 
   private void StartNewLifeEntry(Vector2 startingPosition)
   {
-    if (disregardCurrentLife) return;
+    disregardCurrentLife = false;
 
     currentLifeEntry = new LifeEntry(
       startingPosition, FindObjectOfType<PlayerController>().GetComponent<Skin>().ActiveSkin

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class SceneHandler : MonoBehaviour
@@ -10,6 +11,8 @@ public class SceneHandler : MonoBehaviour
 
   public float preRestartCurtainCloseTime = 1f;
 
+  public InputAction RestartSceneAction;
+
 
   // === STATE
 
@@ -17,6 +20,7 @@ public class SceneHandler : MonoBehaviour
   Bounds checkpointSpawnPosition;
   Vector2 checkpointSpawnPositionCamera;
   bool ignoreReload = false;
+  bool restarting = false;
 
 
   // === REFS
@@ -39,6 +43,15 @@ public class SceneHandler : MonoBehaviour
     if (ignoreReload) return;
 
     StartCoroutine(LoadSceneIn(SceneManager.GetActiveScene().name, delay));
+  }
+
+  public void Restart(InputAction.CallbackContext context)
+  {
+    if (context.performed == false || restarting) return;
+    restarting = true;
+
+    ResetStates();
+    ReloadScene();
   }
 
   public void LoadNextScene(string sceneName)
@@ -82,16 +95,21 @@ public class SceneHandler : MonoBehaviour
   private void OnEnable()
   {
     SceneManager.sceneLoaded += OnSceneLoaded;
+    RestartSceneAction.performed += Restart;
+    RestartSceneAction.Enable();
   }
 
   private void OnDisable()
   {
     SceneManager.sceneLoaded -= OnSceneLoaded;
+    RestartSceneAction.performed -= Restart;
+    RestartSceneAction.Disable();
   }
 
   private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
   {
     UseCheckpoint();
+    restarting = false;
   }
 
   private void UseCheckpoint()
