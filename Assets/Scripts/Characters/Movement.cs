@@ -153,8 +153,6 @@ public class Movement : MonoBehaviour
     // if (useNavMesh)
     if (useNavMesh && DirectPathOver(targetDistance) == false)
     {
-      print("using navMesh");
-
       // Cancel this script's influence over movement
       controlDisabled = true;
 
@@ -163,8 +161,6 @@ public class Movement : MonoBehaviour
 
       return;
     }
-
-    print("NOT using navMesh");
 
     // Otherwise, use own movement
     controlDisabled = false;
@@ -208,7 +204,6 @@ public class Movement : MonoBehaviour
 
   private void Accelerate()
   {
-    if (gameObject.name == "Alien(Clone)") print(controlDisabled);
     if (controlDisabled) return;
 
     // Acceleration with time scale

@@ -596,7 +596,7 @@ GameObject:
   - component: {fileID: 870954747}
   - component: {fileID: 870954748}
   - component: {fileID: 870954750}
-  m_Layer: 7
+  m_Layer: 16
   m_Name: Inner Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2725,7 +2725,7 @@ PrefabInstance:
       objectReference: {fileID: 843585266}
     - target: {fileID: 114866023, guid: 6a5271c1469b2d2448cc520c7ee5202a, type: 3}
       propertyPath: godMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5179717209115902473, guid: 6a5271c1469b2d2448cc520c7ee5202a, type: 3}
       propertyPath: initialArea
@@ -2773,11 +2773,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5179717209115902479, guid: 6a5271c1469b2d2448cc520c7ee5202a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.7
+      value: 1.75
       objectReference: {fileID: 0}
     - target: {fileID: 5179717209115902479, guid: 6a5271c1469b2d2448cc520c7ee5202a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.58
+      value: 2.4
       objectReference: {fileID: 0}
     - target: {fileID: 5179717209115902479, guid: 6a5271c1469b2d2448cc520c7ee5202a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2822,7 +2822,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5595788596688166964, guid: af0f1b902591d8d4d866c4bd090321d3, type: 3}
       propertyPath: alienCount
-      value: 1
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5595788596688166965, guid: af0f1b902591d8d4d866c4bd090321d3, type: 3}
       propertyPath: m_Name
@@ -2952,7 +2952,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8050839299892597863, guid: 09560a18bebf1e74aa3277faca5911b8, type: 3}
       propertyPath: npcCount
-      value: 0
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8050839299892597863, guid: 09560a18bebf1e74aa3277faca5911b8, type: 3}
       propertyPath: runtimeSpawnOrigin

@@ -119,10 +119,8 @@ public class NpcController : MonoBehaviour
       movementCoroutine = null;
     }
 
-    print("return dude!");
-
     // Set starting angle to the inverse of the collision angle
-    movement.MoveTo(confine.transform.position);
+    movement.MoveTo(confine.movementArea.bounds.center);
   }
 
   private void StartNewCycle(Vector2 direction, bool idle)

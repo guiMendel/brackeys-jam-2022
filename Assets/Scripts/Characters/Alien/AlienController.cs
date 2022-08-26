@@ -64,6 +64,7 @@ public class AlienController : MonoBehaviour
   // === INTERFACE
 
   // Whether is in range to shoot the target
+  // acho que ta meio esquisito aqui
   public bool InRange(GameObject target)
   {
     // Guarantee there's a target
