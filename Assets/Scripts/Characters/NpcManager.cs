@@ -80,7 +80,15 @@ public class NpcManager : MonoBehaviour
         Random.Range(movementArea.bounds.min.y + 1, movementArea.bounds.max.y - 1)
       );
     }
-    else position = runtimeSpawnOrigin[Random.Range(0, runtimeSpawnOrigin.Count)].position;
+    else
+    {
+      Transform spawn = runtimeSpawnOrigin[Random.Range(0, runtimeSpawnOrigin.Count)];
+
+      position = spawn.position;
+
+      // Open it's door if possible
+      spawn.GetComponent<OpenDoor>()?.Open();
+    }
 
     // Create it 
     GameObject npc = CreateNpcAt(position);
