@@ -50,7 +50,7 @@ public class SceneHandler : MonoBehaviour
     if (context.performed == false || restarting) return;
     restarting = true;
 
-    ResetStates();
+    ResetStates(lifeTracksOnly: true);
     ReloadScene();
   }
 
@@ -62,11 +62,12 @@ public class SceneHandler : MonoBehaviour
   }
 
 
-  private void ResetStates()
+  private void ResetStates(bool lifeTracksOnly = false)
   {
-    checkpointEnabled = false;
-    FindObjectOfType<DialogueHandler>().ResetDialogues();
     FindObjectOfType<PlayerLifeTracker>().EraseEntries();
+    if (lifeTracksOnly) return;
+    FindObjectOfType<DialogueHandler>().ResetDialogues();
+    checkpointEnabled = false;
   }
 
   private void SingletonCheck()

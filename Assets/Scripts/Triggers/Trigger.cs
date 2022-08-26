@@ -14,6 +14,9 @@ public class Trigger : MonoBehaviour
   [Tooltip("Whether it only triggers once")]
   public bool oneShot = false;
 
+  [Tooltip("Whether it's player controlled only")]
+  public bool playerControlledOnly;
+
   public UnityEvent OnTrigger;
 
 
@@ -24,7 +27,10 @@ public class Trigger : MonoBehaviour
 
   private void OnTriggerEnter2D(Collider2D other)
   {
-    if (oneShot && triggered) return;
+    if (
+      oneShot && triggered
+      || playerControlledOnly && other.GetComponent<PlayerController>() == null
+    ) return;
     triggered = true;
 
     foreach (var target in targets) target.Trigger();
