@@ -88,11 +88,11 @@ GameObject:
   - component: {fileID: 8464543620918312335}
   - component: {fileID: 8464543620918312368}
   - component: {fileID: 8464543620918312369}
-  - component: {fileID: 8464543620918312370}
   - component: {fileID: 1440629787978504825}
   - component: {fileID: 8014436061447483611}
   - component: {fileID: 4763365271077450998}
   - component: {fileID: 8718800462419330295}
+  - component: {fileID: 1427692223988518397}
   m_Layer: 11
   m_Name: Tracked Life NPC
   m_TagString: Untagged
@@ -204,35 +204,10 @@ MonoBehaviour:
   acceleration: 11
   maxSpeed: 2.5
   useRigidbody2D: 1
+  useNavMesh: 0
   adjustSpriteRenderingOrder: 1
   adjustScaleDirection: 1
   snapDistance: 0.05
---- !u!61 &8464543620918312370
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8464543620918312373}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.02, y: -0.345}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 0.96, y: 1.28}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.3, y: 0.3}
-  m_EdgeRadius: 0
 --- !u!114 &1440629787978504825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,3 +270,19 @@ MonoBehaviour:
   - {fileID: 9100000, guid: 8a222c7214203d040934dc4d50f32dcb, type: 2}
   - {fileID: 9100000, guid: 6646242a53e77d0428f7a7b09fe37cb1, type: 2}
   - {fileID: 9100000, guid: 809525c789a102049947b539002ba487, type: 2}
+--- !u!58 &1427692223988518397
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8464543620918312373}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.3}
+  serializedVersion: 2
+  m_Radius: 0.2

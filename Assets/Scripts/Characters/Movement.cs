@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Movement : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class Movement : MonoBehaviour
 
   [Tooltip("Whether to use a rigidbody")]
   public bool useRigidbody2D = true;
+
+  [Tooltip("Whether to use navMesh when there isn't a clear path directly to the target")]
+  public bool useNavMesh = false;
 
   [Tooltip("Whether to adjust sprite render order")]
   public bool adjustSpriteRenderingOrder = true;
@@ -32,17 +36,26 @@ public class Movement : MonoBehaviour
 
   Vector2 _nonRigidbodySpeed = Vector2.zero;
 
-  Coroutine moveToCoroutine;
+  Vector2? destination;
+
+  // Whether control over the object's movement was conceded to the navMesh
+  bool controlDisabled = false;
 
 
   // === PROPERTIES
 
   public Vector2 Speed
   {
-    get { return useRigidbody2D ? body.velocity : _nonRigidbodySpeed; }
+    get
+    {
+      if (useNavMesh) return navMeshAgent.velocity;
+      if (useRigidbody2D) return body.velocity;
+      return _nonRigidbodySpeed;
+    }
     private set
     {
-      if (useRigidbody2D) body.velocity = value;
+      if (useNavMesh) navMeshAgent.velocity = value;
+      else if (useRigidbody2D) body.velocity = value;
       else _nonRigidbodySpeed = value;
     }
   }
@@ -52,26 +65,28 @@ public class Movement : MonoBehaviour
 
   Rigidbody2D body;
   SpriteRenderer spriteRenderer;
+  NavMeshAgent navMeshAgent;
+  CircleCollider2D circleCollider2D;
 
 
   // === INTERFACE
 
   public void SetTargetMovement(Vector2 movementDirection) { SetTargetMovement(movementDirection, true); }
 
-  public Coroutine MoveTo(Vector2 targetPosition)
+  public void MoveTo(Vector2 targetPosition)
   {
-    StopMoveTo();
-
-    moveToCoroutine = StartCoroutine(MoveToCoroutine(targetPosition));
-
-    return moveToCoroutine;
+    destination = targetPosition;
   }
 
   public void SnapTo(Vector2 position)
   {
     Speed = Vector2.zero;
     MovementDirection = Vector2.zero;
-    transform.position = new Vector3(position.x, position.y, transform.position.z);
+
+    Vector3 newPosition = new Vector3(position.x, position.y, transform.position.z);
+
+    if (useNavMesh) navMeshAgent.Warp(newPosition);
+    else transform.position = newPosition;
   }
 
 
@@ -79,43 +94,28 @@ public class Movement : MonoBehaviour
   {
     body = GetComponent<Rigidbody2D>();
     spriteRenderer = GetComponent<SpriteRenderer>();
+    navMeshAgent = GetComponent<NavMeshAgent>();
+    circleCollider2D = GetComponent<CircleCollider2D>();
 
     if (useRigidbody2D) EnsureNotNull.Objects(body);
     if (adjustSpriteRenderingOrder) EnsureNotNull.Objects(spriteRenderer);
-  }
-
-  private IEnumerator MoveToCoroutine(Vector2 targetPosition)
-  {
-    // Gets distance to target
-    Vector2 TargetDistance() { return (targetPosition - (Vector2)transform.position); }
-
-    while (TargetDistance().sqrMagnitude > snapDistance * snapDistance)
+    if (useNavMesh)
     {
-      // Set speed
-      SetTargetMovement(TargetDistance().normalized, stopMoveTo: false);
+      EnsureNotNull.Objects(navMeshAgent, circleCollider2D);
 
-      yield return new WaitForEndOfFrame();
+      navMeshAgent.updateRotation = false;
+      navMeshAgent.updateUpAxis = false;
+      navMeshAgent.acceleration = acceleration;
+      navMeshAgent.speed = maxSpeed;
     }
-
-    // Snap
-    SnapTo(targetPosition);
-
-    moveToCoroutine = null;
   }
 
   private void SetTargetMovement(Vector2 movementDirection, bool stopMoveTo)
   {
     MovementDirection = movementDirection;
 
-    if (stopMoveTo) StopMoveTo();
-  }
-
-  private void StopMoveTo()
-  {
-    if (moveToCoroutine == null) return;
-
-    StopCoroutine(moveToCoroutine);
-    moveToCoroutine = null;
+    if (stopMoveTo) destination = null;
+    controlDisabled = false;
   }
 
   private void Start()
@@ -126,13 +126,76 @@ public class Movement : MonoBehaviour
 
   private void Update()
   {
-    Move();
+    // Update move direction, if with a destination
+    FollowDestination();
 
-    if (useRigidbody2D == false) NonRigidbodyMove();
+    // Update speed
+    Accelerate();
+
+    // If not using rigid body, manually displace the position
+    if (useRigidbody2D == false) DisplacePosition();
+
+    // Update render order
+    SetRenderOrder();
+
+    // Update scale direction
+    SetScaleDirection();
   }
 
-  private void NonRigidbodyMove()
+  private void FollowDestination()
   {
+    if (destination == null) return;
+
+    // Gets distance to target
+    Vector2 targetDistance = destination.Value - (Vector2)transform.position;
+
+    // If no direct path AND can use navMesh, use it
+    // if (useNavMesh)
+    if (useNavMesh && DirectPathOver(targetDistance) == false)
+    {
+      print("using navMesh");
+
+      // Cancel this script's influence over movement
+      controlDisabled = true;
+
+      // Use navMesh
+      navMeshAgent.SetDestination(destination.Value);
+
+      return;
+    }
+
+    print("NOT using navMesh");
+
+    // Otherwise, use own movement
+    controlDisabled = false;
+
+    if (useNavMesh) navMeshAgent.ResetPath();
+
+    // Check if arrived
+    if (targetDistance.sqrMagnitude <= snapDistance * snapDistance)
+    {
+      // Snap
+      SnapTo(destination.Value);
+
+      // Done
+      destination = null;
+
+      return;
+    }
+
+    // Set speed
+    SetTargetMovement(targetDistance.normalized, stopMoveTo: false);
+  }
+
+  private bool DirectPathOver(Vector2 path)
+  {
+    return circleCollider2D.Cast(path, new RaycastHit2D[1], path.magnitude, true) == 0;
+  }
+
+  private void DisplacePosition()
+  {
+    if (controlDisabled) return;
+
     transform.position += new Vector3(Speed.x, Speed.y, 0f) * Time.deltaTime;
   }
 
@@ -143,8 +206,11 @@ public class Movement : MonoBehaviour
     spriteRenderer.sortingOrder = -Mathf.RoundToInt(transform.position.y * 100);
   }
 
-  private void Move()
+  private void Accelerate()
   {
+    if (gameObject.name == "Alien(Clone)") print(controlDisabled);
+    if (controlDisabled) return;
+
     // Acceleration with time scale
     float scaledAcceleration = acceleration * Time.deltaTime;
 
@@ -156,20 +222,14 @@ public class Movement : MonoBehaviour
 
     // Set movement
     Speed = movementTarget * scaledAcceleration + Speed * (1 - scaledAcceleration);
-
-    // Update render order
-    SetRenderOrder();
-
-    // Update scale direction
-    SetScaleDirection();
   }
 
   private void SetScaleDirection()
   {
     // Ignore if moving very little
-    if (adjustScaleDirection == false || Mathf.Abs(MovementDirection.x) < 0.2f) return;
+    if (adjustScaleDirection == false || Mathf.Abs(Speed.x) < 0.2f) return;
 
-    if (MovementDirection.x < 0f) transform.localScale = new Vector3(-1f, 1f, 1f);
+    if (Speed.x < 0f) transform.localScale = new Vector3(-1f, 1f, 1f);
     else transform.localScale = Vector3.one;
   }
 }

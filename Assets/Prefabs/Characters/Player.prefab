@@ -89,11 +89,11 @@ GameObject:
   - component: {fileID: 5179717209115902473}
   - component: {fileID: 5179717209115902472}
   - component: {fileID: 5179717209115902474}
-  - component: {fileID: -1092515670685932520}
   - component: {fileID: -380891646891640602}
   - component: {fileID: -5563711406499440224}
   - component: {fileID: -6593884726718865220}
   - component: {fileID: 2198536488029219312}
+  - component: {fileID: 5368471351632580895}
   m_Layer: 11
   m_Name: Player
   m_TagString: Untagged
@@ -231,35 +231,10 @@ MonoBehaviour:
   acceleration: 11
   maxSpeed: 2.5
   useRigidbody2D: 1
+  useNavMesh: 0
   adjustSpriteRenderingOrder: 1
   adjustScaleDirection: 1
   snapDistance: 0.05
---- !u!61 &-1092515670685932520
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5179717209115902477}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.02, y: -0.345}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 0.96, y: 1.28}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.3, y: 0.3}
-  m_EdgeRadius: 0
 --- !u!114 &-380891646891640602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -332,3 +307,19 @@ MonoBehaviour:
   - {fileID: 9100000, guid: 8a222c7214203d040934dc4d50f32dcb, type: 2}
   - {fileID: 9100000, guid: 6646242a53e77d0428f7a7b09fe37cb1, type: 2}
   - {fileID: 9100000, guid: 809525c789a102049947b539002ba487, type: 2}
+--- !u!58 &5368471351632580895
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5179717209115902477}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.3}
+  serializedVersion: 2
+  m_Radius: 0.2

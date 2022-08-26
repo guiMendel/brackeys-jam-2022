@@ -13,6 +13,8 @@ public class TutorialExitDoor : Triggerable
     Vector2 targetPosition = (Vector2)transform.position + Vector2.up * ownCollider.bounds.extents.y * 2;
 
     // Move towards it
-    yield return movement.MoveTo(targetPosition);
+    movement.MoveTo(targetPosition);
+
+    yield break;
   }
 }

@@ -117,7 +117,7 @@ public class PlayerController : MonoBehaviour
   {
     if (SpawnArea == null) return;
 
-    BoxCollider2D ownCollider = GetComponent<BoxCollider2D>();
+    CircleCollider2D ownCollider = GetComponent<CircleCollider2D>();
 
     // Place player inside initial area randomly
     transform.position = SpawnArea.Value.Accommodate(ownCollider);

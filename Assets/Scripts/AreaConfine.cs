@@ -28,12 +28,12 @@ public class AreaConfine : MonoBehaviour
 
   // === REFS
 
-  BoxCollider2D ownCollider;
+  CircleCollider2D ownCollider;
 
 
   private void Awake()
   {
-    ownCollider = GetComponent<BoxCollider2D>();
+    ownCollider = GetComponent<CircleCollider2D>();
 
     OnOutsideConfinement ??= new Event.Vector2();
     OnEnterConfinement ??= new UnityEvent();

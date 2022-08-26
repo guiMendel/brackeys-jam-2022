@@ -5070,12 +5070,13 @@ GameObject:
   - component: {fileID: 8464543620918312335}
   - component: {fileID: 8464543620918312368}
   - component: {fileID: 8464543620918312369}
-  - component: {fileID: 8464543620918312370}
   - component: {fileID: 59774426087496625}
   - component: {fileID: -7878017163447939867}
   - component: {fileID: -5174717532415457451}
   - component: {fileID: 4128271894004574341}
   - component: {fileID: 178757188968963590}
+  - component: {fileID: -1263211931054727985}
+  - component: {fileID: 3130158413148739600}
   m_Layer: 6
   m_Name: Alien
   m_TagString: Alien
@@ -5188,35 +5189,10 @@ MonoBehaviour:
   acceleration: 13
   maxSpeed: 5.5
   useRigidbody2D: 1
+  useNavMesh: 1
   adjustSpriteRenderingOrder: 1
   adjustScaleDirection: 1
   snapDistance: 0.05
---- !u!61 &8464543620918312370
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8464543620918312373}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.02, y: -0.37}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1.03125}
-    newSize: {x: 0.96, y: 1.28}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.3, y: 0.3}
-  m_EdgeRadius: 0
 --- !u!114 &59774426087496625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5229,7 +5205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b314bb082fa338a48aa75234f3c5775f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootRange: 4
+  shootRange: 6
   laserOrigin: {fileID: 8367217594639813686}
   shoulder: {fileID: 8647524651487381959}
   offsetVariation: 3000
@@ -10050,3 +10026,41 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!195 &-1263211931054727985
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8464543620918312373}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 3.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1.03125
+  m_BaseOffset: 0.515625
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!58 &3130158413148739600
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8464543620918312373}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.31}
+  serializedVersion: 2
+  m_Radius: 0.2

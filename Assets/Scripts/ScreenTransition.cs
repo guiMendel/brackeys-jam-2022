@@ -69,7 +69,7 @@ public class ScreenTransition : MonoBehaviour
     if (playerController != null) playerController.disableInput = true;
 
     // Get destination point
-    Vector2 destination = characterDestination.Accommodate(character.GetComponent<BoxCollider2D>());
+    Vector2 destination = characterDestination.Accommodate(character.GetComponent<CircleCollider2D>());
 
     // Send him on his way
     Move(character, destination);

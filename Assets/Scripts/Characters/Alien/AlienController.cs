@@ -66,7 +66,27 @@ public class AlienController : MonoBehaviour
   // Whether is in range to shoot the target
   public bool InRange(GameObject target)
   {
-    return target == null ? false : Vector2.Distance(transform.position, target.transform.position) <= shootRange;
+    // Guarantee there's a target
+    if (target == null) return false;
+
+    // Get distance
+    Vector2 targetDistance = target.transform.position - transform.position;
+
+    // Check that it's under the range
+    if (targetDistance.sqrMagnitude > shootRange * shootRange) return false;
+
+    // Get contact filter
+    ContactFilter2D contactFilter = new ContactFilter2D().NoFilter();
+    contactFilter.SetLayerMask(LayerMask.GetMask("Scenario"));
+
+    // Check if there's a clear shot to it
+    return Physics2D.Raycast(
+      laserOrigin.transform.position,
+      targetDistance,
+      contactFilter,
+      new RaycastHit2D[1],
+      targetDistance.magnitude
+    ) == 0;
   }
 
   public void CancelTurn()
@@ -196,26 +216,18 @@ public class AlienController : MonoBehaviour
     // Stop wandering
     npcController.enabled = false;
 
-    Vector2 targetDirection = (target.transform.position - transform.position).normalized;
-
     // Set movement towards target
-    movement.SetTargetMovement(targetDirection.Rotated(movementOffset));
+    // movement.SetTargetMovement(targetDirection.Rotated(movementOffset));
+    movement.MoveTo(target.transform.position);
   }
 
   private void Shoot(GameObject target)
   {
-    // If reloading, move around
-    if (Reloading)
-    {
-      MoveAround();
-      return;
-    }
+    // Wander
+    npcController.enabled = true;
 
-    // Stop wandering
-    npcController.enabled = false;
-
-    // Stop moving
-    movement.SetTargetMovement(Vector2.zero);
+    // If reloading, do nothing else
+    if (Reloading) return;
 
     // Shoot
     LaserController newLaser = Instantiate(
@@ -247,11 +259,5 @@ public class AlienController : MonoBehaviour
     yield return new WaitForSeconds(time);
 
     Reloading = false;
-  }
-
-  private void MoveAround()
-  {
-    // Enable wandering
-    npcController.enabled = true;
   }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class BoxCollider2DExtension
 {
-  public static Vector2 Accommodate(this BoxCollider2D collider2D, BoxCollider2D otherCollider)
+  public static Vector2 Accommodate(this BoxCollider2D collider2D, Collider2D otherCollider)
   {
     return new Vector2(
       Random.Range(
@@ -15,7 +15,7 @@ public static class BoxCollider2DExtension
       ) + otherCollider.transform.position.y - otherCollider.bounds.center.y
     );
   }
-  public static Vector2 Accommodate(this Bounds bounds, BoxCollider2D otherCollider)
+  public static Vector2 Accommodate(this Bounds bounds, Collider2D otherCollider)
   {
     return new Vector2(
       Random.Range(
