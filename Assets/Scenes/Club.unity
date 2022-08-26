@@ -2453,6 +2453,10 @@ PrefabInstance:
       propertyPath: movementArea
       value: 
       objectReference: {fileID: 843585266}
+    - target: {fileID: 114866023, guid: 6a5271c1469b2d2448cc520c7ee5202a, type: 3}
+      propertyPath: godMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5179717209115902473, guid: 6a5271c1469b2d2448cc520c7ee5202a, type: 3}
       propertyPath: initialArea
       value: 

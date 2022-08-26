@@ -11,6 +11,12 @@ public class AlienController : MonoBehaviour
   [Tooltip("Max shoot range")]
   [Min(0f)] public float shootRange = 4f;
 
+  [Tooltip("Where the laser will come from")]
+  public Transform laserOrigin;
+
+  [Tooltip("Element to rotate to point to the alien's target")]
+  public Transform shoulder;
+
   [Tooltip("Max degrees to vary movement offset, in degrees per second")]
   public float offsetVariation = 1f;
 
@@ -73,12 +79,35 @@ public class AlienController : MonoBehaviour
 
     if (target == null)
     {
+      // Return shoulder to resting position
+      shoulder.rotation = Quaternion.identity;
+
+      // Activate npc behavior
       npcController.enabled = true;
       return;
     }
 
+    AimAt(target.transform.position);
+
     if (InRange(target)) Shoot(target);
     else Chase(target);
+  }
+
+  private void AimAt(Vector3 target)
+  {
+    float targetAngle = Mathf.Atan2(
+      target.y - transform.position.y, target.x - transform.position.x
+    ) * Mathf.Rad2Deg;
+
+    // If flipped, flip the angle too
+    if (transform.localScale.x == -1f)
+    {
+      print("flipping");
+      // targetAngle *= -1f;
+      targetAngle += 180f;
+    }
+
+    shoulder.rotation = Quaternion.Euler(0, 0, targetAngle);
   }
 
   private GameObject GetTarget()
@@ -138,7 +167,7 @@ public class AlienController : MonoBehaviour
 
     // Shoot
     LaserController newLaser = Instantiate(
-      laser, transform.position, Quaternion.identity, GameObject.Find("Projectiles")?.transform
+      laser, laserOrigin.position, Quaternion.identity, GameObject.Find("Projectiles")?.transform
     ).GetComponent<LaserController>();
 
     newLaser.SetTarget(target);

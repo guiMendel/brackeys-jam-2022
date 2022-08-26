@@ -204,8 +204,6 @@ public class PlayerLifeTracker : MonoBehaviour
     currentLifeEntry = new LifeEntry(
       startingPosition, FindObjectOfType<PlayerController>().GetComponent<Skin>().ActiveSkin
     );
-
-    print(currentLifeEntry.skin.name);
   }
 
   private void RegisterMove(Vector2 movementDirection)

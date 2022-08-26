@@ -29,8 +29,6 @@ public class TrackedLifeRepeater : MonoBehaviour
   {
     LifeEntry = PlayerLifeTracker.LifeEntry.Copy(lifeEntry);
     GetComponent<Skin>().ActiveSkin = lifeEntry.skin;
-
-    print(("loaded", lifeEntry.skin.name));
   }
 
 

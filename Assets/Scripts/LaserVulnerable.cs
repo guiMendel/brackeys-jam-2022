@@ -11,6 +11,8 @@ public class LaserVulnerable : MonoBehaviour
 
   public UnityEvent OnDeath;
 
+  public bool godMode = false;
+
 
   // === STATE
 
@@ -27,7 +29,7 @@ public class LaserVulnerable : MonoBehaviour
 
   public void Die()
   {
-    if (Dead) return;
+    if (Dead || godMode) return;
 
     Dead = true;
 
