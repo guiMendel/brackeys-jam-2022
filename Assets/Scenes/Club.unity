@@ -409,6 +409,7 @@ GameObject:
   - component: {fileID: 243398395}
   - component: {fileID: 243398394}
   - component: {fileID: 243398393}
+  - component: {fileID: 243398396}
   m_Layer: 15
   m_Name: Floor
   m_TagString: Untagged
@@ -1869,6 +1870,22 @@ TilemapCollider2D:
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
+--- !u!114 &243398396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243398388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73b32eb7bf64a8b45ab09ef7ac0f52e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  danceArea: {fileID: 843585266}
+  changeFrequency: 1
+  saturation: 0.2
+  colorValue: 0.8
 --- !u!1 &361042902
 GameObject:
   m_ObjectHideFlags: 0
