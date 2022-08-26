@@ -114,6 +114,9 @@ public class AlienTargetManager : MonoBehaviour
     alien.SetActive(false);
     Destroy(alien);
 
+    // Play the npc's particles
+    newNpc.GetComponent<ParticleSystem>().Play();
+
     return newNpc;
   }
 

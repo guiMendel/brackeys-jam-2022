@@ -68,6 +68,8 @@ public class LaserController : MonoBehaviour
 
   private void OnTriggerEnter2D(Collider2D other)
   {
+    PlayParticles();
+
     if (other.gameObject.CompareTag("StopLaser"))
     {
       Stop();
@@ -81,6 +83,15 @@ public class LaserController : MonoBehaviour
 
     // Try to kill it
     hitVulnerable.Die();
+  }
+
+  private void PlayParticles()
+  {
+    foreach (var system in GetComponentsInChildren<ParticleSystem>())
+    {
+      if (GameObject.ReferenceEquals(system.gameObject, gameObject)) continue;
+      system.Emit(Mathf.RoundToInt(system.emission.rateOverTime.constant * system.main.duration));
+    }
   }
 
   private void Stop()

@@ -2455,7 +2455,7 @@ PrefabInstance:
       objectReference: {fileID: 843585266}
     - target: {fileID: 114866023, guid: 6a5271c1469b2d2448cc520c7ee5202a, type: 3}
       propertyPath: godMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5179717209115902473, guid: 6a5271c1469b2d2448cc520c7ee5202a, type: 3}
       propertyPath: initialArea
@@ -2552,7 +2552,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5595788596688166964, guid: af0f1b902591d8d4d866c4bd090321d3, type: 3}
       propertyPath: alienCount
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5595788596688166965, guid: af0f1b902591d8d4d866c4bd090321d3, type: 3}
       propertyPath: m_Name

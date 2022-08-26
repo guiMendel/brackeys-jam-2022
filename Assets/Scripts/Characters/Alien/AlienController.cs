@@ -53,6 +53,8 @@ public class AlienController : MonoBehaviour
   Movement movement;
   NpcController npcController;
   AlienTargetManager alienTargetManager;
+  Animator gunAnimator;
+  ParticleSystem smokeParticles;
 
 
   private void Awake()
@@ -60,8 +62,10 @@ public class AlienController : MonoBehaviour
     movement = GetComponent<Movement>();
     npcController = GetComponent<NpcController>();
     alienTargetManager = FindObjectOfType<AlienTargetManager>();
+    gunAnimator = shoulder.GetComponentInChildren<Animator>();
+    smokeParticles = shoulder.GetComponentInChildren<ParticleSystem>();
 
-    EnsureNotNull.Objects(movement, npcController, alienTargetManager);
+    EnsureNotNull.Objects(movement, npcController, alienTargetManager, gunAnimator, smokeParticles);
   }
 
   private void Start()
@@ -175,6 +179,17 @@ public class AlienController : MonoBehaviour
 
     // Reload
     StartCoroutine(Reload(Random.Range(reloadTime.x, reloadTime.y)));
+
+    // Play animation
+    gunAnimator.Play("kick");
+
+    // Play particles
+    if (transform.localScale.x == -1f)
+    {
+      smokeParticles.transform.localScale = new Vector3(-1f, 1f, 1f);
+    }
+    else smokeParticles.transform.localScale = Vector3.one;
+    smokeParticles.Emit(20);
   }
 
   private IEnumerator Reload(float time)
