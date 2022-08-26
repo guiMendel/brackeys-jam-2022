@@ -64,14 +64,13 @@ public class AlienController : MonoBehaviour
   // === INTERFACE
 
   // Whether is in range to shoot the target
-  // acho que ta meio esquisito aqui
   public bool InRange(GameObject target)
   {
     // Guarantee there's a target
     if (target == null) return false;
 
     // Get distance
-    Vector2 targetDistance = target.transform.position - transform.position;
+    Vector2 targetDistance = target.transform.position - laserOrigin.transform.position;
 
     // Check that it's under the range
     if (targetDistance.sqrMagnitude > shootRange * shootRange) return false;
@@ -80,14 +79,20 @@ public class AlienController : MonoBehaviour
     ContactFilter2D contactFilter = new ContactFilter2D().NoFilter();
     contactFilter.SetLayerMask(LayerMask.GetMask("Scenario"));
 
+    RaycastHit2D[] hits = new RaycastHit2D[1];
+
     // Check if there's a clear shot to it
-    return Physics2D.Raycast(
+    int hitCount = Physics2D.Raycast(
       laserOrigin.transform.position,
       targetDistance,
       contactFilter,
-      new RaycastHit2D[1],
+      hits,
       targetDistance.magnitude
-    ) == 0;
+    );
+
+    if (hitCount > 0) Debug.DrawLine(laserOrigin.transform.position, hits[0].point, Color.magenta);
+
+    return hitCount == 0;
   }
 
   public void CancelTurn()
@@ -211,6 +216,8 @@ public class AlienController : MonoBehaviour
 
   private void Chase(GameObject target)
   {
+    print("Out of Range");
+
     // Change it's movement offset
     ChangeOffset();
 
@@ -224,6 +231,8 @@ public class AlienController : MonoBehaviour
 
   private void Shoot(GameObject target)
   {
+    print("IN RANGE");
+
     // Wander
     npcController.enabled = true;
 
