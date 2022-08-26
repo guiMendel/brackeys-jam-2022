@@ -20,11 +20,60 @@ public class NpcController : MonoBehaviour
   // The coroutine that keeps changing it's movement
   Coroutine movementCoroutine;
 
+  // Coroutine to turn into alien
+  Coroutine turnCoroutine;
+
 
   // === REFS
 
   Movement movement;
   AreaConfine confine;
+
+
+  // === INTERFACE
+
+  public void CancelTurn()
+  {
+    if (turnCoroutine == null) return;
+    StopCoroutine(turnCoroutine);
+    turnCoroutine = null;
+  }
+
+  public void TurnIntoAlien(float delay = 0)
+  {
+    CancelTurn();
+
+    turnCoroutine = StartCoroutine(TurnIntoAlienCoroutine(delay));
+  }
+
+  private IEnumerator TurnIntoAlienCoroutine(float delay = 0)
+  {
+    yield return new WaitForSeconds(delay);
+
+    // Stop if is in move animation
+    if (GetComponent<SpawnAnimationScript>() != null) yield break;
+
+    AlienTargetManager alienTargetManager = FindObjectOfType<AlienTargetManager>();
+
+    // Create alien in this position
+    AlienController newAlien = alienTargetManager.CreateAlienAt(transform);
+
+    // Store the npc skin
+    newAlien.NpcSkin = GetComponent<Skin>().ActiveSkin;
+
+    // Apply modifier
+    newAlien.maxOffset = newAlien.maxOffset * alienTargetManager.angleOffsetModifier;
+
+    newAlien.tag = "Alien";
+
+    alienTargetManager.SwitchAlienObject(gameObject, newAlien.gameObject);
+
+    turnCoroutine = null;
+
+    // Remove the npc
+    gameObject.SetActive(false);
+    Destroy(gameObject);
+  }
 
   private void Awake()
   {

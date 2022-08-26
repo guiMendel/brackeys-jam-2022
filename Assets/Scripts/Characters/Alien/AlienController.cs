@@ -41,6 +41,9 @@ public class AlienController : MonoBehaviour
   // What was the npc skin before transforming into an alien
   public RuntimeAnimatorController NpcSkin { get; set; }
 
+  // Coroutine to turn into npc
+  Coroutine turnCoroutine;
+
 
   // === PROPERTIES
 
@@ -55,6 +58,57 @@ public class AlienController : MonoBehaviour
   AlienTargetManager alienTargetManager;
   Animator gunAnimator;
   ParticleSystem smokeParticles;
+  NpcManager npcManager;
+
+
+  // === INTERFACE
+
+  // Whether is in range to shoot the target
+  public bool InRange(GameObject target)
+  {
+    return target == null ? false : Vector2.Distance(transform.position, target.transform.position) <= shootRange;
+  }
+
+  public void CancelTurn()
+  {
+    if (turnCoroutine == null) return;
+    StopCoroutine(turnCoroutine);
+    turnCoroutine = null;
+  }
+
+  public void TurnIntoNpc(float delay = 0)
+  {
+    CancelTurn();
+
+    turnCoroutine = StartCoroutine(TurnIntoNpcCoroutine(delay));
+  }
+
+  private IEnumerator TurnIntoNpcCoroutine(float delay = 0)
+  {
+    yield return new WaitForSeconds(delay);
+
+    // Stop if is in move animation
+    if (GetComponent<SpawnAnimationScript>() != null) yield break;
+
+    // Create npc where alien is
+    GameObject newNpc = npcManager.CreateNpcAt(transform.position);
+
+    // Mark npc as alien
+    newNpc.tag = "Alien";
+
+    // Give it's skin back
+    if (NpcSkin != null) newNpc.GetComponent<Skin>().ActiveSkin = NpcSkin;
+
+    // Play the npc's particles
+    newNpc.GetComponent<ParticleSystem>().Play();
+
+    // Update alien target manager
+    alienTargetManager.SwitchAlienObject(gameObject, newNpc);
+
+    // Remove the alien
+    gameObject.SetActive(false);
+    Destroy(gameObject);
+  }
 
 
   private void Awake()
@@ -62,10 +116,11 @@ public class AlienController : MonoBehaviour
     movement = GetComponent<Movement>();
     npcController = GetComponent<NpcController>();
     alienTargetManager = FindObjectOfType<AlienTargetManager>();
+    npcManager = FindObjectOfType<NpcManager>();
     gunAnimator = shoulder.GetComponentInChildren<Animator>();
     smokeParticles = shoulder.GetComponentInChildren<ParticleSystem>();
 
-    EnsureNotNull.Objects(movement, npcController, alienTargetManager, gunAnimator, smokeParticles);
+    EnsureNotNull.Objects(movement, npcController, alienTargetManager, gunAnimator, smokeParticles, npcManager);
   }
 
   private void Start()
@@ -106,7 +161,6 @@ public class AlienController : MonoBehaviour
     // If flipped, flip the angle too
     if (transform.localScale.x == -1f)
     {
-      print("flipping");
       // targetAngle *= -1f;
       targetAngle += 180f;
     }
@@ -123,12 +177,6 @@ public class AlienController : MonoBehaviour
       .ActiveTargets
       .OrderBy(target => Vector2.Distance(target.transform.position, transform.position))
       .ElementAt(0);
-  }
-
-  // Whether is in range to shoot the target
-  public bool InRange(GameObject target)
-  {
-    return target == null ? false : Vector2.Distance(transform.position, target.transform.position) <= shootRange;
   }
 
   private void ChangeOffset()

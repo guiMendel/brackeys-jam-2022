@@ -20,6 +20,12 @@ public class AlienTargetManager : MonoBehaviour
   [Tooltip("How long aliens may take to respawn")]
   public Vector2 respawnTime = new Vector2(0.5f, 2f);
 
+  [Tooltip("How long aliens may take to appear")]
+  public Vector2 appearTime = new Vector2(0f, 0.6f);
+
+  [Tooltip("How long aliens may take to hide")]
+  public Vector2 hideTime = new Vector2(0.2f, 1.5f);
+
 
   // === STATE
 
@@ -47,10 +53,39 @@ public class AlienTargetManager : MonoBehaviour
     ActivateAliens();
 
     // When target perishes, remove it from list
-    TrackDeath(target);
+    TrackTargetDeath(target);
   }
 
-  private void TrackDeath(GameObject target)
+  public void SwitchAlienObject(GameObject oldObject, GameObject newObject)
+  {
+    Aliens.Remove(oldObject);
+    Aliens.Add(newObject);
+
+    TrackAlienDeath(newObject);
+  }
+
+  public void SwitchTarget(GameObject oldTarget, GameObject newTarget)
+  {
+    ActiveTargets.Remove(oldTarget);
+    ActiveTargets.Add(newTarget);
+
+    TrackTargetDeath(newTarget);
+  }
+
+  public AlienController CreateAlienAt(Transform npc)
+  {
+    return Instantiate(
+      alien, npc.transform.position, npc.transform.rotation, npc.transform.parent
+    ).GetComponent<AlienController>();
+  }
+
+
+  private void TrackAlienDeath(GameObject alien)
+  {
+    alien.GetComponentInChildren<LaserVulnerable>().OnDeath.AddListener(() => StartCoroutine(ReplenishAlien(alien)));
+  }
+
+  private void TrackTargetDeath(GameObject target)
   {
     target.GetComponentInChildren<LaserVulnerable>().OnDeath.AddListener(() => RemoveTarget(target));
   }
@@ -69,14 +104,6 @@ public class AlienTargetManager : MonoBehaviour
     if (ActiveTargets.Count == 0) HideAliens();
   }
 
-  public void SwitchTarget(GameObject oldTarget, GameObject newTarget)
-  {
-    ActiveTargets.Remove(oldTarget);
-    ActiveTargets.Add(newTarget);
-
-    TrackDeath(newTarget);
-  }
-
   private void HideAliens()
   {
     if (aliensActive == false) return;
@@ -92,32 +119,13 @@ public class AlienTargetManager : MonoBehaviour
         continue;
       }
 
-      Aliens[i] = TurnIntoNpc(Aliens[i]);
+      AlienController alien = Aliens[i].GetComponent<AlienController>();
+
+      // If is in alien form, turn into npc
+      if (alien != null) alien.TurnIntoNpc(Random.Range(hideTime.x, hideTime.y));
+      // Otherwise, cancel a potential turn into alien request
+      else Aliens[i].GetComponent<NpcController>().CancelTurn();
     }
-  }
-
-  private GameObject TurnIntoNpc(GameObject alien)
-  {
-    // Stop if is in move animation
-    if (alien.GetComponent<SpawnAnimationScript>() != null) return alien;
-
-    // Create alien where the npc is
-    GameObject newNpc = npcManager.CreateNpcAt(alien.transform.position);
-
-    TrackAlienDeath(newNpc);
-    newNpc.tag = "Alien";
-
-    // Give it's skin back
-    newNpc.GetComponent<Skin>().ActiveSkin = alien.GetComponent<AlienController>().NpcSkin;
-
-    // Remove the alien
-    alien.SetActive(false);
-    Destroy(alien);
-
-    // Play the npc's particles
-    newNpc.GetComponent<ParticleSystem>().Play();
-
-    return newNpc;
   }
 
   private void ActivateAliens()
@@ -135,34 +143,13 @@ public class AlienTargetManager : MonoBehaviour
         continue;
       }
 
-      Aliens[i] = TurnIntoAlien(Aliens[i]);
+      NpcController npc = Aliens[i].GetComponent<NpcController>();
+
+      // If is in npc form, turn into alien
+      if (npc != null) npc.TurnIntoAlien(Random.Range(appearTime.x, appearTime.y));
+      // Otherwise, cancel a potential turn into npc request
+      else Aliens[i].GetComponent<AlienController>().CancelTurn();
     }
-  }
-
-  private GameObject TurnIntoAlien(GameObject npc)
-  {
-    // Stop if is in move animation
-    if (npc.GetComponent<SpawnAnimationScript>() != null) return npc;
-
-    // Create alien where the npc is
-    AlienController newAlien = Instantiate(
-      alien, npc.transform.position, npc.transform.rotation, npc.transform.parent
-    ).GetComponent<AlienController>();
-
-    // Store the npc skin
-    newAlien.NpcSkin = npc.GetComponent<Skin>().ActiveSkin;
-
-    // Remove the npc
-    npc.SetActive(false);
-    Destroy(npc);
-
-    // Apply modifier
-    newAlien.maxOffset = newAlien.maxOffset * angleOffsetModifier;
-
-    TrackAlienDeath(newAlien.gameObject);
-    alien.tag = "Alien";
-
-    return newAlien.gameObject;
   }
 
   private void Start()
@@ -189,11 +176,6 @@ public class AlienTargetManager : MonoBehaviour
 
     // Listen to it's death
     TrackAlienDeath(newNpc);
-  }
-
-  private void TrackAlienDeath(GameObject alien)
-  {
-    alien.GetComponentInChildren<LaserVulnerable>().OnDeath.AddListener(() => StartCoroutine(ReplenishAlien(alien)));
   }
 
   private IEnumerator ReplenishAlien(GameObject deadAlien)
