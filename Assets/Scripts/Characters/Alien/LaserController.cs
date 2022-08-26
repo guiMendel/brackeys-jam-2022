@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class LaserController : MonoBehaviour
 {
@@ -101,6 +102,7 @@ public class LaserController : MonoBehaviour
     GetComponent<Collider2D>().enabled = false;
 
     GetComponentInChildren<ParticleSystem>().Stop();
+    GetComponent<Light2D>().enabled = false;
 
     Destroy(gameObject, 5f);
   }

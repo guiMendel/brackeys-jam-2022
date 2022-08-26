@@ -25,6 +25,12 @@ public class SuspicionMeter : MonoBehaviour
   [Tooltip("How much suspicion is raised each second the player is sprinting")]
   public float sprintSuspicion = 10f;
 
+  [Tooltip("The Spotlight to turn on on player aggro")]
+  public GameObject spotlight;
+
+  [Tooltip("The lamps to turn off on player aggro")]
+  public GameObject[] lamps;
+
   [Tooltip("Raised when the aliens aggro to the player character (not the player trackers)")]
   public UnityEvent OnAggro;
 
@@ -148,5 +154,14 @@ public class SuspicionMeter : MonoBehaviour
 
     // Add player as target
     FindObjectOfType<AlienTargetManager>().AddTarget(playerController.gameObject);
+
+    // Turn on spotlight
+    TurnOnSpotlight();
+  }
+
+  private void TurnOnSpotlight()
+  {
+    foreach (GameObject lamp in lamps) lamp.SetActive(false);
+    spotlight.SetActive(true);
   }
 }
