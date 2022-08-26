@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class SpawnAnimationScript : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class SpawnAnimationScript : MonoBehaviour
 
   Movement movement;
   Rigidbody2D body;
+  NavMeshAgent navMeshAgent;
   NpcController controller;
 
 
@@ -27,6 +29,7 @@ public class SpawnAnimationScript : MonoBehaviour
     movement = GetComponent<Movement>();
     body = GetComponent<Rigidbody2D>();
     controller = GetComponent<NpcController>();
+    navMeshAgent = GetComponent<NavMeshAgent>();
 
     EnsureNotNull.Objects(movement, body);
   }
@@ -37,6 +40,7 @@ public class SpawnAnimationScript : MonoBehaviour
     movement.SnapTo(movement.transform.position);
     body.bodyType = RigidbodyType2D.Static;
     movement.useRigidbody2D = false;
+    if (navMeshAgent != null) navMeshAgent.enabled = false;
     if (controller != null) controller.enabled = false;
   }
 
@@ -73,5 +77,6 @@ public class SpawnAnimationScript : MonoBehaviour
     body.bodyType = RigidbodyType2D.Dynamic;
     movement.useRigidbody2D = true;
     if (controller != null) controller.enabled = true;
+    if (navMeshAgent != null) navMeshAgent.enabled = true;
   }
 }

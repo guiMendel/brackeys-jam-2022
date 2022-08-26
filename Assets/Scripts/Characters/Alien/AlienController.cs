@@ -216,8 +216,6 @@ public class AlienController : MonoBehaviour
 
   private void Chase(GameObject target)
   {
-    print("Out of Range");
-
     // Change it's movement offset
     ChangeOffset();
 
@@ -231,8 +229,6 @@ public class AlienController : MonoBehaviour
 
   private void Shoot(GameObject target)
   {
-    print("IN RANGE");
-
     // Wander
     npcController.enabled = true;
 

@@ -48,13 +48,13 @@ public class Movement : MonoBehaviour
   {
     get
     {
-      if (useNavMesh) return navMeshAgent.velocity;
+      if (useNavMesh && navMeshAgent.enabled) return navMeshAgent.velocity;
       if (useRigidbody2D) return body.velocity;
       return _nonRigidbodySpeed;
     }
     private set
     {
-      if (useNavMesh) navMeshAgent.velocity = value;
+      if (useNavMesh && navMeshAgent.enabled) navMeshAgent.velocity = value;
       else if (useRigidbody2D) body.velocity = value;
       else _nonRigidbodySpeed = value;
     }

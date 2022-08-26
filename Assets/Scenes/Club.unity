@@ -1465,7 +1465,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1560050411}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.01, y: -8.05, z: 0.06183766}
+  m_LocalPosition: {x: -8.27, y: -2.73, z: 0.06183766}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2725,7 +2725,7 @@ PrefabInstance:
       objectReference: {fileID: 843585266}
     - target: {fileID: 114866023, guid: 6a5271c1469b2d2448cc520c7ee5202a, type: 3}
       propertyPath: godMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5179717209115902473, guid: 6a5271c1469b2d2448cc520c7ee5202a, type: 3}
       propertyPath: initialArea
@@ -2822,7 +2822,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5595788596688166964, guid: af0f1b902591d8d4d866c4bd090321d3, type: 3}
       propertyPath: alienCount
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5595788596688166965, guid: af0f1b902591d8d4d866c4bd090321d3, type: 3}
       propertyPath: m_Name
@@ -2952,7 +2952,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8050839299892597863, guid: 09560a18bebf1e74aa3277faca5911b8, type: 3}
       propertyPath: npcCount
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 8050839299892597863, guid: 09560a18bebf1e74aa3277faca5911b8, type: 3}
       propertyPath: runtimeSpawnOrigin
