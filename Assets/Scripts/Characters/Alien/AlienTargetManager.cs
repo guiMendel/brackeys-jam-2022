@@ -26,6 +26,9 @@ public class AlienTargetManager : MonoBehaviour
   [Tooltip("How long aliens may take to hide")]
   public Vector2 hideTime = new Vector2(0.2f, 1.5f);
 
+  [Tooltip("How often to check for new aliens to join the hunt when there are targets")]
+  public float alienAssembleFrequency = 1f;
+
 
   // === STATE
 
@@ -35,8 +38,7 @@ public class AlienTargetManager : MonoBehaviour
   // Currently active targets
   public List<GameObject> ActiveTargets { get; private set; } = new List<GameObject>();
 
-  // Whether the aliens are active
-  bool aliensActive = false;
+  Coroutine newAliensAssembleCoroutine = null;
 
 
   // === REFS
@@ -54,6 +56,12 @@ public class AlienTargetManager : MonoBehaviour
 
     // When target perishes, remove it from list
     TrackTargetDeath(target);
+
+    // Start assembling new aliens every so often
+    if (newAliensAssembleCoroutine == null)
+    {
+      newAliensAssembleCoroutine = StartCoroutine(AssembleNewAliens());
+    }
   }
 
   public void SwitchAlienObject(GameObject oldObject, GameObject newObject)
@@ -106,9 +114,11 @@ public class AlienTargetManager : MonoBehaviour
 
   private void HideAliens()
   {
-    if (aliensActive == false) return;
-
-    aliensActive = false;
+    if (newAliensAssembleCoroutine != null)
+    {
+      StopCoroutine(newAliensAssembleCoroutine);
+      newAliensAssembleCoroutine = null;
+    }
 
     for (int i = 0; i < Aliens.Count; i++)
     {
@@ -130,10 +140,6 @@ public class AlienTargetManager : MonoBehaviour
 
   private void ActivateAliens()
   {
-    if (aliensActive) return;
-
-    aliensActive = true;
-
     for (int i = 0; i < Aliens.Count; i++)
     {
       // Ensure it's still alive
@@ -143,12 +149,12 @@ public class AlienTargetManager : MonoBehaviour
         continue;
       }
 
-      NpcController npc = Aliens[i].GetComponent<NpcController>();
+      AlienController alien = Aliens[i].GetComponent<AlienController>();
 
-      // If is in npc form, turn into alien
-      if (npc != null) npc.TurnIntoAlien(Random.Range(appearTime.x, appearTime.y));
-      // Otherwise, cancel a potential turn into npc request
-      else Aliens[i].GetComponent<AlienController>().CancelTurn();
+      // If is in alien form, cancel a potential turn into npc request
+      if (alien != null) alien.CancelTurn();
+      // Otherwise, turn into alien
+      else Aliens[i].GetComponent<NpcController>().TurnIntoAlien(Random.Range(appearTime.x, appearTime.y));
     }
   }
 
@@ -156,6 +162,18 @@ public class AlienTargetManager : MonoBehaviour
   {
     // Allocate aliens
     SpawnAliens();
+  }
+
+  IEnumerator AssembleNewAliens()
+  {
+    while (ActiveTargets.Count > 0)
+    {
+      ActivateAliens();
+
+      yield return new WaitForSeconds(alienAssembleFrequency);
+    }
+
+    newAliensAssembleCoroutine = null;
   }
 
   // Ensures there are aliens ready for the hunt
