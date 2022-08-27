@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -71,6 +72,10 @@ public class ClubDialogues : MonoBehaviour
 
     unplayedDeathDialogues = deathDialogues.ToList();
 
+    TutorialDialogues tutorial = GetComponent<TutorialDialogues>();
+
+    if (tutorial != null) Destroy(tutorial);
+
     EnsureNotNull.Objects(
       intro, deathDialogues
     );
@@ -99,5 +104,18 @@ public class ClubDialogues : MonoBehaviour
 
     handler.SetDialogue(unplayedDeathDialogues[dialogueIndex]);
     unplayedDeathDialogues.RemoveAt(dialogueIndex);
+  }
+
+  void PassParamsAhead()
+  {
+    DialogueHandler handler = DialogueHandler.Instance;
+
+    print("in it");
+
+    if (handler.GetComponent<ClubDialogues>() != null) return;
+
+    handler.AddComponent<ClubDialogues>();
+    print("set it");
+    handler.SetDialogue("Club/1Intro");
   }
 }
