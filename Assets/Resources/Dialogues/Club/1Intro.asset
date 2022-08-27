@@ -14,14 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: 'Finally, you''re back! We need to get out of this stinky club right now!
 
-    Do
-    you see the exit over to the left? #1 It seems to be locked though. Wonder where
-    the key is at...'
+    The
+    exit is somewhere beyond those curtains... But how do we get them open?'
   delay: 2
   maxDuration: 4
+  setTooltips: []
+  resetTooltips: 0
   speedModifier: 1
+  pitchModifier: 1
   fontSizeModifier: 1
-  skippable: 1
+  autoSkip: 1
   followUp: {fileID: 0}
   followUpDelay: 8
   OnStart:
