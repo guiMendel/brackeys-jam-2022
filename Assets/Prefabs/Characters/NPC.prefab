@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9056673993413085279}
   - component: {fileID: 7736334984538892992}
   - component: {fileID: 1537776764259209612}
+  - component: {fileID: 8337361476037673727}
   m_Layer: 14
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -74,8 +75,48 @@ MonoBehaviour:
   destroyTarget: {fileID: 8464543620918312373}
   OnDeath:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8337361476037673727}
+        m_TargetAssemblyTypeName: AudioPlayer, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   godMode: 0
+  destroyDelay: 0
+--- !u!114 &8337361476037673727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6877405466511513035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eee4a0231fd50e141aadc8d6930652e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: e70fbe803f329924db18e726d2c69419, type: 3}
+  - {fileID: 8300000, guid: 1adde0482e9574140a0a5f641ea637f4, type: 3}
+  - {fileID: 8300000, guid: acb26bdce04ff9549b20981dace242f4, type: 3}
+  - {fileID: 8300000, guid: fcdbfb4f9251aa44caae572798ca115f, type: 3}
+  - {fileID: 8300000, guid: 6387f2a29fcb12e4c9914c3bd4f6f36f, type: 3}
+  - {fileID: 8300000, guid: 49fd124baae1df149acc7b706a59ff66, type: 3}
+  - {fileID: 8300000, guid: 5ab01bb1ba1218f4a80e80db77d773db, type: 3}
+  - {fileID: 8300000, guid: 911c38528cf1e664ab1d3b4faa49683d, type: 3}
+  - {fileID: 8300000, guid: cc16fcde9bcf7c64495fe24007c24ea1, type: 3}
+  - {fileID: 8300000, guid: d1f820af851b3614285a996cc420fecc, type: 3}
+  - {fileID: 8300000, guid: b8f12d8a47b164042a9305ede4a18d68, type: 3}
+  volumeScale: 0.3
+  loop: 0
+  playOnAwake: 0
 --- !u!1 &8464543620918312373
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,6 +266,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   idleChance: 0.45
   movementCycleDurationLimits: {x: 0.1, y: 0.6}
+  initialPosition: {x: 0, y: 0}
 --- !u!114 &2590389505014224690
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
 
 public class LaserController : MonoBehaviour
@@ -14,6 +15,8 @@ public class LaserController : MonoBehaviour
 
   [Tooltip("How fast the laser goes")]
   [Min(0f)] public float speed = 5f;
+
+  public UnityEvent OnImpact;
 
 
   // === PROPERTIES
@@ -69,6 +72,8 @@ public class LaserController : MonoBehaviour
 
   private void OnTriggerEnter2D(Collider2D other)
   {
+    OnImpact.Invoke();
+
     PlayParticles();
 
     if (other.gameObject.CompareTag("StopLaser"))

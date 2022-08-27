@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 584157516192815341}
   - component: {fileID: 584157516192815338}
+  - component: {fileID: 3890506164714803142}
   m_Layer: 0
   m_Name: Suspicion Meter
   m_TagString: Untagged
@@ -58,4 +59,34 @@ MonoBehaviour:
   - {fileID: 0}
   OnAggro:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3890506164714803142}
+        m_TargetAssemblyTypeName: AudioPlayer, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3890506164714803142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 584157516192815340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eee4a0231fd50e141aadc8d6930652e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Detected
+  clips:
+  - {fileID: 8300000, guid: 50d7c459405cf384e9c7717ad00f8cef, type: 3}
+  volumeScale: 0.179
+  loop: 0
+  playOnAwake: 0

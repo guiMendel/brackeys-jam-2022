@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 3017402765762133301}
   - component: {fileID: 3017402765762133302}
   - component: {fileID: 3017402765762133303}
+  - component: {fileID: 1569430506}
+  - component: {fileID: 1569430513}
   m_Layer: 12
   m_Name: Lever
   m_TagString: Untagged
@@ -29,7 +31,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3017402765762133308}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 12.5, y: 3.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -119,7 +121,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targets:
   - {fileID: 0}
-  oneShot: 0
+  - {fileID: 1569430506}
+  oneShot: 1
   playerControlledOnly: 0
   OnTrigger:
     m_PersistentCalls:
@@ -4925,3 +4928,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Prefab: {fileID: 2441401539983995269, guid: 5d7d53882e3df5644987b0b6513d53eb, type: 3}
+--- !u!114 &1569430506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3017402765762133308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34193ac879b328e4d957f829caf014f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerMultipleTimes: 0
+  toggledSprite: {fileID: 1841126056, guid: 3044f0ad06cd0344bb242e1b19ba7fd1, type: 3}
+--- !u!114 &1569430513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3017402765762133308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eee4a0231fd50e141aadc8d6930652e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: 
+  clips:
+  - {fileID: 8300000, guid: a5bc6c0245593a24bacf10752a5d8fbb, type: 3}
+  volumeScale: 1
+  loop: 0
+  playOnAwake: 0

@@ -13,6 +13,10 @@ public class SceneHandler : MonoBehaviour
 
   public InputAction RestartSceneAction;
 
+  public AudioClip themeOriginal;
+
+  public float aggroMusicPitch = 1.5f;
+
 
   // === STATE
 
@@ -26,6 +30,7 @@ public class SceneHandler : MonoBehaviour
   // === REFS
 
   static SceneHandler instance;
+  AudioSource musicSource;
 
 
   // === INTERFACE
@@ -93,6 +98,11 @@ public class SceneHandler : MonoBehaviour
     SingletonCheck();
   }
 
+  private void Awake()
+  {
+    musicSource = GetComponent<AudioSource>();
+  }
+
   private void OnEnable()
   {
     SceneManager.sceneLoaded += OnSceneLoaded;
@@ -114,6 +124,22 @@ public class SceneHandler : MonoBehaviour
       gameObject.SetActive(false);
       Destroy(gameObject);
       return;
+    }
+
+    musicSource.pitch = 1f;
+
+    FindObjectOfType<SuspicionMeter>().OnAggro.AddListener(
+      () => musicSource.pitch = aggroMusicPitch
+    );
+
+    if (scene.name != "Tutorial")
+    {
+      int time = musicSource.timeSamples;
+
+      musicSource.clip = themeOriginal;
+
+      musicSource.timeSamples = time;
+      musicSource.Play();
     }
 
     UseCheckpoint();

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 114866021}
   - component: {fileID: 114866022}
   - component: {fileID: 114866023}
+  - component: {fileID: 495971060442786520}
   m_Layer: 13
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -74,8 +75,49 @@ MonoBehaviour:
   destroyTarget: {fileID: 5179717209115902477}
   OnDeath:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 495971060442786520}
+        m_TargetAssemblyTypeName: AudioPlayer, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   godMode: 0
+  destroyDelay: 0
+--- !u!114 &495971060442786520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 114866020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eee4a0231fd50e141aadc8d6930652e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: 
+  clips:
+  - {fileID: 8300000, guid: e70fbe803f329924db18e726d2c69419, type: 3}
+  - {fileID: 8300000, guid: 1adde0482e9574140a0a5f641ea637f4, type: 3}
+  - {fileID: 8300000, guid: acb26bdce04ff9549b20981dace242f4, type: 3}
+  - {fileID: 8300000, guid: fcdbfb4f9251aa44caae572798ca115f, type: 3}
+  - {fileID: 8300000, guid: 6387f2a29fcb12e4c9914c3bd4f6f36f, type: 3}
+  - {fileID: 8300000, guid: 49fd124baae1df149acc7b706a59ff66, type: 3}
+  - {fileID: 8300000, guid: 5ab01bb1ba1218f4a80e80db77d773db, type: 3}
+  - {fileID: 8300000, guid: 911c38528cf1e664ab1d3b4faa49683d, type: 3}
+  - {fileID: 8300000, guid: cc16fcde9bcf7c64495fe24007c24ea1, type: 3}
+  - {fileID: 8300000, guid: d1f820af851b3614285a996cc420fecc, type: 3}
+  - {fileID: 8300000, guid: b8f12d8a47b164042a9305ede4a18d68, type: 3}
+  volumeScale: 0.7
+  loop: 0
+  playOnAwake: 0
 --- !u!1 &44815601091715877
 GameObject:
   m_ObjectHideFlags: 0
@@ -142,19 +184,19 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_Vertices:
-  - position: {x: 0.25, y: -0.4, z: 0}
-    color: {r: 0, g: 0, b: 0, a: 1}
-    uv: {x: 0, y: 0}
-  - position: {x: 0, y: 10, z: 0}
+  - position: {x: -0.25, y: -0.4, z: 0}
     color: {r: 0, g: 0, b: 0, a: 1}
     uv: {x: 0, y: 0}
   - position: {x: 0.5, y: 0, z: 0}
     color: {r: 0, g: 0, b: 0, a: 1}
     uv: {x: 0, y: 0}
-  - position: {x: -0.25, y: -0.4, z: 0}
+  - position: {x: 0.25, y: -0.4, z: 0}
     color: {r: 0, g: 0, b: 0, a: 1}
     uv: {x: 0, y: 0}
   - position: {x: -0.5, y: 0, z: 0}
+    color: {r: 0, g: 0, b: 0, a: 1}
+    uv: {x: 0, y: 0}
+  - position: {x: -3, y: 10, z: 0}
     color: {r: 0, g: 0, b: 0, a: 1}
     uv: {x: 0, y: 0}
   - position: {x: -0.5, y: 0, z: 0}
@@ -169,16 +211,13 @@ MonoBehaviour:
   - position: {x: 0.5, y: 0, z: 0}
     color: {r: 0, g: 0, b: 0, a: 1}
     uv: {x: 0, y: 0}
-  - position: {x: 0, y: 10, z: 0}
+  - position: {x: -3, y: 10, z: 0}
     color: {r: 0, g: 0, b: 0, a: 1}
     uv: {x: 0, y: 0}
-  - position: {x: -0.9994, y: 0.025, z: 0}
+  - position: {x: -0.9851, y: -0.1213, z: 0}
     color: {r: 0, g: 0, b: 0, a: 0}
     uv: {x: 0, y: 0}
-  - position: {x: -0.9947, y: -0.0728, z: 0}
-    color: {r: 0, g: 0, b: 0, a: 0}
-    uv: {x: 0, y: 0}
-  - position: {x: -0.971, y: -0.1677, z: 0}
+  - position: {x: -0.9522, y: -0.2134, z: 0}
     color: {r: 0, g: 0, b: 0, a: 0}
     uv: {x: 0, y: 0}
   - position: {x: -0.924, y: -0.265, z: 0}
@@ -229,64 +268,70 @@ MonoBehaviour:
   - position: {x: 0.9931, y: -0.0829, z: 0}
     color: {r: 0, g: 0, b: 0, a: 0}
     uv: {x: 0, y: 0}
-  - position: {x: 0.9994, y: 0.025, z: 0}
+  - position: {x: 0.9998, y: 0.0148, z: 0}
     color: {r: 0, g: 0, b: 0, a: 0}
     uv: {x: 0, y: 0}
-  - position: {x: 0.4994, y: 10.025, z: 0}
+  - position: {x: 0.9873, y: 0.1118, z: 0}
     color: {r: 0, g: 0, b: 0, a: 0}
     uv: {x: 0, y: 0}
-  - position: {x: 0.4849, y: 10.1218, z: 0}
+  - position: {x: 0.9719, y: 0.1652, z: 0}
     color: {r: 0, g: 0, b: 0, a: 0}
     uv: {x: 0, y: 0}
-  - position: {x: 0.4519, y: 10.2139, z: 0}
+  - position: {x: -2.5281, y: 10.1652, z: 0}
     color: {r: 0, g: 0, b: 0, a: 0}
     uv: {x: 0, y: 0}
-  - position: {x: 0.4016, y: 10.2978, z: 0}
+  - position: {x: -2.5693, y: 10.2539, z: 0}
     color: {r: 0, g: 0, b: 0, a: 0}
     uv: {x: 0, y: 0}
-  - position: {x: 0.3359, y: 10.3703, z: 0}
+  - position: {x: -2.627, y: 10.333, z: 0}
     color: {r: 0, g: 0, b: 0, a: 0}
     uv: {x: 0, y: 0}
-  - position: {x: 0.2573, y: 10.4287, z: 0}
+  - position: {x: -2.699, y: 10.3992, z: 0}
     color: {r: 0, g: 0, b: 0, a: 0}
     uv: {x: 0, y: 0}
-  - position: {x: 0.1689, y: 10.4706, z: 0}
+  - position: {x: -2.7825, y: 10.4502, z: 0}
     color: {r: 0, g: 0, b: 0, a: 0}
     uv: {x: 0, y: 0}
-  - position: {x: 0.074, y: 10.4945, z: 0}
+  - position: {x: -2.8744, y: 10.484, z: 0}
     color: {r: 0, g: 0, b: 0, a: 0}
     uv: {x: 0, y: 0}
-  - position: {x: -0.0237, y: 10.4994, z: 0}
+  - position: {x: -2.9711, y: 10.4992, z: 0}
     color: {r: 0, g: 0, b: 0, a: 0}
     uv: {x: 0, y: 0}
-  - position: {x: -0.1206, y: 10.4852, z: 0}
+  - position: {x: -3.0689, y: 10.4952, z: 0}
     color: {r: 0, g: 0, b: 0, a: 0}
     uv: {x: 0, y: 0}
-  - position: {x: -0.2128, y: 10.4525, z: 0}
+  - position: {x: -3.164, y: 10.4723, z: 0}
     color: {r: 0, g: 0, b: 0, a: 0}
     uv: {x: 0, y: 0}
-  - position: {x: -0.2968, y: 10.4024, z: 0}
+  - position: {x: -3.2529, y: 10.4313, z: 0}
     color: {r: 0, g: 0, b: 0, a: 0}
     uv: {x: 0, y: 0}
-  - position: {x: -0.3695, y: 10.3368, z: 0}
+  - position: {x: -3.332, y: 10.3738, z: 0}
     color: {r: 0, g: 0, b: 0, a: 0}
     uv: {x: 0, y: 0}
-  - position: {x: -0.428, y: 10.2584, z: 0}
+  - position: {x: -3.3985, y: 10.302, z: 0}
     color: {r: 0, g: 0, b: 0, a: 0}
     uv: {x: 0, y: 0}
-  - position: {x: -0.4702, y: 10.1701, z: 0}
+  - position: {x: -3.4497, y: 10.2186, z: 0}
     color: {r: 0, g: 0, b: 0, a: 0}
     uv: {x: 0, y: 0}
-  - position: {x: -0.4943, y: 10.0752, z: 0}
+  - position: {x: -3.4837, y: 10.1268, z: 0}
     color: {r: 0, g: 0, b: 0, a: 0}
     uv: {x: 0, y: 0}
-  - position: {x: -0.4994, y: 10.025, z: 0}
+  - position: {x: -3.4991, y: 10.0302, z: 0}
     color: {r: 0, g: 0, b: 0, a: 0}
     uv: {x: 0, y: 0}
-  m_Triangles: 00000100020003000100000001000300040005000a000a0005000a000b0005000b000c0005000c000d00050006000e0005000d000e0006000e000f0006000f001000060010001100060011001200060012001300060007001400060013001400070014001500070015001600070016001700070017001800070018001900070008001a00070019001a0008001a001b0008001b001c0008001c001d00080009001e0008001d001e0009001e001f0009001f002000090020002100090021002200090022002300090023002400090024002500090025002600090026002700090027002800090028002900090029002a0009002a002b0009002b002c0009002c002d0009002d002e000a00050009000a002e000900
+  - position: {x: -3.4954, y: 9.9324, z: 0}
+    color: {r: 0, g: 0, b: 0, a: 0}
+    uv: {x: 0, y: 0}
+  - position: {x: -6.4381, y: 9.759, z: 0}
+    color: {r: 0, g: 0, b: 0, a: 0}
+    uv: {x: 0, y: 0}
+  m_Triangles: 00000100020003000100000001000300040005000a000a0005000a000b0005000b000c00050006000d0005000c000d0006000d000e0006000e000f0006000f001000060010001100060011001200060007001300060012001300070013001400070014001500070015001600070016001700070017001800070008001900070018001900080019001a0008001a001b0008001b001c0008001c001d0008001d001e00080009001f0008001e001f0009001f002000090020002100090021002200090022002300090023002400090024002500090025002600090026002700090027002800090028002900090029002a0009002a002b0009002b002c0009002c002d0009002d002e0009002e002f000a00050009000a002f000900
   m_LocalBounds:
-    m_Center: {x: 0, y: 4.7997003, z: 0}
-    m_Extent: {x: 0.9994, y: 5.6997, z: 0}
+    m_Center: {x: -1.24965, y: 4.7996, z: 0}
+    m_Extent: {x: 2.24945, y: 5.6995997, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0.75
@@ -301,7 +346,7 @@ MonoBehaviour:
   - {x: -0.25, y: -0.4, z: 0}
   - {x: 0.25, y: -0.4, z: 0}
   - {x: 0.5, y: 0, z: 0}
-  - {x: 0, y: 10, z: 0}
+  - {x: -3, y: 10, z: 0}
 --- !u!1 &5179717209115902477
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,6 +365,7 @@ GameObject:
   - component: {fileID: -6593884726718865220}
   - component: {fileID: 2198536488029219312}
   - component: {fileID: 5368471351632580895}
+  - component: {fileID: 1044922869016650560}
   m_Layer: 11
   m_Name: Player
   m_TagString: Untagged
@@ -410,6 +456,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialArea: {fileID: 0}
   deathRestartDelay: 3
+  footstepDuration: 0.3
   disableMovement: 0
   disableSprinting: 0
   disableInput: 0
@@ -550,6 +597,33 @@ CircleCollider2D:
   m_Offset: {x: 0, y: -0.3}
   serializedVersion: 2
   m_Radius: 0.2
+--- !u!114 &1044922869016650560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5179717209115902477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eee4a0231fd50e141aadc8d6930652e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: 
+  clips:
+  - {fileID: 8300000, guid: fee21422440b9be4e94290c289f5f839, type: 3}
+  - {fileID: 8300000, guid: be93c9b6813a6f248890c86216e9b978, type: 3}
+  - {fileID: 8300000, guid: 173d55b8db08d774e9cae77c3c162659, type: 3}
+  - {fileID: 8300000, guid: 0567e768ad588b64bba2c672bf8d67c1, type: 3}
+  - {fileID: 8300000, guid: c9c932cad5d548a41a5f0372fc872d8f, type: 3}
+  - {fileID: 8300000, guid: 6a5604db89339f145ba5356f6db7fb4e, type: 3}
+  - {fileID: 8300000, guid: 88c63800e1acea542826f318bb71ae49, type: 3}
+  - {fileID: 8300000, guid: 355d439f91a324143af6086d9ebf05fa, type: 3}
+  - {fileID: 8300000, guid: be8f7954f3b9af84f9568f1e314151ab, type: 3}
+  - {fileID: 8300000, guid: aa2d6c58dd91df44dbe3e6926d657379, type: 3}
+  volumeScale: 0.2
+  loop: 0
+  playOnAwake: 0
 --- !u!1 &6592192997831621900
 GameObject:
   m_ObjectHideFlags: 0

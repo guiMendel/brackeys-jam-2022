@@ -16,8 +16,22 @@ public class OpenDoor : MonoBehaviour
   Coroutine closeCoroutine;
 
 
+  // === REFS
+
+  AudioPlayer audioPlayer;
+
+
+  private void Awake()
+  {
+    audioPlayer = GetComponent<AudioPlayer>();
+  }
+
+
   public void Open()
   {
+    // Open sound
+    audioPlayer.Play(0);
+
     doorRenderer.enabled = true;
 
     if (duration <= 0f) return;
@@ -30,6 +44,9 @@ public class OpenDoor : MonoBehaviour
   IEnumerator CloseAfterDelay()
   {
     yield return new WaitForSeconds(duration);
+
+    // Close sound
+    audioPlayer.Play(1);
 
     doorRenderer.enabled = false;
 

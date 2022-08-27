@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -13,6 +14,9 @@ public class PlayerController : MonoBehaviour
 
   [Tooltip("How many seconds to wait before reloading on death")]
   public float deathRestartDelay = 3f;
+
+  [Tooltip("How many seconds per footstep sound")]
+  public float footstepDuration = 0.7f;
 
   [Tooltip("Disables player movement")]
   public bool disableMovement = false;
@@ -32,6 +36,8 @@ public class PlayerController : MonoBehaviour
 
   Bounds? _spawnArea = null;
 
+  Coroutine footsteps;
+
 
   // === PROPERTY
 
@@ -49,6 +55,7 @@ public class PlayerController : MonoBehaviour
 
   LaserVulnerable laserVulnerable;
   PlayerCharacter playerCharacter;
+  AudioPlayer audioPlayer;
 
 
   // === INTERFACE
@@ -62,6 +69,18 @@ public class PlayerController : MonoBehaviour
     playerCharacter.Move(movementVector);
 
     OnPlayerMove.Invoke(movementVector);
+
+    if (movementVector == Vector2.zero)
+    {
+      if (footsteps != null) StopCoroutine(footsteps);
+      footsteps = null;
+    }
+
+    else
+    {
+      if (footsteps != null) StopCoroutine(footsteps);
+      footsteps = StartCoroutine(FootstepCoroutine());
+    }
   }
 
   public void Sprint(InputAction.CallbackContext callbackContext)
@@ -79,6 +98,16 @@ public class PlayerController : MonoBehaviour
   }
 
 
+  private IEnumerator FootstepCoroutine()
+  {
+    while (true)
+    {
+      audioPlayer.Play();
+
+      yield return new WaitForSeconds(playerCharacter.IsSprinting ? footstepDuration / 2f : footstepDuration);
+    }
+  }
+
   private void Awake()
   {
     OnSpawnPlayer ??= new Event.Vector2();
@@ -87,8 +116,9 @@ public class PlayerController : MonoBehaviour
 
     playerCharacter = GetComponent<PlayerCharacter>();
     laserVulnerable = GetComponentInChildren<LaserVulnerable>();
+    audioPlayer = GetComponent<AudioPlayer>();
 
-    EnsureNotNull.Objects(laserVulnerable, playerCharacter);
+    EnsureNotNull.Objects(laserVulnerable, playerCharacter, audioPlayer);
   }
 
   private void OnEnable()
