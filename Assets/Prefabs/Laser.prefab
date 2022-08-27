@@ -50,8 +50,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c9865ce55cfbea408abb1a1abf4bbff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  homingPotency: 75
-  speed: 15
+  homingPotency: 50
+  speed: 10
 --- !u!50 &-3272746324619585186
 Rigidbody2D:
   serializedVersion: 4

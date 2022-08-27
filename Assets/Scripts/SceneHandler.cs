@@ -107,8 +107,15 @@ public class SceneHandler : MonoBehaviour
     RestartSceneAction.Disable();
   }
 
-  private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+  private void OnSceneLoaded(Scene scene, LoadSceneMode arg1)
   {
+    if (scene.name == "EndGame")
+    {
+      gameObject.SetActive(false);
+      Destroy(gameObject);
+      return;
+    }
+
     UseCheckpoint();
     restarting = false;
   }

@@ -91,8 +91,17 @@ public class ClubDialogues : MonoBehaviour
     SceneManager.sceneLoaded += OnSceneLoaded;
   }
 
-  private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+  private void OnSceneLoaded(Scene scene, LoadSceneMode arg1)
   {
+    if (scene.name == "EndGame")
+    {
+      DialogueHandler.Instance.SetDialogue("EndGame/Farewell");
+
+      Destroy(FindObjectOfType<SceneHandler>());
+
+      return;
+    }
+
     playerVulnerable.OnDeath.AddListener(PlayDeathDialogue);
   }
 

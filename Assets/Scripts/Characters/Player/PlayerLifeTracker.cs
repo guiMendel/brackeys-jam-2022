@@ -168,11 +168,18 @@ public class PlayerLifeTracker : MonoBehaviour
 
   private void OnSceneLoad(Scene scene, LoadSceneMode mode)
   {
-    SetUpForScene();
+    SetUpForScene(scene);
   }
 
-  private void SetUpForScene()
+  private void SetUpForScene(Scene scene)
   {
+    if (scene.name == "EndGame")
+    {
+      gameObject.SetActive(false);
+      Destroy(gameObject);
+      return;
+    }
+
     // Set up this scene's tracked life npcs
     SetUpTrackedLifeNpcs();
 

@@ -4888,6 +4888,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   godMode: 0
+  destroyDelay: 0
 --- !u!1 &4110596489544609919
 GameObject:
   m_ObjectHideFlags: 0
@@ -5205,7 +5206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b314bb082fa338a48aa75234f3c5775f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootRange: 4
+  shootRange: 6
   laserOrigin: {fileID: 8367217594639813686}
   shoulder: {fileID: 8647524651487381959}
   offsetVariation: 3000
