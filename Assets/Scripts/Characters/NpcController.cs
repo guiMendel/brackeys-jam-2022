@@ -30,6 +30,7 @@ public class NpcController : MonoBehaviour
 
   Movement movement;
   AreaConfine confine;
+  Animator animator;
 
 
   // === INTERFACE
@@ -86,14 +87,20 @@ public class NpcController : MonoBehaviour
   {
     movement = GetComponent<Movement>();
     confine = GetComponent<AreaConfine>();
+    animator = GetComponent<Animator>();
 
-    EnsureNotNull.Objects(movement);
+    EnsureNotNull.Objects(movement, animator);
+  }
+
+  private void Start()
+  {
+    animator.Play("walk");
   }
 
   private void OnEnable()
   {
     initialPosition = transform.position;
-    
+
     // Start the movement cycles
     StartRandomWalk();
 
@@ -135,7 +142,9 @@ public class NpcController : MonoBehaviour
   private void StartNewCycle(Vector2 direction, bool idle)
   {
     if (idle && movement.Destination != null) return;
-    
+
+    animator.Play(idle ? "idle" : "walk");
+
     movement.SetTargetMovement(idle ? Vector2.zero : direction);
   }
 

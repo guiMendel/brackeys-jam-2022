@@ -28,12 +28,14 @@ public class PlayerCharacter : MonoBehaviour
   // === REFS
 
   Movement movement;
+  Animator animator;
 
   private void Awake()
   {
     movement = GetComponent<Movement>();
+    animator = GetComponent<Animator>();
 
-    EnsureNotNull.Objects(movement);
+    EnsureNotNull.Objects(movement, animator);
 
     // Register initial movement config
     walkAcceleration = movement.acceleration;
@@ -41,7 +43,14 @@ public class PlayerCharacter : MonoBehaviour
   }
 
 
-  public void Move(Vector2 direction) { movement.SetTargetMovement(direction); }
+  public void Move(Vector2 direction)
+  {
+    if (direction == Vector2.zero) animator.Play("idle");
+    else if (IsSprinting) animator.Play("sprint");
+    else animator.Play("walk");
+
+    movement.SetTargetMovement(direction);
+  }
 
   public void Sprint(bool sprint)
   {
