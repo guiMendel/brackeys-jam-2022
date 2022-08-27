@@ -24,6 +24,9 @@ public class Dialogue : ScriptableObject
   [Tooltip("Modifier to apply to writing speed")]
   [Min(0.1f)] public float speedModifier = 1f;
 
+  [Tooltip("Modifier to apply to letter sound pitch")]
+  [Min(0.1f)] public float pitchModifier = 1f;
+
   [Tooltip("Modifier to apply to font size")]
   [Min(0.1f)] public float fontSizeModifier = 1f;
 

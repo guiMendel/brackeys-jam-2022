@@ -23,6 +23,7 @@ MonoBehaviour:
   delay: 0.5
   maxDuration: 0
   speedModifier: 1.2
+  pitchModifier: 1
   fontSizeModifier: 1
   skippable: 0
   followUp: {fileID: 0}

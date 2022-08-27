@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +29,8 @@ public class DialogueHandler : MonoBehaviour
 
   [Tooltip("Extra pause after a new line character")]
   public float newLineTime = 1.5f;
+
+  public AudioClip[] letterClips;
 
   // === STATE
 
@@ -76,6 +77,7 @@ public class DialogueHandler : MonoBehaviour
 
   Label dialogue;
   public static DialogueHandler Instance { get; private set; }
+  AudioSource audioSource;
 
 
   // === INTERFACE
@@ -163,6 +165,10 @@ public class DialogueHandler : MonoBehaviour
     if (SingletonCheck() == false) return;
 
     usedDialogues = new List<Dialogue>();
+    audioSource = GetComponent<AudioSource>();
+
+    EnsureNotNull.Objects(audioSource);
+
     GetDialogueBox();
   }
 
@@ -266,6 +272,8 @@ public class DialogueHandler : MonoBehaviour
 
           DisplayedText += c;
 
+          PlayLetterClip();
+
           // Detect special characters
           if (c == '<') writingSpecialCharacters = true;
 
@@ -307,8 +315,18 @@ public class DialogueHandler : MonoBehaviour
     displayCoroutine = null;
   }
 
+  private void PlayLetterClip()
+  {
+    AudioClip clip = letterClips[Random.Range(0, letterClips.Length)];
+
+    // audioSource.clip = clip;
+    // audioSource.Play();
+    audioSource.PlayOneShot(clip);
+  }
+
   private void ApplyDialogueStyle()
   {
     dialogue.style.fontSize = new Length(ActiveDialogue.fontSizeModifier * initialFontSize);
+    audioSource.pitch = ActiveDialogue.pitchModifier;
   }
 }
