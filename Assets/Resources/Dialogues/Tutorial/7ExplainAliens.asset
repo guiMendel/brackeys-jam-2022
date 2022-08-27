@@ -15,31 +15,23 @@ MonoBehaviour:
   text: 'It''s #0.2 uhh #0.2 okay I swear, lemme explain. #0.3 <u>Don''t</u> freak
     out.
 
-    First things first, you''ll notice you don''t look quite the same
-    as before. Another merry consequence of your identity crisis.
+    First things first, you''ll notice you don''t look quite the same as
+    before. Another merry consequence of your identity crisis.
 
     So, there''s
     these aliens. We don''t know why, but they really #0.5 <u>really</u> want to
-    kill us.
-
-    They are <u>infiltrated</u> among regular people, and reveal themselves
-    when they recognize you.
-
-    When they spot someone <u>acting out of the ordinary</u>,
-    they assume that''s you. So <u>try to blend in</u>.
-
-    They''ll usually start
-    suspecting you once you move away from a group of people, or if you <u>stand
-    still</u> for too long.
-
-    Ah yes, here, remember we have this device that
-    shows us <u>how much they suspect of us</u>.'
+    kill us.'
   delay: 0
   maxDuration: 0
+  setTooltips:
+  - <u>On death</u> your appearance may change
+  - Movement disabled
+  resetTooltips: 0
   speedModifier: 1.5
+  pitchModifier: 1
   fontSizeModifier: 1
-  skippable: 1
-  followUp: {fileID: 11400000, guid: c595b8aed792b1e4e9e46cee77a44388, type: 2}
+  autoSkip: 0
+  followUp: {fileID: 11400000, guid: 931830a608babf646a1c3e2a88d7bff3, type: 2}
   followUpDelay: 1.5
   OnStart:
     m_PersistentCalls:

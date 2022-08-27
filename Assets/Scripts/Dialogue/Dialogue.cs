@@ -18,6 +18,12 @@ public class Dialogue : ScriptableObject
   [Tooltip("Max time the dialogue may appear (0 means unlimited time)")]
   [Min(0f)] public float maxDuration = 0f;
 
+  [Tooltip("Sets up these strings as the current tooltips (empty leaves it unchanged)")]
+  public string[] setTooltips;
+
+  [Tooltip("Resets tooltips")]
+  public bool resetTooltips = false;
+
 
   [Header("Style")]
 
@@ -33,8 +39,8 @@ public class Dialogue : ScriptableObject
 
   [Header("Follow Up")]
 
-  [Tooltip("Whether this dialogue can be skipped")]
-  public bool skippable = true;
+  [Tooltip("Whether this dialogue passes automatically")]
+  public bool autoSkip = true;
 
   [Tooltip("Dialogue to follow up on this one")]
   [SerializeField] Dialogue followUp;

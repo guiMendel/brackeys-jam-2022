@@ -12,13 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a6a01461a8db624aa899ac2a97fd5da, type: 3}
   m_Name: 10SolvePuzzle
   m_EditorClassIdentifier: 
-  text: Long story short, that means you can <u>record your moves</u>, and they will
-    get replayed everytime you die.
+  text: 'Long story short, that means you can <u>record your moves</u>, and they
+    will get replayed everytime you die.
+
+    Sometimes the aliens may even be able
+    to <u>take them out before they did last time</u>, though, so stay on your toes
+    always.
+
+    Oh, and if your past clones start wreaking too much havoc around
+    you, you can always reset them with the <u>esc</u> key. Keep that in mind!'
   delay: 0
   maxDuration: 0
+  setTooltips:
+  - <u>Esc</u> erases all your current clones
+  - <u>Clones of your past lives</u> spawn with you
+  - Movement disabled
+  resetTooltips: 0
   speedModifier: 1
+  pitchModifier: 1
   fontSizeModifier: 1
-  skippable: 1
+  autoSkip: 0
   followUp: {fileID: 11400000, guid: 99802f27e2f2c2a41a2d2323e8c9667a, type: 2}
   followUpDelay: 2
   OnStart:

@@ -13,13 +13,17 @@ MonoBehaviour:
   m_Name: 1Intro
   m_EditorClassIdentifier: 
   text: "What are you doing?! We need to get out of here! #0.5 \nHello? Are you there?\nWe're
-    having one of our <u>identity crises</u> again, aren't we?\nAlright, let's see
+    having one of our <u>identity crisis</u> again, aren't we?\nAlright, let's see
     if I still remember how to do this. Picture with me..."
   delay: 3
   maxDuration: 0
+  setTooltips:
+  - <u>Enter</u> to continue dialogue
+  resetTooltips: 0
   speedModifier: 1
+  pitchModifier: 1
   fontSizeModifier: 1
-  skippable: 1
+  autoSkip: 0
   followUp: {fileID: 11400000, guid: a538c98c6e4123347a4a58bc5439c7bd, type: 2}
   followUpDelay: 2
   OnStart:

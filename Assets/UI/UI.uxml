@@ -7,4 +7,5 @@
     <ui:VisualElement name="dialogue-container" style="width: 100%; height: 100%; position: absolute; align-items: center; padding-left: 5%; padding-right: 5%;">
         <ui:Label text="Sample dialogue text" display-tooltip-when-elided="false" name="dialogue" enable-rich-text="true" style="-unity-font-style: normal; font-size: 50px; white-space: normal; -unity-text-align: upper-left; color: rgb(255, 255, 255); -unity-font: url(&apos;project://database/Assets/Fonts/DISPLAYED.ttf?fileID=12800000&amp;guid=4977d02ba513d22419a55305109de0ae&amp;type=3#DISPLAYED&apos;); -unity-font-definition: none; margin-top: 20px; background-color: rgba(70, 70, 70, 0.55); padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
     </ui:VisualElement>
+    <ui:VisualElement name="tooltip-container" style="position: absolute; align-items: flex-end; bottom: 30px; right: 20px; flex-direction: column-reverse; -unity-font: url(&apos;project://database/Assets/Fonts/DISPLAYED.ttf?fileID=12800000&amp;guid=4977d02ba513d22419a55305109de0ae&amp;type=3#DISPLAYED&apos;); -unity-font-definition: none;" />
 </ui:UXML>

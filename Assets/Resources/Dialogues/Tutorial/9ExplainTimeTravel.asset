@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: "You'll notice this time around we have an extra friend in the safe zone.\r\nThat's
     our <u>past self</u>. So don't become alarmed when the aliens attack him. Bear
-    with me.\r\nIf ever you want to skip what I have to say, just hit the <u>Enter</u>
-    key. #0.3 \r\nWe have a gadget that allows us to <u>go back in time</u> at the
+    with me.\r\nWe have a gadget that allows us to <u>go back in time</u> at the
     moment we die. #0.3 Sortof.\r\nYou see, our body can't travel in time. But our
     <u>mind</u> can. So what we atually do #0.4 is go back and <u>swap it with someone
     else's mind</u> in the past! #0.2 Hence the identity crisis. #0.5 \r\nBut since
@@ -23,9 +22,13 @@ MonoBehaviour:
     <u>exactly the same thing</u>, until it eventually dies too."
   delay: 3
   maxDuration: 0
+  setTooltips:
+  - Movement disabled
+  resetTooltips: 0
   speedModifier: 1.5
+  pitchModifier: 1
   fontSizeModifier: 1
-  skippable: 1
+  autoSkip: 0
   followUp: {fileID: 11400000, guid: 2aec8c4e39a3dc14f86f0db164a0233f, type: 2}
   followUpDelay: 1
   OnStart:

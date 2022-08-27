@@ -20,7 +20,7 @@ MonoBehaviour:
   speedModifier: 2.5
   pitchModifier: 2
   fontSizeModifier: 0.6
-  skippable: 0
+  autoSkip: 1
   followUp: {fileID: 0}
   followUpDelay: 1
   OnStart:

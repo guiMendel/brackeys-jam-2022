@@ -10,17 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a6a01461a8db624aa899ac2a97fd5da, type: 3}
-  m_Name: 12WrapUp
+  m_Name: 7_2ExplainAliens
   m_EditorClassIdentifier: 
-  text: Oh, and if your past clones start wreaking too much havoc around you, you
-    can always reset them with the <u>esc</u> key. Keep that in mind!
+  text: 'They will kill all in their way to you, <u>including other aliens</u>, which
+    can be useful.
+
+    Ah yes, here, remember we have this device that shows us
+    <u>how much they suspect of us</u>.'
   delay: 0
-  maxDuration: 4
-  speedModifier: 1
+  maxDuration: 0
+  setTooltips:
+  - Aliens can <u>kill each other</u>
+  - Movement disabled
+  resetTooltips: 0
+  speedModifier: 1.5
+  pitchModifier: 1
   fontSizeModifier: 1
-  skippable: 0
-  followUp: {fileID: 0}
-  followUpDelay: 1
+  autoSkip: 0
+  followUp: {fileID: 11400000, guid: c595b8aed792b1e4e9e46cee77a44388, type: 2}
+  followUpDelay: 1.5
   OnStart:
     m_PersistentCalls:
       m_Calls: []

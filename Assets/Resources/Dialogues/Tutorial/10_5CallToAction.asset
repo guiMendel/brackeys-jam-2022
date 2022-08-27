@@ -16,9 +16,14 @@ MonoBehaviour:
     and then escape through it!
   delay: 0
   maxDuration: 5
+  setTooltips:
+  - <u>Esc</u> erases all your current clones
+  - <u>Clones of your past lives</u> spawn with you
+  resetTooltips: 0
   speedModifier: 1
+  pitchModifier: 1
   fontSizeModifier: 1
-  skippable: 0
+  autoSkip: 0
   followUp: {fileID: 0}
   followUpDelay: 1
   OnStart:

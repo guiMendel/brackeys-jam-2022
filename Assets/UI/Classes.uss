@@ -27,3 +27,18 @@
 .red-warning #overlay {
     background-color: rgb(231, 6, 0);
 }
+
+#tooltip-container * {
+    -unity-font-style: normal;
+    font-size: 30px;
+    white-space: normal;
+    -unity-text-align: upper-left;
+    color: rgb(255, 162, 236);
+    -unity-font: url('project://database/Assets/Fonts/DISPLAYED.ttf?fileID=12800000&guid=4977d02ba513d22419a55305109de0ae&type=3#DISPLAYED');
+    -unity-font-definition: none;
+    margin-top: 20px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}

@@ -18,9 +18,12 @@ MonoBehaviour:
     lever</u> up there, then exit through the door to your right.'
   delay: 0
   maxDuration: 0
+  setTooltips: []
+  resetTooltips: 1
   speedModifier: 1
+  pitchModifier: 1
   fontSizeModifier: 1
-  skippable: 0
+  autoSkip: 1
   followUp: {fileID: 0}
   followUpDelay: 1
   OnStart:

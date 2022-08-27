@@ -106,7 +106,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.29
+  m_Radius: 0.2
 --- !u!199 &3576765620015428278
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -4977,6 +4977,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eee4a0231fd50e141aadc8d6930652e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  title: 
   clips:
   - {fileID: 8300000, guid: d3b9db2885f8f4d469720c77d4d8ddaa, type: 3}
   - {fileID: 8300000, guid: 89affea3357972045852a934cfa45dc0, type: 3}
@@ -4998,6 +4999,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eee4a0231fd50e141aadc8d6930652e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  title: 
   clips:
   - {fileID: 8300000, guid: a24c0293c8d19444dafbf712371df11b, type: 3}
   - {fileID: 8300000, guid: 0ccd6b0243adc6041812bba470a4cc91, type: 3}

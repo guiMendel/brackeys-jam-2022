@@ -18,10 +18,16 @@ MonoBehaviour:
     already. We're in <u>danger</u> in real life."
   delay: 0.3
   maxDuration: 0
+  setTooltips:
+  - <u>Esc</u> erases all your current clones
+  - <u>Shift</u> to sprint
+  - Sprinting draws a lot of attention
+  resetTooltips: 0
   speedModifier: 1
+  pitchModifier: 1
   fontSizeModifier: 1
-  skippable: 0
-  followUp: {fileID: 11400000, guid: 15af56aeb25681443bccea4b52e68d3d, type: 2}
+  autoSkip: 0
+  followUp: {fileID: 0}
   followUpDelay: 1.5
   OnStart:
     m_PersistentCalls:

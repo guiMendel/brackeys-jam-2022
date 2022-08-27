@@ -21,9 +21,13 @@ MonoBehaviour:
     have to know <u>who you are</u>. Trust me, it won''t always be easy.'
   delay: 0
   maxDuration: 0
+  setTooltips:
+  - Movement disabled
+  resetTooltips: 0
   speedModifier: 1
+  pitchModifier: 1
   fontSizeModifier: 1
-  skippable: 1
+  autoSkip: 0
   followUp: {fileID: 11400000, guid: fb596c1f7a59a89488baaf99d5af92fa, type: 2}
   followUpDelay: 2
   OnStart:

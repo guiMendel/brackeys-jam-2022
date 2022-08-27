@@ -321,12 +321,33 @@ PrefabInstance:
       value: Dialogue Handler
       objectReference: {fileID: 0}
     - target: {fileID: 8221832511193879008, guid: 2be372d939536b54688387e424141331, type: 3}
+      propertyPath: destroyOnLoad
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8221832511193879008, guid: 2be372d939536b54688387e424141331, type: 3}
       propertyPath: initialDialogue
       value: 
       objectReference: {fileID: 11400000, guid: 207c75e7f59beed49bdcf320c1c1145f, type: 2}
     m_RemovedComponents:
     - {fileID: 3560303425478029912, guid: 2be372d939536b54688387e424141331, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2be372d939536b54688387e424141331, type: 3}
+--- !u!1 &1388427217 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3560303425478029919, guid: 2be372d939536b54688387e424141331, type: 3}
+  m_PrefabInstance: {fileID: 1388427216}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1388427218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388427217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 973f2f711ddfd2f4a90cd773e1e21331, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1424188835
 GameObject:
   m_ObjectHideFlags: 0

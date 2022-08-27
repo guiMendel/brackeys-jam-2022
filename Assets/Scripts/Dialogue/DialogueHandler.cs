@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -30,7 +31,11 @@ public class DialogueHandler : MonoBehaviour
   [Tooltip("Extra pause after a new line character")]
   public float newLineTime = 1.5f;
 
+  public bool destroyOnLoad = false;
+
   public AudioClip[] letterClips;
+
+  public UnityEvent OnFinish;
 
   // === STATE
 
@@ -43,6 +48,12 @@ public class DialogueHandler : MonoBehaviour
   List<Dialogue> usedDialogues;
 
   string _displayedText;
+
+  // Whether user has requested dialogue skip
+  bool skipRequested = false;
+
+  string[] tooltips = new string[0];
+
 
 
   // === PROPERTIES
@@ -78,6 +89,7 @@ public class DialogueHandler : MonoBehaviour
   Label dialogue;
   public static DialogueHandler Instance { get; private set; }
   AudioSource audioSource;
+  VisualElement tooltipContainer => FindObjectOfType<UIDocument>().rootVisualElement.Q<VisualElement>("tooltip-container");
 
 
   // === INTERFACE
@@ -108,13 +120,11 @@ public class DialogueHandler : MonoBehaviour
 
   public void Skip(bool setInterrupted = true)
   {
-    if (ActiveDialogue == null || ActiveDialogue.skippable == false) return;
+    if (ActiveDialogue == null) return;
 
-    Dialogue nextDialogue = ActiveDialogue.GetFollowUp();
+    DisplayedText = "";
 
-    if (setInterrupted == false) ActiveDialogue.Finished = true;
-
-    SetDialogue(nextDialogue);
+    skipRequested = true;
   }
 
   public void SetDialogue(Dialogue dialogue)
@@ -140,6 +150,22 @@ public class DialogueHandler : MonoBehaviour
 
   // === INTERNAL
 
+  void SetTooltips() { SetTooltips(new string[] { }); }
+
+  void SetTooltips(string[] newTooltips)
+  {
+    VisualElement tooltipContainer = FindObjectOfType<UIDocument>().rootVisualElement.Q<VisualElement>("tooltip-container");
+
+    tooltipContainer.Clear();
+
+    foreach (var tooltip in newTooltips)
+    {
+      tooltipContainer.Add(new Label(tooltip));
+    }
+
+    tooltips = newTooltips;
+  }
+
   private bool SingletonCheck()
   {
     if (Instance != null && Instance != this)
@@ -154,8 +180,11 @@ public class DialogueHandler : MonoBehaviour
       return false;
     }
 
-    Instance = this;
-    DontDestroyOnLoad(gameObject);
+    if (destroyOnLoad == false)
+    {
+      DontDestroyOnLoad(gameObject);
+      Instance = this;
+    }
 
     return true;
   }
@@ -203,21 +232,28 @@ public class DialogueHandler : MonoBehaviour
     // Get what was displayed
     string screenText = DisplayedText;
 
+
     GetDialogueBox();
 
     // Put it back there
     DisplayedText = screenText;
+
+    // Gat what the tooltips were
+    if (tooltips.Length > 0) SetTooltips(tooltips);
   }
 
   private IEnumerator DisplayDialogue()
   {
     while (ActiveDialogue != null)
     {
+      // Reset skip request
+      skipRequested = false;
+
       // Set it as started
       ActiveDialogue.Started = true;
 
       // Wait delay
-      if (ActiveDialogue.delay > 0f) yield return new WaitForSeconds(ActiveDialogue.delay);
+      if (ActiveDialogue.delay > 0f) yield return new WaitForSecondsRealtime(ActiveDialogue.delay);
 
       // Restart box
       DisplayedText = "";
@@ -237,13 +273,28 @@ public class DialogueHandler : MonoBehaviour
         .ToArray();
 
       foreach (
-        var (word, wordIndex) in words.Select((word, index) => (word, index))
+        var wordPair in words.Select((word, index) => (word, index))
       )
       {
+        string word = wordPair.word;
+        int wordIndex = wordPair.index;
+
+        if (skipRequested)
+        {
+          // On skip requested, seek next line break or next dialogue, whichever comes first
+          if (word.Contains('\n') == false) continue;
+
+          // Trim everything before the line break
+          DisplayedText = "";
+          skipRequested = false;
+          if (word.Length == 1) continue;
+          word = word.Substring(word.IndexOf('\n') + 1);
+        }
+
         // Detect pauses
         if (Regex.IsMatch(word, @"^#\d+(.\d+)?$"))
         {
-          yield return new WaitForSeconds(float.Parse(word.Substring(1)));
+          yield return new WaitForSecondsRealtime(float.Parse(word.Substring(1)));
 
           continue;
         }
@@ -262,10 +313,20 @@ public class DialogueHandler : MonoBehaviour
         // Type it plus a space (if not the first word)
         foreach (char c in $"{(wordIndex == 0 ? "" : " ")}{word}")
         {
+          if (skipRequested) break;
+
           // Detect new lines
           if (c == '\n')
           {
-            yield return new WaitForSeconds(newLineDelay);
+            // If not auto skipping, wait for skip
+            if (ActiveDialogue.autoSkip == false)
+            {
+              yield return new WaitUntil(() => skipRequested);
+              skipRequested = false;
+            }
+
+            else yield return new WaitForSecondsRealtime(newLineDelay);
+
             DisplayedText = "";
             continue;
           }
@@ -278,7 +339,7 @@ public class DialogueHandler : MonoBehaviour
           if (c == '<') writingSpecialCharacters = true;
 
           // Don't wait it writing special characters
-          if (writingSpecialCharacters == false) yield return new WaitForSeconds(dialogueWriteSpeed);
+          if (writingSpecialCharacters == false) yield return new WaitForSecondsRealtime(dialogueWriteSpeed);
 
           else if (c == '>') writingSpecialCharacters = false;
         }
@@ -286,30 +347,39 @@ public class DialogueHandler : MonoBehaviour
         // Detect paused characters (if  not last word)
         if (wordIndex < words.Length - 1)
         {
-          if (word[word.Length - 1] == ',') yield return new WaitForSeconds(commaDelay);
-          else if (".?!".Contains(word[word.Length - 1])) yield return new WaitForSeconds(periodDelay);
+          if (word[word.Length - 1] == ',') yield return new WaitForSecondsRealtime(commaDelay);
+          else if (".?!".Contains(word[word.Length - 1])) yield return new WaitForSecondsRealtime(periodDelay);
         }
       }
 
       // Set it as finished
       ActiveDialogue.Finished = true;
 
-      // Wait die time and stop
-      if (ActiveDialogue.maxDuration > 0f)
+      // If not auto skipping
+      if (ActiveDialogue.autoSkip == false)
       {
-        yield return new WaitForSeconds(ActiveDialogue.maxDuration);
+        yield return new WaitUntil(() => skipRequested);
+        ActiveDialogue.RegisterLeave();
+      }
+
+      // Wait die time and stop
+      else if (ActiveDialogue.maxDuration > 0f)
+      {
+        if (skipRequested == false) yield return new WaitForSecondsRealtime(ActiveDialogue.maxDuration);
         DisplayedText = "";
         ActiveDialogue.RegisterLeave();
       }
 
       // Wait follow up time
-      if (ActiveDialogue.followUpDelay > 0f)
-        yield return new WaitForSeconds(ActiveDialogue.followUpDelay);
+      if (!skipRequested && ActiveDialogue.followUpDelay > 0f)
+        yield return new WaitForSecondsRealtime(ActiveDialogue.followUpDelay);
 
       // Follow up
       // No problem if register leave gets called twice
       ActiveDialogue.RegisterLeave();
       ActiveDialogue = ActiveDialogue.GetFollowUp();
+
+      OnFinish.Invoke();
     }
 
     displayCoroutine = null;
@@ -328,5 +398,12 @@ public class DialogueHandler : MonoBehaviour
   {
     dialogue.style.fontSize = new Length(ActiveDialogue.fontSizeModifier * initialFontSize);
     audioSource.pitch = ActiveDialogue.pitchModifier;
+
+    if (ActiveDialogue.resetTooltips) SetTooltips();
+
+    if (ActiveDialogue.setTooltips != null && ActiveDialogue.setTooltips.Length > 0)
+    {
+      SetTooltips(ActiveDialogue.setTooltips);
+    }
   }
 }

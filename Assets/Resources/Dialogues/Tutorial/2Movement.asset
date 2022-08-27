@@ -16,9 +16,13 @@ MonoBehaviour:
     long, buddy...
   delay: 0.5
   maxDuration: 0
+  setTooltips:
+  - <u>WASD</u> to move
+  resetTooltips: 0
   speedModifier: 1
+  pitchModifier: 1
   fontSizeModifier: 1
-  skippable: 0
+  autoSkip: 0
   followUp: {fileID: 0}
   followUpDelay: 1
   OnStart:

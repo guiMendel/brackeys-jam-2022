@@ -19,9 +19,13 @@ MonoBehaviour:
     <u>little surprise</u> for them.'
   delay: 0
   maxDuration: 0
+  setTooltips:
+  - Aliens can <u>kill each other</u>
+  resetTooltips: 0
   speedModifier: 1
+  pitchModifier: 1
   fontSizeModifier: 1
-  skippable: 0
+  autoSkip: 1
   followUp: {fileID: 0}
   followUpDelay: 1
   OnStart:
