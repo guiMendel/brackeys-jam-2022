@@ -33,6 +33,9 @@ public class NpcController : MonoBehaviour
   Animator animator;
 
 
+  bool IsInAlienForm => GetComponent<AlienController>() != null;
+
+
   // === INTERFACE
 
   public void CancelTurn()
@@ -143,7 +146,7 @@ public class NpcController : MonoBehaviour
   {
     if (idle && movement.Destination != null) return;
 
-    animator.Play(idle ? "idle" : "walk");
+    animator.Play(idle && !IsInAlienForm ? "idle" : "walk");
 
     movement.SetTargetMovement(idle ? Vector2.zero : direction);
   }

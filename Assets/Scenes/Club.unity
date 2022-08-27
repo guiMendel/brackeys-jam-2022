@@ -62392,6 +62392,7 @@ MonoBehaviour:
   commaTime: 0.2
   periodTime: 0.5
   newLineTime: 1.5
+  destroyOnLoad: 0
   letterClips:
   - {fileID: 8300000, guid: f78449ec748912541b2ba39d5e51225f, type: 3}
   - {fileID: 8300000, guid: 30f4d18d6325fc941b764c60a2f96f84, type: 3}
@@ -62423,6 +62424,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 914410d6d9938ff429cdf959965c8f59, type: 3}
   - {fileID: 8300000, guid: aa4e71d325ebb904484e02fba262ddfc, type: 3}
   - {fileID: 8300000, guid: 1b949eeb4299a5b4485e275e95d8d6f5, type: 3}
+  OnFinish:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &4859784227106285933
 MonoBehaviour:
   m_ObjectHideFlags: 0

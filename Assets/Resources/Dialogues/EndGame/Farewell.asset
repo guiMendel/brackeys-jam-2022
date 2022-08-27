@@ -19,13 +19,16 @@ MonoBehaviour:
     it they won't!\r\nIn fact, we need to fix ourselves another one, to avoid havng
     any more crisis. Now I can finally remind you of how we came up with this gadget:\r\nIt's
     actually strikingly simple! All we had to do #0.6 oooooo$$$ wi|h ddrk matter
-    &* ///// !!\r\n??? #1 A aaa ()/ u there #1 ?\r\n0H nnnn,,,,o, plaes n&ot an tho))er\r\n<u>P_ers^^ona!ity}
+    &* ///// !!\r\n??? #1 A aaa ()/ u there #1 ?\r\n0H nnnn,,,,o, plaes n&ot an tho))er\r\n<u>I_den^^t!ty}
     &crisissssssss/</u>"
   delay: 2
   maxDuration: 0
+  setTooltips: []
+  resetTooltips: 0
   speedModifier: 1
+  pitchModifier: 1
   fontSizeModifier: 1
-  skippable: 1
+  autoSkip: 1
   followUp: {fileID: 0}
   followUpDelay: 1
   OnStart:
