@@ -110,12 +110,9 @@ public class ClubDialogues : MonoBehaviour
   {
     DialogueHandler handler = DialogueHandler.Instance;
 
-    print("in it");
-
     if (handler.GetComponent<ClubDialogues>() != null) return;
 
     handler.AddComponent<ClubDialogues>();
-    print("set it");
     handler.SetDialogue("Club/1Intro");
   }
 }

@@ -35,12 +35,12 @@ public class SuspicionMeterFiller : MonoBehaviour
     meterOverlay = meterBar.Q<VisualElement>("overlay");
     suspicionMeter = FindObjectOfType<SuspicionMeter>();
 
-    EnsureNotNull.Objects(meterOverlay, suspicionMeter);
+    EnsureNotNull.Objects(meterOverlay);
   }
 
   private void Update()
   {
-    if (suspicionMeter.enabled == false || hideMeter)
+    if (suspicionMeter == null || suspicionMeter.enabled == false || hideMeter)
     {
       if (meterIsDisplayed) HideMeter();
       return;

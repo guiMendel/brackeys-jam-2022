@@ -87,8 +87,6 @@ public class DialogueHandler : MonoBehaviour
 
   public void Interrupt()
   {
-    print("stop!");
-
     // Detect interruption
     if (ActiveDialogue != null)
     {
@@ -123,8 +121,6 @@ public class DialogueHandler : MonoBehaviour
     Interrupt();
 
     ActiveDialogue = dialogue;
-
-    print(("playing", dialogue.name));
 
     if (dialogue != null) displayCoroutine = StartCoroutine(DisplayDialogue());
   }

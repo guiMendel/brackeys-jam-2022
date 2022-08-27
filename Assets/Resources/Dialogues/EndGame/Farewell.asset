@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a6a01461a8db624aa899ac2a97fd5da, type: 3}
+  m_Name: Farewell
+  m_EditorClassIdentifier: 
+  text: "<u>We made it!</u> I can't believe it!\r\nNow we just have to figure out
+    why those aliens were after us in the first place.\r\nI wonder #0.3 if it had
+    anything to do with our time travel gadget... #2 \r\nWell good thing they'll
+    never lay those slimy green hands on them. Not if we have anything to say about
+    it they won't!\r\nIn fact, we need to fix ourselves another one, to avoid havng
+    any more crisis. Now I can finally remind you of how we came up with this gadget:\r\nIt's
+    actually strikingly simple! All we had to do #0.6 oooooo$$$ wi|h ddrk matter
+    &* ///// !!\r\n??? #1 A aaa ()/ u there #1 ?\r\n0H nnnn,,,,o, plaes n&ot an tho))er\r\n<u>P_ers^^ona!ity}
+    &crisissssssss/</u>"
+  delay: 2
+  maxDuration: 0
+  speedModifier: 1
+  fontSizeModifier: 1
+  skippable: 1
+  followUp: {fileID: 0}
+  followUpDelay: 1
+  OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStop:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFinish:
+    m_PersistentCalls:
+      m_Calls: []
+  OnInterrupt:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFollowUp:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLeave:
+    m_PersistentCalls:
+      m_Calls: []
