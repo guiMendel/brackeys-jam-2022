@@ -143,7 +143,7 @@ public class SuspicionMeter : MonoBehaviour
 
   private void TriggerAggro()
   {
-    if (Triggered || playerController?.gameObject == null) return;
+    if (Triggered || playerController == null) return;
 
     Triggered = true;
 
